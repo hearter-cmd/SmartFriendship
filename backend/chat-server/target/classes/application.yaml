@@ -1,0 +1,46 @@
+server:
+  port: 8103
+  servlet:
+    context-path: /api
+    session:
+      # Session超时时间
+      timeout: PT60M
+ws:
+  port: 8104
+spring:
+  application:
+    name: chat-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root #${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://1.94.141.32:3306/intelligent?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    type: com.zaxxer.hikari.HikariDataSource
+  data:
+    redis:
+      host: 192.168.182.128
+      port: 6379
+      timeout: 5000
+      database: 2
+  # 存入时间, 自动变成时间戳
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+logging:
+  level:
+    sql: debug
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/**/*.xml
+# 项目目录
+project:
+  folder: G:\Study\Intelligent-assessment-server\backend\assets
+log:
+  root:
+    level: info
+admin:
+  email: 771603162@qq.com
+# 是否是开发环境
+dev: true

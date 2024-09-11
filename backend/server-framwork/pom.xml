@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>server-common-starter</module>
+        <module>server-common-model</module>
     </modules>
 
     <properties>
