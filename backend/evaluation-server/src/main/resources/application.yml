@@ -114,6 +114,7 @@ wx:
       redis:
         host: 1.94.141.32
         port: 6379
+        password: 351660315Wcl@
       type: Memory
   # 微信开放平台
   # todo 需替换配置
@@ -155,3 +156,4 @@ logging:
     org.springframework.web: INFO
     com.github.binarywang.demo.wx.mp: DEBUG
     me.chanjar.weixin: DEBUG
+    web: debug

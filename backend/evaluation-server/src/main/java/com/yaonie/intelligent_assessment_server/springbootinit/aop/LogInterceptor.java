@@ -1,5 +1,6 @@
 package com.yaonie.intelligent_assessment_server.springbootinit.aop;
 
+import cn.hutool.http.HttpRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,7 @@ public class LogInterceptor {
      * 执行拦截
      */
     @Around("execution(* com.yaonie.intelligent_assessment_server.springbootinit.controller.*.*(..))")
-    public Object doInterceptor(ProceedingJoinPoint point) throws Throwable {
+    public Object doInterceptor(ProceedingJoinPoint point, HttpServletRequest request) throws Throwable {
         // 计时
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();

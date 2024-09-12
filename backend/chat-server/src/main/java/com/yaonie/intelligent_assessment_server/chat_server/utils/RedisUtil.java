@@ -4,8 +4,8 @@ package com.yaonie.intelligent_assessment_server.chat_server.utils;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +31,9 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtil {
 
     @Resource
-    private StringRedisTemplate redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
-    public StringRedisTemplate getRedisTemplate() {
+    public RedisTemplate getRedisTemplate() {
         return this.redisTemplate;
     }
 

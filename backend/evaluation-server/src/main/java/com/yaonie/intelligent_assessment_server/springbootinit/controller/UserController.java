@@ -18,10 +18,15 @@ import com.yaonie.intelligent_assessment_server.model.entity.User;
 import com.yaonie.intelligent_assessment_server.model.vo.LoginUserVO;
 import com.yaonie.intelligent_assessment_server.model.vo.UserVO;
 import com.yaonie.intelligent_assessment_server.springbootinit.annotation.AuthCheck;
+import com.yaonie.intelligent_assessment_server.springbootinit.config.WxOpenConfig;
 import com.yaonie.intelligent_assessment_server.springbootinit.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
+import me.chanjar.weixin.mp.api.WxMpService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
@@ -29,7 +34,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -47,6 +54,11 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private RestTemplate restTemplate;
+
+    @Resource
+    private WxOpenConfig wxOpenConfig;
 
     // region 登录相关
 
@@ -95,7 +107,7 @@ public class UserController {
     /**
      * 用户登录（微信开放平台）
      */
-    /*
+
     @GetMapping("/login/wx_open")
     public BaseResponse<LoginUserVO> userLoginByWxOpen(HttpServletRequest request, HttpServletResponse response,
             @RequestParam("code") String code) {
@@ -115,7 +127,7 @@ public class UserController {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "登录失败，系统错误");
         }
     }
-*/
+
     /**
      * 用户注销
      *
@@ -144,6 +156,16 @@ public class UserController {
         User user = userService.getLoginUser(request);
         return ResultUtils.success(userService.getLoginUserVO(user));
     }
+
+//    /**
+//     * TODO:
+//     *  微信登录
+//     */
+//    @GetMapping("/wxLogin")
+//    public BaseResponse WxLogin() {
+////        restTemplate.getForEntity()
+//        return null;
+//    }
 
     // endregion
 

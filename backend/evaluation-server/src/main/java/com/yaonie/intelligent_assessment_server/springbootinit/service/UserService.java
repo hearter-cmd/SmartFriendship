@@ -7,6 +7,7 @@ import com.yaonie.intelligent_assessment_server.model.entity.User;
 import com.yaonie.intelligent_assessment_server.model.vo.LoginUserVO;
 import com.yaonie.intelligent_assessment_server.model.vo.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 
 import java.util.List;
 
@@ -116,4 +117,11 @@ public interface UserService extends IService<User> {
      */
     QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 
+    /**
+     * 用户登录（微信开放平台）
+     * @param userInfo
+     * @param request
+     * @return
+     */
+    LoginUserVO userLoginByMpOpen(WxOAuth2UserInfo userInfo, HttpServletRequest request);
 }

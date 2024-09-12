@@ -26,9 +26,6 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: true
-logging:
-  level:
-    sql: debug
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

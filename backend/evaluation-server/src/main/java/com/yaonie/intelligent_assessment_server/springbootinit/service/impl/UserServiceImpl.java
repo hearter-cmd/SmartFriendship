@@ -16,6 +16,7 @@ import com.yaonie.intelligent_assessment_server.springbootinit.service.UserServi
 import com.yaonie.intelligent_assessment_server.springbootinit.utils.SqlUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -276,5 +277,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
         return queryWrapper;
+    }
+
+    @Override
+    public LoginUserVO userLoginByMpOpen(WxOAuth2UserInfo userInfo, HttpServletRequest request) {
+        return null;
     }
 }
