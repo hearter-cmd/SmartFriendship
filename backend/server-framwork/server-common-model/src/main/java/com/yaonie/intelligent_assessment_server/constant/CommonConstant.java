@@ -15,5 +15,10 @@ public interface CommonConstant {
      * 降序
      */
     String SORT_ORDER_DESC = " descend";
-    
+
+    /**
+     * Redis验证码前缀
+     */
+    String REDIS_CAPTCHA_PREFIX = "user:captcha:";
+
 }

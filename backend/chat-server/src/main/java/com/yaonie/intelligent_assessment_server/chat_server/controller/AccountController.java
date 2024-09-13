@@ -6,7 +6,6 @@ import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.ResponseVO
 import com.yaonie.intelligent_assessment_server.chat_server.utils.RedisUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

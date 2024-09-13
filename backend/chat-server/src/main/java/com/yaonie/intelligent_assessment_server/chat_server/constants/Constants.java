@@ -12,4 +12,26 @@ package com.yaonie.intelligent_assessment_server.chat_server.constants;
  * @Description : TODO
  */
 public interface Constants {
+
+    String CHAT_SERVER_HOST = "127.0.0.1";
+
+    int CHAT_SERVER_PORT = 8080;
+
+    String CHAT_SERVER_NAME = "Chat Server";
+
+    String CHAT_SERVER_VERSION = "1.0.0";
+
+    String CHAT_SERVER_DESCRIPTION = "Chat Server for Intelligent Assessment";
+
+    String CHAT_SERVER_WEBSITE = "https://www.yaonie.com";
+
+    String CHAT_SERVER_EMAIL = "support@yaonie.com";
+
+    String CHAT_SERVER_COPYRIGHT = "Copyright © 2024 Yaonie. All rights reserved.";
+
+    String CHAT_SERVER_LICENSE = "";
+
+    Long ROBOT_UID = 88888888L;
+
+    String REDIS_KEY_SYS_PREFIX = "system:syssetting:";
 }

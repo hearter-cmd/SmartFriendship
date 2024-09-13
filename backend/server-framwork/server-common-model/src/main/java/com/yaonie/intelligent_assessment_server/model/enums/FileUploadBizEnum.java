@@ -1,5 +1,6 @@
 package com.yaonie.intelligent_assessment_server.model.enums;
 
+
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.Arrays;
@@ -14,7 +15,10 @@ public enum FileUploadBizEnum {
 
     USER_AVATAR("用户头像", "user_avatar"),
     APP_ICON("应用图标", "app_icon"),
-    SCORING_RESULT_PICTURE("评分结果图片", "scoring_result_picture");
+    SCORING_RESULT_PICTURE("评分结果图片", "scoring_result_picture"),
+    GROUP_PICTURE("群组头像", "group_picture"),
+    GROUP_COVER("群组封面", "group_cover"),
+    ;
 
     private final String text;
 

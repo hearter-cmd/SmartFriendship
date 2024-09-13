@@ -3,7 +3,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: springboot-init
+    name: evaluation-server
   # 支持 swagger3
   mvc:
     pathmatch:
@@ -22,6 +22,8 @@ spring:
     username: root
     password: ${MYSQL_PASSWORD}
     type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      max-lifetime: 300000
   # Redis 配置
   # todo 需替换配置，然后取消注释
   #    password: 123456
@@ -82,13 +84,11 @@ server:
   address: 0.0.0.0
   port: 8101
   servlet:
-    context-path: /api
+    context-path: /api/evaluation-server
     # cookie 30 天过期
     session:
       cookie:
         max-age: 2592000
-        same-site: none
-        secure: true
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

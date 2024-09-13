@@ -1,15 +1,22 @@
 package com.yaonie.intelligent_assessment_server.chat_server.controller;
 
-import java.util.List;
-
-import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.po.User;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.ResponseVO;
 import com.yaonie.intelligent_assessment_server.chat_server.service.UserService;
+import com.yaonie.intelligent_assessment_server.common.BaseResponse;
+import com.yaonie.intelligent_assessment_server.feign.evaluation.EvaluationClient;
+import com.yaonie.intelligent_assessment_server.model.dto.app.AppQueryRequest;
+import com.yaonie.intelligent_assessment_server.model.vo.AppVO;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 /**
@@ -21,6 +28,16 @@ public class UserController extends ABaseController{
 
 	@Resource
 	private UserService userService;
+
+	@Resource
+	private EvaluationClient evaluationClient;
+
+	@GetMapping("/test")
+	public BaseResponse<Page<AppVO>> test(HttpServletRequest request) {
+		AppQueryRequest appQueryRequest = new AppQueryRequest();
+		return evaluationClient.listAppVOByPage(appQueryRequest);
+	}
+
 	/**
 	 * 根据条件分页查询
 	 */

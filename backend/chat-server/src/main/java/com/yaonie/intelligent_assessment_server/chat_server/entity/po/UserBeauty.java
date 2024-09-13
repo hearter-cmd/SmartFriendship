@@ -1,12 +1,12 @@
 package com.yaonie.intelligent_assessment_server.chat_server.entity.po;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.enums.DateTimePatternEnum;
 import com.yaonie.intelligent_assessment_server.chat_server.utils.DateUtil;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 /**

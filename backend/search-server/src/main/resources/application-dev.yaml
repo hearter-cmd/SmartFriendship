@@ -1,7 +1,25 @@
 server:
   port: 8102
   servlet:
-    context-path: /api
+    context-path: /api/search-server
+spring:
+  application:
+    name: search-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD}
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://192.168.182.128:3306/intelligent
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 192.168.182.128:8848
+        namespace: 3df35b9e-228b-42c9-bdf8-fc10c45a0875
+    loadbalancer:
+      nacos:
+        enabled: true
 # 接口文档配置
 knife4j:
   enable: true
@@ -23,13 +41,6 @@ mybatis-plus:
       logic-delete-field: isDelete # 逻辑删除字段
       logic-delete-value: 1
       logic-not-delete-value: 0
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD}
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://192.168.182.128:3306/intelligent
 logging:
   level:
     com.yaonie.intelligent_assessment_server.search_server.datasource: debug

@@ -1,7 +1,12 @@
 package com.yaonie.intelligent_assessment_server.chat_server.utils;
-import com.yaonie.intelligent_assessment_server.chat_server.exception.BusinessException;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.enums.UserContactTypeEnum;
+import com.yaonie.intelligent_assessment_server.common.ErrorCode;
+import com.yaonie.intelligent_assessment_server.exception.BusinessException;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Random;
+import java.util.stream.LongStream;
 
 
 public class StringTools {
@@ -21,13 +26,13 @@ public class StringTools {
                 }
             }
             if (!notEmpty) {
-                throw new BusinessException("多参数更新，删除，必须有非空条件");
+                throw new BusinessException(ErrorCode.PARAMS_ERROR, "多参数更新，删除，必须有非空条件");
             }
         } catch (BusinessException e) {
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BusinessException("校验参数是否为空失败");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "校验参数是否为空失败");
         }
     }
 
@@ -49,5 +54,10 @@ public class StringTools {
             return true;
         }
         return false;
+    }
+
+    public static Long getGroupId() {
+        Random random = new Random();
+        return random.nextInt((int) (Math.pow(10, 11) - Math.pow(10, 10))) + (long) Math.pow(10, 10);
     }
 }

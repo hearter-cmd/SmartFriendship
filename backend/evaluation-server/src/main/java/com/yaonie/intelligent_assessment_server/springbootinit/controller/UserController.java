@@ -1,6 +1,7 @@
 package com.yaonie.intelligent_assessment_server.springbootinit.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wf.captcha.SpecCaptcha;
 import com.yaonie.intelligent_assessment_server.common.BaseResponse;
 import com.yaonie.intelligent_assessment_server.common.DeleteRequest;
 import com.yaonie.intelligent_assessment_server.common.ErrorCode;
@@ -23,12 +24,14 @@ import com.yaonie.intelligent_assessment_server.springbootinit.service.UserServi
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.mp.api.WxMpService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,10 +39,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import static com.yaonie.intelligent_assessment_server.constant.CommonConstant.REDIS_CAPTCHA_PREFIX;
 import static com.yaonie.intelligent_assessment_server.springbootinit.service.impl.UserServiceImpl.SALT;
 
 /**
@@ -55,12 +60,26 @@ public class UserController {
     private UserService userService;
 
     @Resource
-    private RestTemplate restTemplate;
+    private RedisTemplate<String,String> redisTemplate;
 
     @Resource
     private WxOpenConfig wxOpenConfig;
 
+
+
     // region 登录相关
+    /**
+     * 获取验证码
+     */
+    @GetMapping("/captcha")
+    public BaseResponse<String> getCaptcha(HttpSession session) {
+        SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
+        String checkCode = specCaptcha.text();
+        String checkCodeKey = UUID.randomUUID().toString().replace("-","");
+        session.setAttribute(REDIS_CAPTCHA_PREFIX, checkCodeKey);
+        redisTemplate.opsForValue().set(REDIS_CAPTCHA_PREFIX + checkCodeKey, checkCode, 280, TimeUnit.SECONDS);
+        return ResultUtils.success(specCaptcha.toBase64());
+    }
 
     /**
      * 用户注册
@@ -69,17 +88,18 @@ public class UserController {
      * @return 注册结果
      */
     @PostMapping("/register")
-    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
+    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest, HttpServletRequest request) {
         if (userRegisterRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
         String checkPassword = userRegisterRequest.getCheckPassword();
+        String captcha = userRegisterRequest.getCaptcha();
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
             return null;
         }
-        long result = userService.userRegister(userAccount, userPassword, checkPassword);
+        long result = userService.userRegister(userAccount, userPassword, checkPassword, request, captcha);
         return ResultUtils.success(result);
     }
 
@@ -92,9 +112,22 @@ public class UserController {
      */
     @PostMapping("/login")
     public BaseResponse<LoginUserVO> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
-        if (userLoginRequest == null) {
+        if (userLoginRequest == null || StringUtils.isBlank(userLoginRequest.getCaptcha())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+        // 验证码校验
+        String captchaKey = request.getSession().getAttribute(REDIS_CAPTCHA_PREFIX).toString();
+        String captcha = userLoginRequest.getCaptcha();
+        if (StringUtils.isAnyBlank(captchaKey, captcha)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        String realCaptcha = redisTemplate.opsForValue().getAndDelete(REDIS_CAPTCHA_PREFIX + captchaKey);
+        log.info("captchaKey: {}, captcha: {}, realCaptcha: {}", captchaKey, captcha, realCaptcha);
+        if (StringUtils.isBlank(realCaptcha) || !realCaptcha.equalsIgnoreCase(captcha)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "验证码错误");
+        }
+
+        // 用户校验
         String userAccount = userLoginRequest.getUserAccount();
         String userPassword = userLoginRequest.getUserPassword();
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {

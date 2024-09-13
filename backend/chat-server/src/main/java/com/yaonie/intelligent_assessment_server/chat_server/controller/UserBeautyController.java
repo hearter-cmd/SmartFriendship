@@ -1,15 +1,15 @@
 package com.yaonie.intelligent_assessment_server.chat_server.controller;
 
-import java.util.List;
-
-import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserBeautyQuery;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.po.UserBeauty;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserBeautyQuery;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.ResponseVO;
 import com.yaonie.intelligent_assessment_server.chat_server.service.UserBeautyService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 /**

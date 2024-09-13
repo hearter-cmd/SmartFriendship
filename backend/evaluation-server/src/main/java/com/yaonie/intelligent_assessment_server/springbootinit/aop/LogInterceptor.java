@@ -1,6 +1,5 @@
 package com.yaonie.intelligent_assessment_server.springbootinit.aop;
 
-import cn.hutool.http.HttpRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

@@ -33,6 +33,18 @@
             <artifactId>server-common-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.yaonie.intelligent_assessment_server</groupId>
+            <artifactId>server-common-model</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--OpenFeign公共包-->
+        <dependency>
+            <groupId>com.yaonie.intelligent_assessment_server</groupId>
+            <artifactId>evaluation-server-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- netty -->
 <!--        <dependency>-->
 <!--            <groupId>io.netty</groupId>-->
@@ -84,6 +96,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--Nacos 注册中心-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!--loadbalancer 均衡负载-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
     </dependencies>
 

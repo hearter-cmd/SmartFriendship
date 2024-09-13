@@ -3,7 +3,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: springboot-init
+    name: evaluation-server
   # 默认 dev 环境
   profiles:
     active: prod
@@ -45,6 +45,15 @@ spring:
       host: 192.168.182.128
       port: 6379
       timeout: 5000
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 192.168.182.128:8848
+        namespace: 3df35b9e-228b-42c9-bdf8-fc10c45a0875
+    loadbalancer:
+      nacos:
+        enabled: true
 #      password:
 #  shardingsphere:
 #    mode:
@@ -85,7 +94,7 @@ server:
   address: 0.0.0.0
   port: 8101
   servlet:
-    context-path: /api
+    context-path: /api/evaluation-server
     # cookie 30 天过期
     session:
       cookie:

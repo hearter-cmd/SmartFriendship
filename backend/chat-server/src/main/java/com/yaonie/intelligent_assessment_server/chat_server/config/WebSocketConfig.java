@@ -1,9 +1,7 @@
 package com.yaonie.intelligent_assessment_server.chat_server.config;
 
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
  * _*_ coding : utf-8 _*_

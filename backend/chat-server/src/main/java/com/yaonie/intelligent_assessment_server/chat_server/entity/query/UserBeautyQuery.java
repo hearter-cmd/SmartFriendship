@@ -2,8 +2,6 @@ package com.yaonie.intelligent_assessment_server.chat_server.entity.query;
 
 import lombok.Data;
 
-import java.util.Date;
-
 
 /**
  * 用户参数

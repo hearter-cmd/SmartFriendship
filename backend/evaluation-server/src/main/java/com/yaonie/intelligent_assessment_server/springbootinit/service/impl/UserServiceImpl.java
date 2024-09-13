@@ -14,11 +14,13 @@ import com.yaonie.intelligent_assessment_server.model.vo.UserVO;
 import com.yaonie.intelligent_assessment_server.springbootinit.mapper.UserMapper;
 import com.yaonie.intelligent_assessment_server.springbootinit.service.UserService;
 import com.yaonie.intelligent_assessment_server.springbootinit.utils.SqlUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.yaonie.intelligent_assessment_server.constant.CommonConstant.REDIS_CAPTCHA_PREFIX;
 import static com.yaonie.intelligent_assessment_server.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -51,8 +54,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     public static final String SALT = "yaonie";
 
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
+
     @Override
-    public long userRegister(String userAccount, String userPassword, String checkPassword) {
+    public long userRegister(String userAccount, String userPassword, String checkPassword, HttpServletRequest request, String captcha) {
         // 1. 校验
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
@@ -66,6 +72,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 密码和校验密码相同
         if (!userPassword.equals(checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "两次输入的密码不一致");
+        }
+        // 验证码校验
+        String captchaKey = request.getSession().getAttribute(REDIS_CAPTCHA_PREFIX).toString();
+        if (StringUtils.isAnyBlank(captchaKey, captcha)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        String realCaptcha = redisTemplate.opsForValue().getAndDelete(REDIS_CAPTCHA_PREFIX + captchaKey);
+        if (StringUtils.isBlank(realCaptcha) || !realCaptcha.equalsIgnoreCase(captcha)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "验证码错误");
         }
         synchronized (userAccount.intern()) {
             // 账户不能重复

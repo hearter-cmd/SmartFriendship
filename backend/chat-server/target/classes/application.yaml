@@ -1,7 +1,7 @@
 server:
   port: 8103
   servlet:
-    context-path: /api
+    context-path: /api/chat-server
     session:
       # Session超时时间
       timeout: PT60M
@@ -22,6 +22,15 @@ spring:
       port: 6379
       timeout: 5000
       database: 2
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 192.168.182.128:8848
+        namespace: 3df35b9e-228b-42c9-bdf8-fc10c45a0875
+    loadbalancer:
+      nacos:
+        enabled: true
   # 存入时间, 自动变成时间戳
   jackson:
     serialization:

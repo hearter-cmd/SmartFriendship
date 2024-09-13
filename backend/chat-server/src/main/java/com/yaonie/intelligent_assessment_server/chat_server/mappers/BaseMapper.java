@@ -1,9 +1,9 @@
 package com.yaonie.intelligent_assessment_server.chat_server.mappers;
 
 
- import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Param;
 
- import java.util.List;
+import java.util.List;
 
  interface BaseMapper<T, P> {
 

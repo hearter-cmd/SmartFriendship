@@ -17,7 +17,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 // todo 如需开启 Redis，须移除 exclude 中的内容
 //    (exclude = {RedisAutoConfiguration.class})
 @SpringBootApplication(scanBasePackages = {
-        "com.yaonie.intelligent_assessment_server"
+        "com.yaonie.intelligent_assessment_server",
 })
 @MapperScan("com.yaonie.intelligent_assessment_server.springbootinit.mapper")
 @EnableScheduling
@@ -26,7 +26,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableConfigurationProperties({
         ZhiPuAi.class
 })
-
 public class MainApplication {
 
     public static void main(String[] args) {

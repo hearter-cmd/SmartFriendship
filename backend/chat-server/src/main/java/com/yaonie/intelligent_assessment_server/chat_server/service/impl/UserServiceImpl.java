@@ -1,18 +1,22 @@
 package com.yaonie.intelligent_assessment_server.chat_server.service.impl;
 
-import java.util.List;
-
-import jakarta.annotation.Resource;
-import org.springframework.stereotype.Service;
-
 import com.yaonie.intelligent_assessment_server.chat_server.entity.enums.PageSize;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.po.User;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.query.SimplePage;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
 import com.yaonie.intelligent_assessment_server.chat_server.mappers.UserMapper;
 import com.yaonie.intelligent_assessment_server.chat_server.service.UserService;
 import com.yaonie.intelligent_assessment_server.chat_server.utils.StringTools;
+import com.yaonie.intelligent_assessment_server.common.ErrorCode;
+import com.yaonie.intelligent_assessment_server.exception.BusinessException;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static com.yaonie.intelligent_assessment_server.constant.UserConstant.USER_LOGIN_STATE;
 
 
 /**
@@ -149,5 +153,28 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Integer deleteUserByEmail(String email) {
 		return this.userMapper.deleteByEmail(email);
+	}
+
+	/**
+	 * 获取当前登录用户
+	 *
+	 * @param request
+	 * @return
+	 */
+	@Override
+	public User getLoginUser(HttpServletRequest request) {
+		// 先判断是否已登录
+		Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+		User currentUser = (User) userObj;
+		if (currentUser == null || currentUser.getId() == null) {
+			throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+		}
+		// TODO 从数据库查询（追求性能的话可以注释，直接走缓存）
+		long userId = currentUser.getId();
+		currentUser = this.getUserById(userId);
+		if (currentUser == null) {
+			throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+		}
+		return currentUser;
 	}
 }
