@@ -3,12 +3,14 @@ package com.yaonie.intelligent_assessment_server.chat_server.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.po.User;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.ResponseVO;
 import com.yaonie.intelligent_assessment_server.chat_server.service.UserService;
 import com.yaonie.intelligent_assessment_server.common.BaseResponse;
 import com.yaonie.intelligent_assessment_server.feign.evaluation.EvaluationClient;
 import com.yaonie.intelligent_assessment_server.model.dto.app.AppQueryRequest;
 import com.yaonie.intelligent_assessment_server.model.vo.AppVO;
+import com.yaonie.intelligent_assessment_server.model.vo.UserVO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import java.util.List;
 
 /**
  * 用户 Controller
+ * @Author 武春利
  */
 @RestController("userController")
 @RequestMapping("/user")
@@ -33,16 +36,17 @@ public class UserController extends ABaseController{
 	private EvaluationClient evaluationClient;
 
 	@GetMapping("/test")
-	public BaseResponse<Page<AppVO>> test(HttpServletRequest request) {
+	public BaseResponse<Page<UserVO>> test(HttpServletRequest request) {
 		AppQueryRequest appQueryRequest = new AppQueryRequest();
-		return evaluationClient.listAppVOByPage(appQueryRequest);
+		BaseResponse<Page<UserVO>> pageBaseResponse = evaluationClient.listAppVOByPage(appQueryRequest);
+		return pageBaseResponse;
 	}
 
 	/**
 	 * 根据条件分页查询
 	 */
 	@RequestMapping("/loadDataList")
-	public ResponseVO loadDataList(UserQuery query){
+	public ResponseVO<PaginationResultVO<User>> loadDataList(UserQuery query){
 		return getSuccessResponseVO(userService.findListByPage(query));
 	}
 
@@ -59,7 +63,7 @@ public class UserController extends ABaseController{
 	 * 批量新增
 	 */
 	@RequestMapping("/addBatch")
-	public ResponseVO addBatch(@RequestBody List<User> listBean) {
+	public ResponseVO<Integer> addBatch(@RequestBody List<User> listBean) {
 		userService.addBatch(listBean);
 		return getSuccessResponseVO(null);
 	}
@@ -68,7 +72,7 @@ public class UserController extends ABaseController{
 	 * 批量新增/修改
 	 */
 	@RequestMapping("/addOrUpdateBatch")
-	public ResponseVO addOrUpdateBatch(@RequestBody List<User> listBean) {
+	public ResponseVO<Object> addOrUpdateBatch(@RequestBody List<User> listBean) {
 		userService.addBatch(listBean);
 		return getSuccessResponseVO(null);
 	}
@@ -77,7 +81,7 @@ public class UserController extends ABaseController{
 	 * 根据Id查询对象
 	 */
 	@RequestMapping("/getUserById")
-	public ResponseVO getUserById(Long id) {
+	public ResponseVO<User> getUserById(Long id) {
 		return getSuccessResponseVO(userService.getUserById(id));
 	}
 
