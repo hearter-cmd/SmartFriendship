@@ -9,7 +9,7 @@ import com.yaonie.intelligent_assessment_server.exception.BusinessException;
  */
 public class ABaseController {
 
-    protected <T> ResponseVO getSuccessResponseVO(T t) {
+    protected <T> ResponseVO<T> getSuccessResponseVO(T t) {
         ResponseVO<T> responseVO = new ResponseVO<>();
         responseVO.setCode(ResponseCodeEnum.CODE_200.getCode());
         responseVO.setMessage(ResponseCodeEnum.CODE_200.getMsg());
@@ -17,8 +17,8 @@ public class ABaseController {
         return responseVO;
     }
 
-    protected <T> ResponseVO getBusinessErrorResponseVO(BusinessException e, T t) {
-        ResponseVO vo = new ResponseVO();
+    protected <T> ResponseVO<T> getBusinessErrorResponseVO(BusinessException e, T t) {
+        ResponseVO<T> vo = new ResponseVO<>();
         if (e.getCode() == null) {
             vo.setCode(ResponseCodeEnum.CODE_600.getCode());
         } else {
@@ -29,8 +29,8 @@ public class ABaseController {
         return vo;
     }
 
-    protected <T> ResponseVO getServerErrorResponseVO(T t) {
-        ResponseVO vo = new ResponseVO();
+    protected <T> ResponseVO<T> getServerErrorResponseVO(T t) {
+        ResponseVO<T> vo = new ResponseVO<T>();
         vo.setCode(ResponseCodeEnum.CODE_500.getCode());
         vo.setMessage(ResponseCodeEnum.CODE_500.getMsg());
         vo.setData(t);
