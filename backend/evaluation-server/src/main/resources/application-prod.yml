@@ -1,3 +1,11 @@
+server:
+  address: 0.0.0.0
+  port: 8101
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        path: /
 # 线上配置文件
 spring:
   main:
@@ -23,7 +31,8 @@ spring:
     password: ${MYSQL_PASSWORD}
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      max-lifetime: 300000
+      maximum-pool-size: 5
+      max-lifetime: 800000
   # Redis 配置
   # todo 需替换配置，然后取消注释
   #    password: 123456
@@ -45,6 +54,9 @@ spring:
       port: 6379
       timeout: 5000
       password: ${MYSQL_PASSWORD}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
 #  shardingsphere:
 #    mode:
 #      type: Standalone
@@ -80,15 +92,6 @@ spring:
 #    props:
 #      sql-show: true  # 显示SQL语句，方便调试和验证分表规则是否正确
 #    enabled: true
-server:
-  address: 0.0.0.0
-  port: 8101
-  servlet:
-    context-path: /api/evaluation-server
-    # cookie 30 天过期
-    session:
-      cookie:
-        max-age: 2592000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -113,7 +116,7 @@ wx:
       redis:
         host: 1.94.141.32
         port: 6379
-      type: Memory
+      type: redisson
   # 微信开放平台
   # todo 需替换配置
 #  open:

@@ -8,9 +8,9 @@
 		<!--id-->
 		<id column="id" property="id"  />
 		<!--账号-->
-		<result column="userAccount" property="useraccount"  />
+		<result column="userAccount" property="userAccount"  />
 		<!--密码-->
-		<result column="userPassword" property="userpassword"  />
+		<result column="userPassword" property="userPassword"  />
 		<!--邮箱-->
 		<result column="email" property="email"  />
 		<!--性别 0:女 1:男  2:未知-->
@@ -18,17 +18,17 @@
 		<!--个性签名-->
 		<result column="person_signature" property="personSignature"  />
 		<!--微信开放平台id-->
-		<result column="unionId" property="unionid"  />
+		<result column="unionId" property="unionId"  />
 		<!--公众号openId-->
-		<result column="mpOpenId" property="mpopenid"  />
+		<result column="mpOpenId" property="mpOpenId"  />
 		<!--用户昵称-->
-		<result column="userName" property="username"  />
+		<result column="userName" property="userName"  />
 		<!--用户头像-->
-		<result column="userAvatar" property="useravatar"  />
+		<result column="userAvatar" property="userAvatar"  />
 		<!--用户简介-->
-		<result column="userProfile" property="userprofile"  />
+		<result column="userProfile" property="userProfile"  />
 		<!--用户角色：user/admin/ban-->
-		<result column="userRole" property="userrole"  />
+		<result column="userRole" property="userRole"  />
 		<!--添加好友的方式 0 : 直接添加; 1 : 同意后添加-->
 		<result column="join_type" property="joinType"  />
 		<!--地区名称-->
@@ -40,11 +40,11 @@
 		<!--最后离开时间-->
 		<result column="last_leave_time" property="lastLeaveTime"  />
 		<!--创建时间-->
-		<result column="createTime" property="createtime"  />
+		<result column="createTime" property="createTime"  />
 		<!--更新时间-->
-		<result column="updateTime" property="updatetime"  />
+		<result column="updateTime" property="updateTime"  />
 		<!--是否删除-->
-		<result column="isDelete" property="isdelete"  />
+		<result column="isDelete" property="isDelete"  />
 	</resultMap>
 
 
@@ -61,11 +61,11 @@
 			<if test="query.id != null">
 				 and  id = #{query.id}
 			</if>
-			<if test="query.useraccount != null and query.useraccount!=''">
-				 and  userAccount = #{query.useraccount}
+			<if test="query.userAccount != null and query.userAccount!=''">
+				 and  userAccount = #{query.userAccount}
 			</if>
-			<if test="query.userpassword != null and query.userpassword!=''">
-				 and  userPassword = #{query.userpassword}
+			<if test="query.userPassword != null and query.userPassword!=''">
+				 and  userPassword = #{query.userPassword}
 			</if>
 			<if test="query.email != null and query.email!=''">
 				 and  email = #{query.email}
@@ -76,23 +76,23 @@
 			<if test="query.personSignature != null and query.personSignature!=''">
 				 and  person_signature = #{query.personSignature}
 			</if>
-			<if test="query.unionid != null and query.unionid!=''">
-				 and  unionId = #{query.unionid}
+			<if test="query.unionId != null and query.unionId!=''">
+				 and  unionId = #{query.unionId}
 			</if>
-			<if test="query.mpopenid != null and query.mpopenid!=''">
-				 and  mpOpenId = #{query.mpopenid}
+			<if test="query.mpOpenId != null and query.mpOpenId!=''">
+				 and  mpOpenId = #{query.mpOpenId}
 			</if>
-			<if test="query.username != null and query.username!=''">
-				 and  userName = #{query.username}
+			<if test="query.userName != null and query.userName!=''">
+				 and  userName = #{query.userName}
 			</if>
-			<if test="query.useravatar != null and query.useravatar!=''">
-				 and  userAvatar = #{query.useravatar}
+			<if test="query.userAvatar != null and query.userAvatar!=''">
+				 and  userAvatar = #{query.userAvatar}
 			</if>
-			<if test="query.userprofile != null and query.userprofile!=''">
-				 and  userProfile = #{query.userprofile}
+			<if test="query.userProfile != null and query.userProfile!=''">
+				 and  userProfile = #{query.userProfile}
 			</if>
-			<if test="query.userrole != null and query.userrole!=''">
-				 and  userRole = #{query.userrole}
+			<if test="query.userRole != null and query.userRole!=''">
+				 and  userRole = #{query.userRole}
 			</if>
 			<if test="query.joinType != null">
 				 and  join_type = #{query.joinType}
@@ -109,14 +109,14 @@
 			<if test="query.lastLeaveTime != null">
 				 and  last_leave_time = #{query.lastLeaveTime}
 			</if>
-			<if test="query.createtime != null and query.createtime!=''">
-				 <![CDATA[ and  createTime=str_to_date(#{query.createtime}, '%Y-%m-%d') ]]>
+			<if test="query.createTime != null and query.createTime!=''">
+				 <![CDATA[ and  createTime=str_to_date(#{query.createTime}, '%Y-%m-%d') ]]>
 			</if>
-			<if test="query.updatetime != null and query.updatetime!=''">
-				 <![CDATA[ and  updateTime=str_to_date(#{query.updatetime}, '%Y-%m-%d') ]]>
+			<if test="query.updateTime != null and query.updateTime!=''">
+				 <![CDATA[ and  updateTime=str_to_date(#{query.updateTime}, '%Y-%m-%d') ]]>
 			</if>
-			<if test="query.isdelete != null">
-				 and  isDelete = #{query.isdelete}
+			<if test="query.isDelete != null">
+				 and  isDelete = #{query.isDelete}
 			</if>
 	</sql>
 	<!-- 通用条件列-->
@@ -130,11 +130,11 @@
 	<sql id="query_condition">
 	 <where>
 			<include refid="base_condition_filed" />
-			<if test="query.useraccountFuzzy!= null  and query.useraccountFuzzy!=''">
-				 and  userAccount like concat('%', #{query.useraccountFuzzy}, '%')
+			<if test="query.userAccountFuzzy!= null  and query.userAccountFuzzy!=''">
+				 and  userAccount like concat('%', #{query.userAccountFuzzy}, '%')
 			</if>
-			<if test="query.userpasswordFuzzy!= null  and query.userpasswordFuzzy!=''">
-				 and  userPassword like concat('%', #{query.userpasswordFuzzy}, '%')
+			<if test="query.userPasswordFuzzy!= null  and query.userPasswordFuzzy!=''">
+				 and  userPassword like concat('%', #{query.userPasswordFuzzy}, '%')
 			</if>
 			<if test="query.emailFuzzy!= null  and query.emailFuzzy!=''">
 				 and  email like concat('%', #{query.emailFuzzy}, '%')
@@ -142,23 +142,23 @@
 			<if test="query.personSignatureFuzzy!= null  and query.personSignatureFuzzy!=''">
 				 and  person_signature like concat('%', #{query.personSignatureFuzzy}, '%')
 			</if>
-			<if test="query.unionidFuzzy!= null  and query.unionidFuzzy!=''">
-				 and  unionId like concat('%', #{query.unionidFuzzy}, '%')
+			<if test="query.unionIdFuzzy!= null  and query.unionIdFuzzy!=''">
+				 and  unionId like concat('%', #{query.unionIdFuzzy}, '%')
 			</if>
-			<if test="query.mpopenidFuzzy!= null  and query.mpopenidFuzzy!=''">
-				 and  mpOpenId like concat('%', #{query.mpopenidFuzzy}, '%')
+			<if test="query.mpOpenIdFuzzy!= null  and query.mpOpenIdFuzzy!=''">
+				 and  mpOpenId like concat('%', #{query.mpOpenIdFuzzy}, '%')
 			</if>
-			<if test="query.usernameFuzzy!= null  and query.usernameFuzzy!=''">
-				 and  userName like concat('%', #{query.usernameFuzzy}, '%')
+			<if test="query.userNameFuzzy!= null  and query.userNameFuzzy!=''">
+				 and  userName like concat('%', #{query.userNameFuzzy}, '%')
 			</if>
-			<if test="query.useravatarFuzzy!= null  and query.useravatarFuzzy!=''">
-				 and  userAvatar like concat('%', #{query.useravatarFuzzy}, '%')
+			<if test="query.userAvatarFuzzy!= null  and query.userAvatarFuzzy!=''">
+				 and  userAvatar like concat('%', #{query.userAvatarFuzzy}, '%')
 			</if>
-			<if test="query.userprofileFuzzy!= null  and query.userprofileFuzzy!=''">
-				 and  userProfile like concat('%', #{query.userprofileFuzzy}, '%')
+			<if test="query.userProfileFuzzy!= null  and query.userProfileFuzzy!=''">
+				 and  userProfile like concat('%', #{query.userProfileFuzzy}, '%')
 			</if>
-			<if test="query.userroleFuzzy!= null  and query.userroleFuzzy!=''">
-				 and  userRole like concat('%', #{query.userroleFuzzy}, '%')
+			<if test="query.userRoleFuzzy!= null  and query.userRoleFuzzy!=''">
+				 and  userRole like concat('%', #{query.userRoleFuzzy}, '%')
 			</if>
 			<if test="query.areaNameFuzzy!= null  and query.areaNameFuzzy!=''">
 				 and  area_name like concat('%', #{query.areaNameFuzzy}, '%')
@@ -172,17 +172,17 @@
 			<if test="query.lastLoginTimeEnd!= null and query.lastLoginTimeEnd!=''">
 				 <![CDATA[ and  last_login_time< date_sub(str_to_date(#{query.lastLoginTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
 			</if>
-			<if test="query.createtimeStart!= null and query.createtimeStart!=''">
-				 <![CDATA[ and  createTime>=str_to_date(#{query.createtimeStart}, '%Y-%m-%d') ]]>
+			<if test="query.createTimeStart!= null and query.createTimeStart!=''">
+				 <![CDATA[ and  createTime>=str_to_date(#{query.createTimeStart}, '%Y-%m-%d') ]]>
 			</if>
-			<if test="query.createtimeEnd!= null and query.createtimeEnd!=''">
-				 <![CDATA[ and  createTime< date_sub(str_to_date(#{query.createtimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+			<if test="query.createTimeEnd!= null and query.createTimeEnd!=''">
+				 <![CDATA[ and  createTime< date_sub(str_to_date(#{query.createTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
 			</if>
-			<if test="query.updatetimeStart!= null and query.updatetimeStart!=''">
-				 <![CDATA[ and  updateTime>=str_to_date(#{query.updatetimeStart}, '%Y-%m-%d') ]]>
+			<if test="query.updateTimeStart!= null and query.updateTimeStart!=''">
+				 <![CDATA[ and  updateTime>=str_to_date(#{query.updateTimeStart}, '%Y-%m-%d') ]]>
 			</if>
-			<if test="query.updatetimeEnd!= null and query.updatetimeEnd!=''">
-				 <![CDATA[ and  updateTime< date_sub(str_to_date(#{query.updatetimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+			<if test="query.updateTimeEnd!= null and query.updateTimeEnd!=''">
+				 <![CDATA[ and  updateTime< date_sub(str_to_date(#{query.updateTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
 			</if>
 	 </where>
 	</sql>
@@ -210,10 +210,10 @@
 		</selectKey>
 		 INSERT INTO user_beauty
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="bean.useraccount != null">
+			<if test="bean.userAccount != null">
 				 userAccount,
 			</if>
-			<if test="bean.userpassword != null">
+			<if test="bean.userPassword != null">
 				 userPassword,
 			</if>
 			<if test="bean.email != null">
@@ -225,22 +225,22 @@
 			<if test="bean.personSignature != null">
 				 person_signature,
 			</if>
-			<if test="bean.unionid != null">
+			<if test="bean.unionId != null">
 				 unionId,
 			</if>
-			<if test="bean.mpopenid != null">
+			<if test="bean.mpOpenId != null">
 				 mpOpenId,
 			</if>
-			<if test="bean.username != null">
+			<if test="bean.userName != null">
 				 userName,
 			</if>
-			<if test="bean.useravatar != null">
+			<if test="bean.userAvatar != null">
 				 userAvatar,
 			</if>
-			<if test="bean.userprofile != null">
+			<if test="bean.userProfile != null">
 				 userProfile,
 			</if>
-			<if test="bean.userrole != null">
+			<if test="bean.userRole != null">
 				 userRole,
 			</if>
 			<if test="bean.joinType != null">
@@ -258,22 +258,22 @@
 			<if test="bean.lastLeaveTime != null">
 				 last_leave_time,
 			</if>
-			<if test="bean.createtime != null">
+			<if test="bean.createTime != null">
 				 createTime,
 			</if>
-			<if test="bean.updatetime != null">
+			<if test="bean.updateTime != null">
 				 updateTime,
 			</if>
-			<if test="bean.isdelete != null">
+			<if test="bean.isDelete != null">
 				 isDelete,
 			</if>
 		 </trim>
 		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="bean.useraccount!=null">
-				 #{bean.useraccount},
+			<if test="bean.userAccount!=null">
+				 #{bean.userAccount},
 			</if>
-			<if test="bean.userpassword!=null">
-				 #{bean.userpassword},
+			<if test="bean.userPassword!=null">
+				 #{bean.userPassword},
 			</if>
 			<if test="bean.email!=null">
 				 #{bean.email},
@@ -284,23 +284,23 @@
 			<if test="bean.personSignature!=null">
 				 #{bean.personSignature},
 			</if>
-			<if test="bean.unionid!=null">
-				 #{bean.unionid},
+			<if test="bean.unionId!=null">
+				 #{bean.unionId},
 			</if>
-			<if test="bean.mpopenid!=null">
-				 #{bean.mpopenid},
+			<if test="bean.mpOpenId!=null">
+				 #{bean.mpOpenId},
 			</if>
-			<if test="bean.username!=null">
-				 #{bean.username},
+			<if test="bean.userName!=null">
+				 #{bean.userName},
 			</if>
-			<if test="bean.useravatar!=null">
-				 #{bean.useravatar},
+			<if test="bean.userAvatar!=null">
+				 #{bean.userAvatar},
 			</if>
-			<if test="bean.userprofile!=null">
-				 #{bean.userprofile},
+			<if test="bean.userProfile!=null">
+				 #{bean.userProfile},
 			</if>
-			<if test="bean.userrole!=null">
-				 #{bean.userrole},
+			<if test="bean.userRole!=null">
+				 #{bean.userRole},
 			</if>
 			<if test="bean.joinType!=null">
 				 #{bean.joinType},
@@ -317,14 +317,14 @@
 			<if test="bean.lastLeaveTime!=null">
 				 #{bean.lastLeaveTime},
 			</if>
-			<if test="bean.createtime!=null">
-				 #{bean.createtime},
+			<if test="bean.createTime!=null">
+				 #{bean.createTime},
 			</if>
-			<if test="bean.updatetime!=null">
-				 #{bean.updatetime},
+			<if test="bean.updateTime!=null">
+				 #{bean.updateTime},
 			</if>
-			<if test="bean.isdelete!=null">
-				 #{bean.isdelete},
+			<if test="bean.isDelete!=null">
+				 #{bean.isDelete},
 			</if>
 		 </trim>
 	</insert>
@@ -336,10 +336,10 @@
 			<if test="bean.id != null">
 				 id,
 			</if>
-			<if test="bean.useraccount != null">
+			<if test="bean.userAccount != null">
 				 userAccount,
 			</if>
-			<if test="bean.userpassword != null">
+			<if test="bean.userPassword != null">
 				 userPassword,
 			</if>
 			<if test="bean.email != null">
@@ -351,22 +351,22 @@
 			<if test="bean.personSignature != null">
 				 person_signature,
 			</if>
-			<if test="bean.unionid != null">
+			<if test="bean.unionId != null">
 				 unionId,
 			</if>
-			<if test="bean.mpopenid != null">
+			<if test="bean.mpOpenId != null">
 				 mpOpenId,
 			</if>
-			<if test="bean.username != null">
+			<if test="bean.userName != null">
 				 userName,
 			</if>
-			<if test="bean.useravatar != null">
+			<if test="bean.userAvatar != null">
 				 userAvatar,
 			</if>
-			<if test="bean.userprofile != null">
+			<if test="bean.userProfile != null">
 				 userProfile,
 			</if>
-			<if test="bean.userrole != null">
+			<if test="bean.userRole != null">
 				 userRole,
 			</if>
 			<if test="bean.joinType != null">
@@ -384,13 +384,13 @@
 			<if test="bean.lastLeaveTime != null">
 				 last_leave_time,
 			</if>
-			<if test="bean.createtime != null">
+			<if test="bean.createTime != null">
 				 createTime,
 			</if>
-			<if test="bean.updatetime != null">
+			<if test="bean.updateTime != null">
 				 updateTime,
 			</if>
-			<if test="bean.isdelete != null">
+			<if test="bean.isDelete != null">
 				 isDelete,
 			</if>
 		 </trim>
@@ -398,11 +398,11 @@
 			<if test="bean.id!=null">
 				 #{bean.id},
 			</if>
-			<if test="bean.useraccount!=null">
-				 #{bean.useraccount},
+			<if test="bean.userAccount!=null">
+				 #{bean.userAccount},
 			</if>
-			<if test="bean.userpassword!=null">
-				 #{bean.userpassword},
+			<if test="bean.userPassword!=null">
+				 #{bean.userPassword},
 			</if>
 			<if test="bean.email!=null">
 				 #{bean.email},
@@ -413,23 +413,23 @@
 			<if test="bean.personSignature!=null">
 				 #{bean.personSignature},
 			</if>
-			<if test="bean.unionid!=null">
-				 #{bean.unionid},
+			<if test="bean.unionId!=null">
+				 #{bean.unionId},
 			</if>
-			<if test="bean.mpopenid!=null">
-				 #{bean.mpopenid},
+			<if test="bean.mpOpenId!=null">
+				 #{bean.mpOpenId},
 			</if>
-			<if test="bean.username!=null">
-				 #{bean.username},
+			<if test="bean.userName!=null">
+				 #{bean.userName},
 			</if>
-			<if test="bean.useravatar!=null">
-				 #{bean.useravatar},
+			<if test="bean.userAvatar!=null">
+				 #{bean.userAvatar},
 			</if>
-			<if test="bean.userprofile!=null">
-				 #{bean.userprofile},
+			<if test="bean.userProfile!=null">
+				 #{bean.userProfile},
 			</if>
-			<if test="bean.userrole!=null">
-				 #{bean.userrole},
+			<if test="bean.userRole!=null">
+				 #{bean.userRole},
 			</if>
 			<if test="bean.joinType!=null">
 				 #{bean.joinType},
@@ -446,22 +446,22 @@
 			<if test="bean.lastLeaveTime!=null">
 				 #{bean.lastLeaveTime},
 			</if>
-			<if test="bean.createtime!=null">
-				 #{bean.createtime},
+			<if test="bean.createTime!=null">
+				 #{bean.createTime},
 			</if>
-			<if test="bean.updatetime!=null">
-				 #{bean.updatetime},
+			<if test="bean.updateTime!=null">
+				 #{bean.updateTime},
 			</if>
-			<if test="bean.isdelete!=null">
-				 #{bean.isdelete},
+			<if test="bean.isDelete!=null">
+				 #{bean.isDelete},
 			</if>
 		 </trim>
 		 on DUPLICATE key update 
 		 <trim prefix="" suffix="" suffixOverrides=",">
-			<if test="bean.useraccount!=null">
+			<if test="bean.userAccount!=null">
 				 userAccount = VALUES(userAccount),
 			</if>
-			<if test="bean.userpassword!=null">
+			<if test="bean.userPassword!=null">
 				 userPassword = VALUES(userPassword),
 			</if>
 			<if test="bean.email!=null">
@@ -473,22 +473,22 @@
 			<if test="bean.personSignature!=null">
 				 person_signature = VALUES(person_signature),
 			</if>
-			<if test="bean.unionid!=null">
+			<if test="bean.unionId!=null">
 				 unionId = VALUES(unionId),
 			</if>
-			<if test="bean.mpopenid!=null">
+			<if test="bean.mpOpenId!=null">
 				 mpOpenId = VALUES(mpOpenId),
 			</if>
-			<if test="bean.username!=null">
+			<if test="bean.userName!=null">
 				 userName = VALUES(userName),
 			</if>
-			<if test="bean.useravatar!=null">
+			<if test="bean.userAvatar!=null">
 				 userAvatar = VALUES(userAvatar),
 			</if>
-			<if test="bean.userprofile!=null">
+			<if test="bean.userProfile!=null">
 				 userProfile = VALUES(userProfile),
 			</if>
-			<if test="bean.userrole!=null">
+			<if test="bean.userRole!=null">
 				 userRole = VALUES(userRole),
 			</if>
 			<if test="bean.joinType!=null">
@@ -506,13 +506,13 @@
 			<if test="bean.lastLeaveTime!=null">
 				 last_leave_time = VALUES(last_leave_time),
 			</if>
-			<if test="bean.createtime!=null">
+			<if test="bean.createTime!=null">
 				 createTime = VALUES(createTime),
 			</if>
-			<if test="bean.updatetime!=null">
+			<if test="bean.updateTime!=null">
 				 updateTime = VALUES(updateTime),
 			</if>
-			<if test="bean.isdelete!=null">
+			<if test="bean.isDelete!=null">
 				 isDelete = VALUES(isDelete),
 			</if>
 		 </trim>
@@ -543,25 +543,25 @@
 		 )values
 		 <foreach collection="list" item="item" separator=",">
 			 (
-				 #{item.useraccount},
-				 #{item.userpassword},
+				 #{item.userAccount},
+				 #{item.userPassword},
 				 #{item.email},
 				 #{item.sex},
 				 #{item.personSignature},
-				 #{item.unionid},
-				 #{item.mpopenid},
-				 #{item.username},
-				 #{item.useravatar},
-				 #{item.userprofile},
-				 #{item.userrole},
+				 #{item.unionId},
+				 #{item.mpOpenId},
+				 #{item.userName},
+				 #{item.userAvatar},
+				 #{item.userProfile},
+				 #{item.userRole},
 				 #{item.joinType},
 				 #{item.areaName},
 				 #{item.areaCode},
 				 #{item.lastLoginTime},
 				 #{item.lastLeaveTime},
-				 #{item.createtime},
-				 #{item.updatetime},
-				 #{item.isdelete}
+				 #{item.createTime},
+				 #{item.updateTime},
+				 #{item.isDelete}
 			 )
 		 </foreach>
 	</insert>
@@ -591,25 +591,25 @@
 		 )values
 		 <foreach collection="list" item="item" separator=",">
 			 (
-				 #{item.useraccount},
-				 #{item.userpassword},
+				 #{item.userAccount},
+				 #{item.userPassword},
 				 #{item.email},
 				 #{item.sex},
 				 #{item.personSignature},
-				 #{item.unionid},
-				 #{item.mpopenid},
-				 #{item.username},
-				 #{item.useravatar},
-				 #{item.userprofile},
-				 #{item.userrole},
+				 #{item.unionId},
+				 #{item.mpOpenId},
+				 #{item.userName},
+				 #{item.userAvatar},
+				 #{item.userProfile},
+				 #{item.userRole},
 				 #{item.joinType},
 				 #{item.areaName},
 				 #{item.areaCode},
 				 #{item.lastLoginTime},
 				 #{item.lastLeaveTime},
-				 #{item.createtime},
-				 #{item.updatetime},
-				 #{item.isdelete}
+				 #{item.createTime},
+				 #{item.updateTime},
+				 #{item.isDelete}
 			 )
 		 </foreach>
 			on DUPLICATE key update 
@@ -638,11 +638,11 @@
 	<update id="updateByParam" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserBeautyQuery">
 		 UPDATE user_beauty
  		 <set> 
-			<if test="bean.useraccount != null">
-				 userAccount = #{bean.useraccount},
+			<if test="bean.userAccount != null">
+				 userAccount = #{bean.userAccount},
 			</if>
-			<if test="bean.userpassword != null">
-				 userPassword = #{bean.userpassword},
+			<if test="bean.userPassword != null">
+				 userPassword = #{bean.userPassword},
 			</if>
 			<if test="bean.email != null">
 				 email = #{bean.email},
@@ -653,23 +653,23 @@
 			<if test="bean.personSignature != null">
 				 person_signature = #{bean.personSignature},
 			</if>
-			<if test="bean.unionid != null">
-				 unionId = #{bean.unionid},
+			<if test="bean.unionId != null">
+				 unionId = #{bean.unionId},
 			</if>
-			<if test="bean.mpopenid != null">
-				 mpOpenId = #{bean.mpopenid},
+			<if test="bean.mpOpenId != null">
+				 mpOpenId = #{bean.mpOpenId},
 			</if>
-			<if test="bean.username != null">
-				 userName = #{bean.username},
+			<if test="bean.userName != null">
+				 userName = #{bean.userName},
 			</if>
-			<if test="bean.useravatar != null">
-				 userAvatar = #{bean.useravatar},
+			<if test="bean.userAvatar != null">
+				 userAvatar = #{bean.userAvatar},
 			</if>
-			<if test="bean.userprofile != null">
-				 userProfile = #{bean.userprofile},
+			<if test="bean.userProfile != null">
+				 userProfile = #{bean.userProfile},
 			</if>
-			<if test="bean.userrole != null">
-				 userRole = #{bean.userrole},
+			<if test="bean.userRole != null">
+				 userRole = #{bean.userRole},
 			</if>
 			<if test="bean.joinType != null">
 				 join_type = #{bean.joinType},
@@ -686,14 +686,14 @@
 			<if test="bean.lastLeaveTime != null">
 				 last_leave_time = #{bean.lastLeaveTime},
 			</if>
-			<if test="bean.createtime != null">
-				 createTime = #{bean.createtime},
+			<if test="bean.createTime != null">
+				 createTime = #{bean.createTime},
 			</if>
-			<if test="bean.updatetime != null">
-				 updateTime = #{bean.updatetime},
+			<if test="bean.updateTime != null">
+				 updateTime = #{bean.updateTime},
 			</if>
-			<if test="bean.isdelete != null">
-				 isDelete = #{bean.isdelete},
+			<if test="bean.isDelete != null">
+				 isDelete = #{bean.isDelete},
 			</if>
  		 </set>
  		 <include refid="query_condition" />
@@ -709,11 +709,11 @@
 	<update id="updateById" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.UserBeauty">
 		 UPDATE user_beauty
  		 <set> 
-			<if test="bean.useraccount != null">
-				 userAccount = #{bean.useraccount},
+			<if test="bean.userAccount != null">
+				 userAccount = #{bean.userAccount},
 			</if>
-			<if test="bean.userpassword != null">
-				 userPassword = #{bean.userpassword},
+			<if test="bean.userPassword != null">
+				 userPassword = #{bean.userPassword},
 			</if>
 			<if test="bean.email != null">
 				 email = #{bean.email},
@@ -724,23 +724,23 @@
 			<if test="bean.personSignature != null">
 				 person_signature = #{bean.personSignature},
 			</if>
-			<if test="bean.unionid != null">
-				 unionId = #{bean.unionid},
+			<if test="bean.unionId != null">
+				 unionId = #{bean.unionId},
 			</if>
-			<if test="bean.mpopenid != null">
-				 mpOpenId = #{bean.mpopenid},
+			<if test="bean.mpOpenId != null">
+				 mpOpenId = #{bean.mpOpenId},
 			</if>
-			<if test="bean.username != null">
-				 userName = #{bean.username},
+			<if test="bean.userName != null">
+				 userName = #{bean.userName},
 			</if>
-			<if test="bean.useravatar != null">
-				 userAvatar = #{bean.useravatar},
+			<if test="bean.userAvatar != null">
+				 userAvatar = #{bean.userAvatar},
 			</if>
-			<if test="bean.userprofile != null">
-				 userProfile = #{bean.userprofile},
+			<if test="bean.userProfile != null">
+				 userProfile = #{bean.userProfile},
 			</if>
-			<if test="bean.userrole != null">
-				 userRole = #{bean.userrole},
+			<if test="bean.userRole != null">
+				 userRole = #{bean.userRole},
 			</if>
 			<if test="bean.joinType != null">
 				 join_type = #{bean.joinType},
@@ -757,14 +757,14 @@
 			<if test="bean.lastLeaveTime != null">
 				 last_leave_time = #{bean.lastLeaveTime},
 			</if>
-			<if test="bean.createtime != null">
-				 createTime = #{bean.createtime},
+			<if test="bean.createTime != null">
+				 createTime = #{bean.createTime},
 			</if>
-			<if test="bean.updatetime != null">
-				 updateTime = #{bean.updatetime},
+			<if test="bean.updateTime != null">
+				 updateTime = #{bean.updateTime},
 			</if>
-			<if test="bean.isdelete != null">
-				 isDelete = #{bean.isdelete},
+			<if test="bean.isDelete != null">
+				 isDelete = #{bean.isDelete},
 			</if>
  		 </set>
  		 where id=#{id}
@@ -784,11 +784,11 @@
 	<update id="updateByEmail" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.UserBeauty">
 		 UPDATE user_beauty
  		 <set> 
-			<if test="bean.useraccount != null">
-				 userAccount = #{bean.useraccount},
+			<if test="bean.userAccount != null">
+				 userAccount = #{bean.userAccount},
 			</if>
-			<if test="bean.userpassword != null">
-				 userPassword = #{bean.userpassword},
+			<if test="bean.userPassword != null">
+				 userPassword = #{bean.userPassword},
 			</if>
 			<if test="bean.sex != null">
 				 sex = #{bean.sex},
@@ -796,23 +796,23 @@
 			<if test="bean.personSignature != null">
 				 person_signature = #{bean.personSignature},
 			</if>
-			<if test="bean.unionid != null">
-				 unionId = #{bean.unionid},
+			<if test="bean.unionId != null">
+				 unionId = #{bean.unionId},
 			</if>
-			<if test="bean.mpopenid != null">
-				 mpOpenId = #{bean.mpopenid},
+			<if test="bean.mpOpenId != null">
+				 mpOpenId = #{bean.mpOpenId},
 			</if>
-			<if test="bean.username != null">
-				 userName = #{bean.username},
+			<if test="bean.userName != null">
+				 userName = #{bean.userName},
 			</if>
-			<if test="bean.useravatar != null">
-				 userAvatar = #{bean.useravatar},
+			<if test="bean.userAvatar != null">
+				 userAvatar = #{bean.userAvatar},
 			</if>
-			<if test="bean.userprofile != null">
-				 userProfile = #{bean.userprofile},
+			<if test="bean.userProfile != null">
+				 userProfile = #{bean.userProfile},
 			</if>
-			<if test="bean.userrole != null">
-				 userRole = #{bean.userrole},
+			<if test="bean.userRole != null">
+				 userRole = #{bean.userRole},
 			</if>
 			<if test="bean.joinType != null">
 				 join_type = #{bean.joinType},
@@ -829,14 +829,14 @@
 			<if test="bean.lastLeaveTime != null">
 				 last_leave_time = #{bean.lastLeaveTime},
 			</if>
-			<if test="bean.createtime != null">
-				 createTime = #{bean.createtime},
+			<if test="bean.createTime != null">
+				 createTime = #{bean.createTime},
 			</if>
-			<if test="bean.updatetime != null">
-				 updateTime = #{bean.updatetime},
+			<if test="bean.updateTime != null">
+				 updateTime = #{bean.updateTime},
 			</if>
-			<if test="bean.isdelete != null">
-				 isDelete = #{bean.isdelete},
+			<if test="bean.isDelete != null">
+				 isDelete = #{bean.isDelete},
 			</if>
  		 </set>
  		 where email=#{email}

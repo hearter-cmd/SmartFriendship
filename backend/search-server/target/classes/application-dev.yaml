@@ -1,7 +1,7 @@
 server:
   port: 8102
   servlet:
-    context-path: /api/search-server
+    context-path: /api
 spring:
   application:
     name: search-server
@@ -11,6 +11,9 @@ spring:
     password: ${MYSQL_PASSWORD}
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://192.168.182.128:3306/intelligent
+    hikari:
+      max-lifetime: 1200000
+      maximum-pool-size: 5
   cloud:
     nacos:
       discovery:

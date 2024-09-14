@@ -1,17 +1,18 @@
 package com.yaonie.intelligent_assessment_server.chat_server.service.impl;
 
-import com.yaonie.intelligent_assessment_server.chat_server.entity.enums.PageSize;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.po.UserBeauty;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.query.SimplePage;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserBeautyQuery;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
-import com.yaonie.intelligent_assessment_server.chat_server.mappers.UserBeautyMapper;
-import com.yaonie.intelligent_assessment_server.chat_server.service.UserBeautyService;
-import com.yaonie.intelligent_assessment_server.chat_server.utils.StringTools;
+import java.util.List;
+
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.enums.PageSize;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserBeautyQuery;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.po.UserBeauty;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.query.SimplePage;
+import com.yaonie.intelligent_assessment_server.chat_server.mappers.UserBeautyMapper;
+import com.yaonie.intelligent_assessment_server.chat_server.service.UserBeautyService;
+import com.yaonie.intelligent_assessment_server.chat_server.utils.StringTools;
 
 
 /**

@@ -1,12 +1,13 @@
 package com.yaonie.intelligent_assessment_server.chat_server.entity.po;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Date;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.enums.DateTimePatternEnum;
 import com.yaonie.intelligent_assessment_server.chat_server.utils.DateUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 /**
@@ -23,12 +24,12 @@ public class UserBeauty implements Serializable {
 	/**
 	 * 账号
 	 */
-	private String useraccount;
+	private String userAccount;
 
 	/**
 	 * 密码
 	 */
-	private String userpassword;
+	private String userPassword;
 
 	/**
 	 * 邮箱
@@ -48,32 +49,32 @@ public class UserBeauty implements Serializable {
 	/**
 	 * 微信开放平台id
 	 */
-	private String unionid;
+	private String unionId;
 
 	/**
 	 * 公众号openId
 	 */
-	private String mpopenid;
+	private String mpOpenId;
 
 	/**
 	 * 用户昵称
 	 */
-	private String username;
+	private String userName;
 
 	/**
 	 * 用户头像
 	 */
-	private String useravatar;
+	private String userAvatar;
 
 	/**
 	 * 用户简介
 	 */
-	private String userprofile;
+	private String userProfile;
 
 	/**
 	 * 用户角色：user/admin/ban
 	 */
-	private String userrole;
+	private String userRole;
 
 	/**
 	 * 添加好友的方式 0 : 直接添加; 1 : 同意后添加
@@ -107,19 +108,19 @@ public class UserBeauty implements Serializable {
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date createtime;
+	private Date createTime;
 
 	/**
 	 * 更新时间
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date updatetime;
+	private Date updateTime;
 
 	/**
 	 * 是否删除
 	 */
-	private Integer isdelete;
+	private Integer isDelete;
 
 
 	public void setId(Long id){
@@ -130,20 +131,20 @@ public class UserBeauty implements Serializable {
 		return this.id;
 	}
 
-	public void setUseraccount(String useraccount){
-		this.useraccount = useraccount;
+	public void setUserAccount(String userAccount){
+		this.userAccount = userAccount;
 	}
 
-	public String getUseraccount(){
-		return this.useraccount;
+	public String getUserAccount(){
+		return this.userAccount;
 	}
 
-	public void setUserpassword(String userpassword){
-		this.userpassword = userpassword;
+	public void setUserPassword(String userPassword){
+		this.userPassword = userPassword;
 	}
 
-	public String getUserpassword(){
-		return this.userpassword;
+	public String getUserPassword(){
+		return this.userPassword;
 	}
 
 	public void setEmail(String email){
@@ -170,52 +171,52 @@ public class UserBeauty implements Serializable {
 		return this.personSignature;
 	}
 
-	public void setUnionid(String unionid){
-		this.unionid = unionid;
+	public void setUnionId(String unionId){
+		this.unionId = unionId;
 	}
 
-	public String getUnionid(){
-		return this.unionid;
+	public String getUnionId(){
+		return this.unionId;
 	}
 
-	public void setMpopenid(String mpopenid){
-		this.mpopenid = mpopenid;
+	public void setMpOpenId(String mpOpenId){
+		this.mpOpenId = mpOpenId;
 	}
 
-	public String getMpopenid(){
-		return this.mpopenid;
+	public String getMpOpenId(){
+		return this.mpOpenId;
 	}
 
-	public void setUsername(String username){
-		this.username = username;
+	public void setUserName(String userName){
+		this.userName = userName;
 	}
 
-	public String getUsername(){
-		return this.username;
+	public String getUserName(){
+		return this.userName;
 	}
 
-	public void setUseravatar(String useravatar){
-		this.useravatar = useravatar;
+	public void setUserAvatar(String userAvatar){
+		this.userAvatar = userAvatar;
 	}
 
-	public String getUseravatar(){
-		return this.useravatar;
+	public String getUserAvatar(){
+		return this.userAvatar;
 	}
 
-	public void setUserprofile(String userprofile){
-		this.userprofile = userprofile;
+	public void setUserProfile(String userProfile){
+		this.userProfile = userProfile;
 	}
 
-	public String getUserprofile(){
-		return this.userprofile;
+	public String getUserProfile(){
+		return this.userProfile;
 	}
 
-	public void setUserrole(String userrole){
-		this.userrole = userrole;
+	public void setUserRole(String userRole){
+		this.userRole = userRole;
 	}
 
-	public String getUserrole(){
-		return this.userrole;
+	public String getUserRole(){
+		return this.userRole;
 	}
 
 	public void setJoinType(Integer joinType){
@@ -258,32 +259,32 @@ public class UserBeauty implements Serializable {
 		return this.lastLeaveTime;
 	}
 
-	public void setCreatetime(Date createtime){
-		this.createtime = createtime;
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
 	}
 
-	public Date getCreatetime(){
-		return this.createtime;
+	public Date getCreateTime(){
+		return this.createTime;
 	}
 
-	public void setUpdatetime(Date updatetime){
-		this.updatetime = updatetime;
+	public void setUpdateTime(Date updateTime){
+		this.updateTime = updateTime;
 	}
 
-	public Date getUpdatetime(){
-		return this.updatetime;
+	public Date getUpdateTime(){
+		return this.updateTime;
 	}
 
-	public void setIsdelete(Integer isdelete){
-		this.isdelete = isdelete;
+	public void setIsDelete(Integer isDelete){
+		this.isDelete = isDelete;
 	}
 
-	public Integer getIsdelete(){
-		return this.isdelete;
+	public Integer getIsDelete(){
+		return this.isDelete;
 	}
 
 	@Override
 	public String toString (){
-		return "id:"+(id == null ? "空" : id)+"，账号:"+(useraccount == null ? "空" : useraccount)+"，密码:"+(userpassword == null ? "空" : userpassword)+"，邮箱:"+(email == null ? "空" : email)+"，性别 0:女 1:男  2:未知:"+(sex == null ? "空" : sex)+"，个性签名:"+(personSignature == null ? "空" : personSignature)+"，微信开放平台id:"+(unionid == null ? "空" : unionid)+"，公众号openId:"+(mpopenid == null ? "空" : mpopenid)+"，用户昵称:"+(username == null ? "空" : username)+"，用户头像:"+(useravatar == null ? "空" : useravatar)+"，用户简介:"+(userprofile == null ? "空" : userprofile)+"，用户角色：user/admin/ban:"+(userrole == null ? "空" : userrole)+"，添加好友的方式 0 : 直接添加; 1 : 同意后添加:"+(joinType == null ? "空" : joinType)+"，地区名称:"+(areaName == null ? "空" : areaName)+"，地区编号:"+(areaCode == null ? "空" : areaCode)+"，最后一次登录的时间:"+(lastLoginTime == null ? "空" : DateUtil.format(lastLoginTime, DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern()))+"，最后离开时间:"+(lastLeaveTime == null ? "空" : lastLeaveTime)+"，创建时间:"+(createtime == null ? "空" : DateUtil.format(createtime, DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern()))+"，更新时间:"+(updatetime == null ? "空" : DateUtil.format(updatetime, DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern()))+"，是否删除:"+(isdelete == null ? "空" : isdelete);
+		return "id:"+(id == null ? "空" : id)+"，账号:"+(userAccount == null ? "空" : userAccount)+"，密码:"+(userPassword == null ? "空" : userPassword)+"，邮箱:"+(email == null ? "空" : email)+"，性别 0:女 1:男  2:未知:"+(sex == null ? "空" : sex)+"，个性签名:"+(personSignature == null ? "空" : personSignature)+"，微信开放平台id:"+(unionId == null ? "空" : unionId)+"，公众号openId:"+(mpOpenId == null ? "空" : mpOpenId)+"，用户昵称:"+(userName == null ? "空" : userName)+"，用户头像:"+(userAvatar == null ? "空" : userAvatar)+"，用户简介:"+(userProfile == null ? "空" : userProfile)+"，用户角色：user/admin/ban:"+(userRole == null ? "空" : userRole)+"，添加好友的方式 0 : 直接添加; 1 : 同意后添加:"+(joinType == null ? "空" : joinType)+"，地区名称:"+(areaName == null ? "空" : areaName)+"，地区编号:"+(areaCode == null ? "空" : areaCode)+"，最后一次登录的时间:"+(lastLoginTime == null ? "空" : DateUtil.format(lastLoginTime, DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern()))+"，最后离开时间:"+(lastLeaveTime == null ? "空" : lastLeaveTime)+"，创建时间:"+(createTime == null ? "空" : DateUtil.format(createTime, DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern()))+"，更新时间:"+(updateTime == null ? "空" : DateUtil.format(updateTime, DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern()))+"，是否删除:"+(isDelete == null ? "空" : isDelete);
 	}
 }

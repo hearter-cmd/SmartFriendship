@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,17 +28,32 @@ public class User implements Serializable {
     private Long id;
 
     /**
-     * 用户账号
+     * 账号
      */
     private String userAccount;
 
     /**
-     * 用户密码
+     * 密码
      */
     private String userPassword;
 
     /**
-     * 开放平台id
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 性别 0:女 1:男  2:未知
+     */
+    private Integer sex;
+
+    /**
+     * 个性签名
+     */
+    private String personSignature;
+
+    /**
+     * 微信开放平台id
      */
     private String unionId;
 
@@ -66,14 +83,31 @@ public class User implements Serializable {
     private String userRole;
 
     /**
-     * 创建时间
+     * 添加好友的方式 0 : 直接添加; 1 : 同意后添加
      */
-    private Date createTime;
+    private Integer joinType;
 
     /**
-     * 更新时间
+     * 地区名称
      */
-    private Date updateTime;
+    private String areaName;
+
+    /**
+     * 地区编号
+     */
+    private String areaCode;
+
+    /**
+     * 最后一次登录的时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date lastLoginTime;
+
+    /**
+     * 最后离开时间
+     */
+    private Long lastLeaveTime;
 
     /**
      * 是否删除

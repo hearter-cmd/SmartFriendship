@@ -1,11 +1,11 @@
 package com.yaonie.intelligent_assessment_server.chat_server.service;
 
-import com.yaonie.intelligent_assessment_server.chat_server.entity.po.User;
+import java.util.List;
+
 import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
+import com.yaonie.intelligent_assessment_server.model.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.List;
 
 
 /**
@@ -88,10 +88,5 @@ public interface UserService {
 	 */
 	Integer deleteUserByEmail(String email);
 
-	/**
-	 * 获取当前登录用户信息
-	 * @param request request请求
-	 * @return 用户信息
-	 */
 	User getLoginUser(HttpServletRequest request);
 }

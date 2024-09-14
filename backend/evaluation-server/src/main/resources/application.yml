@@ -1,3 +1,8 @@
+server:
+  address: 0.0.0.0
+  port: 8101
+  servlet:
+    context-path: /api
 # 公共配置文件
 spring:
   main:
@@ -11,12 +16,6 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  # session 配置
-  session:
-    # todo 取消注释开启分布式 session（须先配置 Redis）
-#    store-type: redis
-    # 30 天过期
-    timeout: 2592000
   # 数据库配置
   # todo 需替换配置
   datasource:
@@ -25,6 +24,15 @@ spring:
     username: root #${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
     type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 5
+      max-lifetime: 300000
+  # session 配置
+  session:
+    # todo 取消注释开启分布式 session（须先配置 Redis）
+    store-type: redis
+    # 30 天过期
+    timeout: 2592000
   # Redis 配置
   # todo 需替换配置，然后取消注释
   #    password: 123456
@@ -42,9 +50,10 @@ spring:
   data:
     redis:
       database: 1
-      host: 192.168.182.128
+      host: 1.94.141.32
       port: 6379
       timeout: 5000
+      password: ${MYSQL_PASSWORD}
   cloud:
     nacos:
       discovery:
@@ -90,15 +99,6 @@ spring:
 #    props:
 #      sql-show: true  # 显示SQL语句，方便调试和验证分表规则是否正确
 #    enabled: true
-server:
-  address: 0.0.0.0
-  port: 8101
-  servlet:
-    context-path: /api/evaluation-server
-    # cookie 30 天过期
-    session:
-      cookie:
-        max-age: 2592000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

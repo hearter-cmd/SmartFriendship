@@ -33,11 +33,18 @@
             <artifactId>server-common-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--公共对象模块-->
         <dependency>
             <groupId>com.yaonie.intelligent_assessment_server</groupId>
             <artifactId>server-common-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- https://doc.xiaominfo.com/docs/quick-start#openapi2 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!--OpenFeign公共包-->
         <dependency>
@@ -108,6 +115,18 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>
+        </dependency>
+
+        <!-- https://github.com/ben-manes/caffeine/wiki/Home-zh-CN -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+
+        <!--监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 

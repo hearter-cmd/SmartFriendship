@@ -21,6 +21,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 })
 @MapperScan("com.yaonie.intelligent_assessment_server.springbootinit.mapper")
 @EnableScheduling
+// 开启AOP
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableRedisHttpSession
 @EnableConfigurationProperties({

@@ -1,16 +1,17 @@
 package com.yaonie.intelligent_assessment_server.chat_server.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.po.User;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.ResponseVO;
 import com.yaonie.intelligent_assessment_server.chat_server.service.UserService;
 import com.yaonie.intelligent_assessment_server.common.BaseResponse;
+import com.yaonie.intelligent_assessment_server.common.ResultUtils;
 import com.yaonie.intelligent_assessment_server.feign.evaluation.EvaluationClient;
 import com.yaonie.intelligent_assessment_server.model.dto.app.AppQueryRequest;
-import com.yaonie.intelligent_assessment_server.model.vo.AppVO;
+import com.yaonie.intelligent_assessment_server.model.entity.User;
 import com.yaonie.intelligent_assessment_server.model.vo.UserVO;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,13 @@ public class UserController extends ABaseController{
 
 	@Resource
 	private EvaluationClient evaluationClient;
+
+	@GetMapping("/setSession")
+	@Operation(summary = "设置session")
+	public BaseResponse setSession(HttpServletRequest request) {
+		request.getSession().setAttribute("test", "test");
+		return ResultUtils.success(null);
+	}
 
 	@GetMapping("/test")
 	public BaseResponse<Page<UserVO>> test(HttpServletRequest request) {

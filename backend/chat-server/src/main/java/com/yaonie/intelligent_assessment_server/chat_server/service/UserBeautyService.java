@@ -1,10 +1,10 @@
 package com.yaonie.intelligent_assessment_server.chat_server.service;
 
-import com.yaonie.intelligent_assessment_server.chat_server.entity.po.UserBeauty;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserBeautyQuery;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
-
 import java.util.List;
+
+import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserBeautyQuery;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.po.UserBeauty;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
 
 
 /**

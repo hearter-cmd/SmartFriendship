@@ -1,20 +1,22 @@
 package com.yaonie.intelligent_assessment_server.chat_server.service.impl;
 
+import java.util.List;
+
+import com.yaonie.intelligent_assessment_server.common.ErrorCode;
+import com.yaonie.intelligent_assessment_server.exception.BusinessException;
+import com.yaonie.intelligent_assessment_server.model.entity.User;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
 import com.yaonie.intelligent_assessment_server.chat_server.entity.enums.PageSize;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.po.User;
-import com.yaonie.intelligent_assessment_server.chat_server.entity.query.SimplePage;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.query.UserQuery;
 import com.yaonie.intelligent_assessment_server.chat_server.entity.vo.PaginationResultVO;
+import com.yaonie.intelligent_assessment_server.chat_server.entity.query.SimplePage;
 import com.yaonie.intelligent_assessment_server.chat_server.mappers.UserMapper;
 import com.yaonie.intelligent_assessment_server.chat_server.service.UserService;
 import com.yaonie.intelligent_assessment_server.chat_server.utils.StringTools;
-import com.yaonie.intelligent_assessment_server.common.ErrorCode;
-import com.yaonie.intelligent_assessment_server.exception.BusinessException;
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static com.yaonie.intelligent_assessment_server.constant.UserConstant.USER_LOGIN_STATE;
 
@@ -23,6 +25,7 @@ import static com.yaonie.intelligent_assessment_server.constant.UserConstant.USE
  * 用户 业务接口实现
  */
 @Service("userService")
+@Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Resource
@@ -166,6 +169,7 @@ public class UserServiceImpl implements UserService {
 		// 先判断是否已登录
 		Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
 		User currentUser = (User) userObj;
+		log.info("userObj:{}, sessionId:{}", userObj, request.getSession().getId());
 		if (currentUser == null || currentUser.getId() == null) {
 			throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
 		}

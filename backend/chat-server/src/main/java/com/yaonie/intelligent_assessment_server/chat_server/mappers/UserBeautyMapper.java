@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户 数据库操作接口
+ * @author 77160
  */
 public interface UserBeautyMapper<T,P> extends BaseMapper<T,P> {
 
