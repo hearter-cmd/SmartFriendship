@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          connect-timeout: 1000 # 连接超时时间 1s
+          read-timeout: 1000 # 读取超时时间 1s

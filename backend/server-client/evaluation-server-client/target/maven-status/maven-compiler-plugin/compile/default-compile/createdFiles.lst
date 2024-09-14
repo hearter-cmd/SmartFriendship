@@ -1,0 +1,3 @@
+com\yaonie\intelligent_assessment_server\feign\evaluation\EvaluationClient.class
+com\yaonie\intelligent_assessment_server\feign\config\FeignConfig.class
+com\yaonie\intelligent_assessment_server\feign\config\RetryConfig.class

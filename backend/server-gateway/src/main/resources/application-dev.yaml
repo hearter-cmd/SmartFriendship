@@ -1,0 +1,107 @@
+spring:
+  application:
+    name: server-gateway
+  servlet:
+    session:
+      # todo 取消注释开启分布式 session（须先配置 Redis）
+      store-type: redis
+      # 30 天过期
+      timeout: 2592000
+  data:
+    redis:
+      database: 1
+      host: 1.94.141.32
+      port: 6379
+      timeout: 5000
+      password: ${MYSQL_PASSWORD}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.182.128:8848
+        namespace: 3df35b9e-228b-42c9-bdf8-fc10c45a0875
+    loadbalancer:
+      nacos:
+        enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcookies:
+        path: /
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 跨域请求允许携带Cookie
+            allow-credentials: true
+            # 运行跨域请求方式
+            allowed-methods: "*"
+            # 跨域请求匹配的地址
+            allowed-origin-patterns: "*"
+            allowed-headers: "*"
+            # 跨域检测的有效时间
+            max-age: 36000
+      routes:
+        - id: evaluation-server
+          uri: lb://evaluation-server
+          predicates:
+            - Path=/*/evaluation-server/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: '/api/evaluation-server/(?<segment>.*)'
+                replacement: '/api/${segment}'
+        - id: chat-server
+          uri: lb://chat-server
+          predicates:
+            - Path=/*/chat-server/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: '/api/chat-server/(?<segment>.*)'
+                replacement: '/api/${segment}'
+        - id: search-server
+          uri: lb://search-server
+          predicates:
+            - Path=/*/search-server/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: '/api/search-server/(?<segment>.*)'
+                replacement: '/api/${segment}'
+server:
+  reactive:
+    session:
+      cookie:
+        path: /
+
+knife4j:
+  # 聚合swagger文档
+  gateway:
+    enabled: true
+    # 排序规则(tag/operation排序自4.2.0版本新增)
+    # 取值：alpha-默认排序规则，官方swagger-ui默认实现,order-Knife4j提供的增强排序规则，开发者可扩展x-order，根据数值来自定义排序
+    tags-sorter: order
+    operations-sorter: order
+    # 指定手动配置的模式(默认为该模式)
+    strategy: manual
+    routes:
+      - name: 测评服务
+        # 真实子服务访问url地址-提供OpenAPI的文档
+        url: /api/evaluation-server/v3/api-docs?group=default
+        service-name: evaluation-server
+        # 路由前缀
+        # 兼容OpenAPI3规范在聚合时丢失contextPath属性的异常情况，由开发者自己配置contextPath,Knife4j的前端Ui做兼容处理,与url属性独立不冲突，仅OpenAPI3规范聚合需要，OpenAPI2规范不需要设置此属性,默认为(apiPathPrefix)
+        context-path: /api/evaluation-server
+        order: 2
+      - name: 聊天服务
+        url: /api/chat-server/v3/api-docs?group=default
+        service-name: order-service
+        # 路由前缀
+        context-path: /api/chat-server
+        order: 3
+      - name: 聚合搜索服务
+        url: /api/search-server/v3/api-docs?group=default
+        service-name: search-server
+        # 路由前缀
+        context-path: /api/search-server
+        order: 5

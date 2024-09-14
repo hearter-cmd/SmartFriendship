@@ -4,7 +4,7 @@
 <mapper namespace="com.yaonie.intelligent_assessment_server.chat_server.mappers.UserMapper">
 
 	<!--实体映射-->
-	<resultMap id="base_result_map" type="com.yaonie.intelligent_assessment_server.chat_server.entity.po.User">
+	<resultMap id="base_result_map" type="com.yaonie.intelligent_assessment_server.model.entity.User">
 		<!--id-->
 		<id column="id" property="id"  />
 		<!--账号-->
@@ -204,7 +204,7 @@
 	</select>
 
 	<!-- 插入 （匹配有值的字段）-->
-	<insert id="insert" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.User">
+	<insert id="insert" parameterType="com.yaonie.intelligent_assessment_server.model.entity.User">
 		<selectKey keyProperty="bean.id" resultType="Long" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -330,7 +330,7 @@
 	</insert>
 
 	<!-- 插入或者更新 （匹配有值的字段）-->
-	<insert id="insertOrUpdate" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.User">
+	<insert id="insertOrUpdate" parameterType="com.yaonie.intelligent_assessment_server.model.entity.User">
 		 INSERT INTO user
 		 <trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="bean.id != null">
@@ -519,7 +519,7 @@
 	</insert>
 
 	<!-- 添加 （批量插入）-->
-	<insert id="insertBatch" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.User" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertBatch" parameterType="com.yaonie.intelligent_assessment_server.model.entity.User" useGeneratedKeys="true" keyProperty="id">
 		 INSERT INTO user(
 			 userAccount,
 			 userPassword,
@@ -567,7 +567,7 @@
 	</insert>
 
 	<!-- 批量新增修改 （批量插入）-->
-	<insert id="insertOrUpdateBatch" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.User">
+	<insert id="insertOrUpdateBatch" parameterType="com.yaonie.intelligent_assessment_server.model.entity.User">
 		 INSERT INTO user(
 			 userAccount,
 			 userPassword,
@@ -706,7 +706,7 @@
 	</delete>
 
 	<!-- 根据Id修改-->
-	<update id="updateById" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.User">
+	<update id="updateById" parameterType="com.yaonie.intelligent_assessment_server.model.entity.User">
 		 UPDATE user
  		 <set> 
 			<if test="bean.userAccount != null">
@@ -781,7 +781,7 @@
 	</select>
 
 	<!-- 根据Email修改-->
-	<update id="updateByEmail" parameterType="com.yaonie.intelligent_assessment_server.chat_server.entity.po.User">
+	<update id="updateByEmail" parameterType="com.yaonie.intelligent_assessment_server.model.entity.User">
 		 UPDATE user
  		 <set> 
 			<if test="bean.userAccount != null">
