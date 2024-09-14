@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yaonie.intelligent_assessment_server</groupId>
+        <groupId>com.yaonie.intelligent.assessment.server</groupId>
         <artifactId>server-framwork</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <description>所有模块公共的包</description>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <artifactId>server-common-starter</artifactId>
 

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yaonie.intelligent_assessment_server.springbootinit.mapper.PostFavourMapper">
+<mapper namespace="com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostFavourMapper">
 
-    <resultMap id="BaseResultMap" type="com.yaonie.intelligent_assessment_server.model.entity.PostFavour">
+    <resultMap id="BaseResultMap" type="com.yaonie.intelligent.assessment.server.model.entity.evaluation.PostFavour">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="postId" column="postId" jdbcType="BIGINT"/>
         <result property="userId" column="userId" jdbcType="BIGINT"/>
@@ -18,7 +18,7 @@
     </sql>
 
     <select id="listFavourPostByPage"
-            resultType="com.yaonie.intelligent_assessment_server.model.entity.Post">
+            resultType="com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post">
         select p.*
         from post p
                  join (select postId from post_favour where userId = #{favourUserId}) pf

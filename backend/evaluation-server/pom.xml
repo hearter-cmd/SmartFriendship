@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yaonie.intelligent_assessment_server</groupId>
+        <groupId>com.yaonie.intelligent.assessment.server</groupId>
         <artifactId>springboot-init</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -21,12 +21,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.yaonie.intelligent_assessment_server</groupId>
+            <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.yaonie.intelligent_assessment_server</groupId>
+            <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

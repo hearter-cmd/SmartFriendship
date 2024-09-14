@@ -12,8 +12,22 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://192.168.182.128:3306/intelligent
     hikari:
-      max-lifetime: 1200000
+      max-lifetime: 800000
       maximum-pool-size: 5
+  # 分布式session
+  session:
+    # todo 取消注释开启分布式 session（须先配置 Redis）
+    store-type: redis
+    # 30 天过期
+    # cookie 30 天过期
+    timeout: 2592000
+  data:
+    redis:
+      host: 1.94.141.32
+      port: 6379
+      timeout: 5000
+      database: 8
+      password: ${MYSQL_PASSWORD}
   cloud:
     nacos:
       discovery:
@@ -23,6 +37,11 @@ spring:
     loadbalancer:
       nacos:
         enabled: true
+  elasticsearch:
+    uris:
+      - http://192.168.182.128:9200
+    socket-timeout:
+#    socket-keep-alive: true
 # 接口文档配置
 knife4j:
   enable: true
@@ -33,7 +52,7 @@ knife4j:
       default:
         api-rule: package
         api-rule-resources:
-          - com.yaonie.intelligent_assessment_server.search_server.controller
+          - com.yaonie.intelligent.assessment.server.search_server.controller
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -46,4 +65,4 @@ mybatis-plus:
       logic-not-delete-value: 0
 logging:
   level:
-    com.yaonie.intelligent_assessment_server.search_server.datasource: debug
+    com.yaonie.intelligent.assessment.server.search_server.datasource: debug
