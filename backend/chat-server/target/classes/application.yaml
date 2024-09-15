@@ -6,6 +6,7 @@ server:
     session:
       cookie:
         path: /
+
 spring:
   application:
     name: chat-server
@@ -62,6 +63,10 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.yaonie.intelligent.assessment.server.springbootinit.controller
+wx:
+  mp:
+    app-id: wxf161c2344129151f
+    secret:
 # 项目目录
 project:
   folder: G:\Study\Intelligent-assessment-server\backend\assets

@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 评分结果表接口
  *
+ * @author 77160
  */
 @RestController
 @RequestMapping("/scoringResult")
@@ -51,9 +52,9 @@ public class ScoringResultController {
     /**
      * 创建评分结果表
      *
-     * @param scoringResultAddRequest
-     * @param request
-     * @return
+     * @param scoringResultAddRequest 评分结果添加请求
+     * @param request request请求对象
+     * @return 创建的评分结果的ID
      */
     @PostMapping("/add")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
@@ -80,9 +81,9 @@ public class ScoringResultController {
     /**
      * 删除评分结果表
      *
-     * @param deleteRequest
-     * @param request
-     * @return
+     * @param deleteRequest 删除请求信息
+     * @param request request请求对象
+     * @return 是否删除成功
      */
     @PostMapping("/delete")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
@@ -108,8 +109,8 @@ public class ScoringResultController {
     /**
      * 更新评分结果表（仅管理员可用）
      *
-     * @param scoringResultUpdateRequest
-     * @return
+     * @param scoringResultUpdateRequest 评分结果更新信息
+     * @return 是否更新成功
      */
     @PostMapping("/update")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
@@ -137,8 +138,8 @@ public class ScoringResultController {
     /**
      * 根据 id 获取评分结果表（封装类）
      *
-     * @param id
-     * @return
+     * @param id 用户ID
+     * @return 评分结果表
      */
     @GetMapping("/get/vo")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
@@ -154,8 +155,8 @@ public class ScoringResultController {
     /**
      * 分页获取评分结果表列表（仅管理员可用）
      *
-     * @param scoringResultQueryRequest
-     * @return
+     * @param scoringResultQueryRequest 评分结果表查询请求
+     * @return 评分结果表列表
      */
     @PostMapping("/list/page")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
@@ -171,9 +172,9 @@ public class ScoringResultController {
     /**
      * 分页获取评分结果表列表（封装类）
      *
-     * @param scoringResultQueryRequest
-     * @param request
-     * @return
+     * @param scoringResultQueryRequest 评分结果表查询请求
+     * @param request HttpServletRequest
+     * @return 评分结果表列表
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<ScoringResultVO>> listScoringResultVOByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest,
@@ -192,9 +193,9 @@ public class ScoringResultController {
     /**
      * 分页获取当前登录用户创建的评分结果表列表
      *
-     * @param scoringResultQueryRequest
-     * @param request
-     * @return
+     * @param scoringResultQueryRequest 评分结果表查询请求
+     * @param request HttpServletRequest
+     * @return 评分结果表列表
      */
     @PostMapping("/my/list/page/vo")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
@@ -218,9 +219,9 @@ public class ScoringResultController {
     /**
      * 编辑评分结果表（给用户使用）
      *
-     * @param scoringResultEditRequest
-     * @param request
-     * @return
+     * @param scoringResultEditRequest 评分结果表编辑请求
+     * @param request HttpServletRequest
+     * @return 评分结果表列表
      */
     @PostMapping("/edit")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)

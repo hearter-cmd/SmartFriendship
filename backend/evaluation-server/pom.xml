@@ -29,6 +29,12 @@
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Mybatis -->
         <dependency>

@@ -4,3 +4,4 @@ templates
 getApi
 *.jar
 *.iml
+private.properties
