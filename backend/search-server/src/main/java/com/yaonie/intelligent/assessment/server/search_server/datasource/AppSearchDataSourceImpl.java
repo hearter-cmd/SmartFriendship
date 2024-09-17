@@ -3,9 +3,9 @@ package com.yaonie.intelligent.assessment.server.search_server.datasource;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
-import com.yaonie.intelligent.assessment.server.model.vo.AppVO;
-import com.yaonie.intelligent.assessment.server.model.vo.SearchVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.AppVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.SearchVO;
 import com.yaonie.intelligent.assessment.server.search_server.model.dto.search.SearchRequest;
 import com.yaonie.intelligent.assessment.server.search_server.service.AppService;
 import jakarta.annotation.Resource;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @CreateTime 2024-09-08
  * @ClassName AppSearchDataSourceImpl
  * @Project backend
- * @Description : TODO
+ * @Description : APP搜索数据源, 因为可能有多种数据源
  */
 @Component
 public class AppSearchDataSourceImpl implements SearchDataSource<AppVO> {

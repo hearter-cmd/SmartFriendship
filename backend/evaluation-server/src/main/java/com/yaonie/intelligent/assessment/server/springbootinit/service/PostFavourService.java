@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.PostFavour;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.PostFavour;
 
 /**
  * 帖子收藏服务

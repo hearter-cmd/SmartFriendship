@@ -1,8 +1,8 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.utils;
 
 
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.springbootinit.properties.ZhiPuAi;
 import com.zhipu.oapi.ClientV4;
 import com.zhipu.oapi.Constants;

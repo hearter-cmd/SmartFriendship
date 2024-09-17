@@ -1,8 +1,8 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.PostThumb;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.PostThumb;
 
 /**
  * 帖子点赞服务

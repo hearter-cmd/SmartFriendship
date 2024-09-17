@@ -2,11 +2,11 @@ package com.yaonie.intelligent.assessment.server.springbootinit.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.PostThumb;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.PostThumb;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostThumbMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostThumbService;

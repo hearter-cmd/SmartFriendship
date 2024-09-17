@@ -14,7 +14,7 @@ import org.springframework.data.elasticsearch.config.EnableReactiveElasticsearch
  * @CreateTime 2024-09-05
  * @ClassName SearchApplication
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 @SpringBootApplication(scanBasePackages = {
         "com.yaonie.intelligent.assessment.server"

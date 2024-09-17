@@ -2,7 +2,7 @@ package com.yaonie.intelligent.assessment.server.springbootinit;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.UserAnswer;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.UserAnswer;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserAnswerService;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @CreateTime 2024-08-29
  * @ClassName springbootinit.com.yaonie.intelligent.assessment.server.ShardingJdbcTest
  * @Project backend
- * @Description : TODO
+ * @Description : ShadingJdbc测试类
  */
 @SpringBootTest
 public class ShardingJdbcTest {

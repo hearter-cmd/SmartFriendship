@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @CreateTime 2024-09-08
  * @ClassName MvcConfig
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {

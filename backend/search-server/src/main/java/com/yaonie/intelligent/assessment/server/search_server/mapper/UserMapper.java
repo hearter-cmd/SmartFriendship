@@ -2,7 +2,7 @@ package com.yaonie.intelligent.assessment.server.search_server.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @CreateTime 2024-09-05
  * @ClassName UserMapper
  * @Project backend
- * @Description : TODO
+ * @Description : 用户数据库映射
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {

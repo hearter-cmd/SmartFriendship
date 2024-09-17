@@ -1,6 +1,6 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.mapper;
 
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

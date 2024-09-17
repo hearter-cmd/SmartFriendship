@@ -1,11 +1,11 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
-import com.yaonie.intelligent.assessment.server.common.BaseResponse;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.common.ResultUtils;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.model.dto.postthumb.PostThumbAddRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.postthumb.PostThumbAddRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostThumbService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
 import jakarta.annotation.Resource;

@@ -1,9 +1,9 @@
 package com.yaonie.intelligent.assessment.server.search_server.model.enums;
 
 
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.exception.ThrowUtils;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
 import lombok.Getter;
 
 /**

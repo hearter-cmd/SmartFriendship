@@ -2,7 +2,7 @@ package com.yaonie.intelligent.assessment.server.search_server.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
 
 /**
  * _*_ coding : utf-8 _*_
@@ -12,7 +12,7 @@ import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
  * @CreateTime 2024-09-05
  * @ClassName AppService
  * @Project backend
- * @Description : TODO
+ * @Description : 应用服务
  */
 public interface AppService extends IService<App> {
 }

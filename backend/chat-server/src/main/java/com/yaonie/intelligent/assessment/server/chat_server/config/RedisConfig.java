@@ -14,7 +14,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  * @CreateTime 2024-09-11
  * @ClassName RedisConfig
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 @Configuration
 public class RedisConfig<V> {

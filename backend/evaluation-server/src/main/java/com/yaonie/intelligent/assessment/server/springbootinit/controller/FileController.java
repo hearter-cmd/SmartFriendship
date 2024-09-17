@@ -2,14 +2,14 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 
 import cn.hutool.core.io.FileUtil;
-import com.yaonie.intelligent.assessment.server.common.BaseResponse;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.common.ResultUtils;
-import com.yaonie.intelligent.assessment.server.constant.FileConstant;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.model.dto.file.UploadFileRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.enums.FileUploadBizEnum;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
+import com.yaonie.intelligent.assessment.server.common.model.constant.FileConstant;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.file.UploadFileRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.enums.FileUploadBizEnum;
 import com.yaonie.intelligent.assessment.server.springbootinit.manager.CosManager;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
 import jakarta.annotation.Resource;

@@ -3,7 +3,7 @@ package com.yaonie.intelligent.assessment.feign.encoder;
 import cn.hutool.core.util.TypeUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import feign.FeignException;
 import feign.Response;
 import feign.Util;

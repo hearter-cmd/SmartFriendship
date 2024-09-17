@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaonie.intelligent.assessment.server.chat_server.user.mappers.UserContactMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact">
+		<!--用户ID-->
+		<result column="user_id" property="userId"  />
+		<!--其他用户ID 或 群组ID-->
+		<result column="contact_id" property="contactId"  />
+		<!--联系人类型 (0 : 好友 1 : 群组)-->
+		<result column="contact_type" property="contactType"  />
+		<!--创建时间-->
+		<result column="create_time" property="createTime"  />
+		<!--状态 0:非好友 1:好友 2:已删除好友 3:被好友删除 4:已拉黑好友 5:被好友拉黑-->
+		<result column="status" property="status"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		 user_id,contact_id,contact_type,create_time,status
+		 
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="query.userId != null">
+				 and  user_id = #{query.userId}
+			</if>
+			<if test="query.contactId != null and query.contactId!=''">
+				 and  contact_id = #{query.contactId}
+			</if>
+			<if test="query.contactType != null">
+				 and  contact_type = #{query.contactType}
+			</if>
+			<if test="query.createTime != null and query.createTime!=''">
+				 <![CDATA[ and  create_time=str_to_date(#{query.createTime}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.status != null">
+				 and  status = #{query.status}
+			</if>
+	</sql>
+	<!-- 通用条件列-->
+	<sql id="base_condition">
+	 <where>
+		 <include refid="base_condition_filed" />
+	 </where>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	 <where>
+			<include refid="base_condition_filed" />
+			<if test="query.contactIdFuzzy!= null  and query.contactIdFuzzy!=''">
+				 and  contact_id like concat('%', #{query.contactIdFuzzy}, '%')
+			</if>
+			<if test="query.createTimeStart!= null and query.createTimeStart!=''">
+				 <![CDATA[ and  create_time>=str_to_date(#{query.createTimeStart}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.createTimeEnd!= null and query.createTimeEnd!=''">
+				 <![CDATA[ and  create_time< date_sub(str_to_date(#{query.createTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+			</if>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" /> FROM user_contact <include refid="query_condition" />
+		 <if test="query.orderBy!=null">
+			 order by ${query.orderBy}
+		 </if>
+		 <if test="query.simplePage!=null">
+			 limit #{query.simplePage.start},#{query.simplePage.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1) FROM user_contact <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact">
+		 INSERT INTO user_contact
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+			<if test="bean.contactId != null">
+				 contact_id,
+			</if>
+			<if test="bean.contactType != null">
+				 contact_type,
+			</if>
+			<if test="bean.createTime != null">
+				 create_time,
+			</if>
+			<if test="bean.status != null">
+				 status,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.userId!=null">
+				 #{bean.userId},
+			</if>
+			<if test="bean.contactId!=null">
+				 #{bean.contactId},
+			</if>
+			<if test="bean.contactType!=null">
+				 #{bean.contactType},
+			</if>
+			<if test="bean.createTime!=null">
+				 #{bean.createTime},
+			</if>
+			<if test="bean.status!=null">
+				 #{bean.status},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact">
+		 INSERT INTO user_contact
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+			<if test="bean.contactId != null">
+				 contact_id,
+			</if>
+			<if test="bean.contactType != null">
+				 contact_type,
+			</if>
+			<if test="bean.createTime != null">
+				 create_time,
+			</if>
+			<if test="bean.status != null">
+				 status,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.userId!=null">
+				 #{bean.userId},
+			</if>
+			<if test="bean.contactId!=null">
+				 #{bean.contactId},
+			</if>
+			<if test="bean.contactType!=null">
+				 #{bean.contactType},
+			</if>
+			<if test="bean.createTime!=null">
+				 #{bean.createTime},
+			</if>
+			<if test="bean.status!=null">
+				 #{bean.status},
+			</if>
+		 </trim>
+		 on DUPLICATE key update 
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.userId!=null">
+				 user_id = VALUES(user_id),
+			</if>
+			<if test="bean.contactId!=null">
+				 contact_id = VALUES(contact_id),
+			</if>
+			<if test="bean.contactType!=null">
+				 contact_type = VALUES(contact_type),
+			</if>
+			<if test="bean.createTime!=null">
+				 create_time = VALUES(create_time),
+			</if>
+			<if test="bean.status!=null">
+				 status = VALUES(status),
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact">
+		 INSERT INTO user_contact(
+			 user_id,
+			 contact_id,
+			 contact_type,
+			 create_time,
+			 status
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userId},
+				 #{item.contactId},
+				 #{item.contactType},
+				 #{item.createTime},
+				 #{item.status}
+			 )
+		 </foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact">
+		 INSERT INTO user_contact(
+			 user_id,
+			 contact_id,
+			 contact_type,
+			 create_time,
+			 status
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userId},
+				 #{item.contactId},
+				 #{item.contactType},
+				 #{item.createTime},
+				 #{item.status}
+			 )
+		 </foreach>
+			on DUPLICATE key update 
+			user_id = VALUES(user_id),
+			contact_id = VALUES(contact_id),
+			contact_type = VALUES(contact_type),
+			create_time = VALUES(create_time),
+			status = VALUES(status)
+	</insert>
+
+	<!--多条件修改-->
+	<update id="updateByParam" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.UserContactQuery">
+		 UPDATE user_contact
+ 		 <set> 
+			<if test="bean.userId != null">
+				 user_id = #{bean.userId},
+			</if>
+			<if test="bean.contactId != null">
+				 contact_id = #{bean.contactId},
+			</if>
+			<if test="bean.contactType != null">
+				 contact_type = #{bean.contactType},
+			</if>
+			<if test="bean.createTime != null">
+				 create_time = #{bean.createTime},
+			</if>
+			<if test="bean.status != null">
+				 status = #{bean.status},
+			</if>
+ 		 </set>
+ 		 <include refid="query_condition" />
+	</update>
+
+	<!--多条件删除-->
+	<delete id="deleteByParam">
+		 delete from user_contact
+ 		 <include refid="query_condition" />
+	</delete>
+
+	<!-- 根据UserIdAndContactId修改-->
+	<update id="updateByUserIdAndContactId" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact">
+		 UPDATE user_contact
+ 		 <set> 
+			<if test="bean.contactType != null">
+				 contact_type = #{bean.contactType},
+			</if>
+			<if test="bean.createTime != null">
+				 create_time = #{bean.createTime},
+			</if>
+			<if test="bean.status != null">
+				 status = #{bean.status},
+			</if>
+ 		 </set>
+ 		 where user_id=#{userId} and contact_id=#{contactId}
+	</update>
+
+	<!-- 根据UserIdAndContactId删除-->
+	<delete id="deleteByUserIdAndContactId">
+		delete from user_contact where user_id=#{userId} and contact_id=#{contactId}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByUserIdAndContactId" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from user_contact where user_id=#{userId} and contact_id=#{contactId}
+	</select>
+
+</mapper>

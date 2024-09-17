@@ -2,11 +2,11 @@ package com.yaonie.intelligent.assessment.server.springbootinit.scoring.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.yaonie.intelligent.assessment.server.model.dto.question.QuestionContextDto;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Question;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.ScoringResult;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.UserAnswer;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.QuestionContextDto;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Question;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.ScoringResult;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.UserAnswer;
 import com.yaonie.intelligent.assessment.server.springbootinit.scoring.ScoringStrategy;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.QuestionService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.ScoringResultService;

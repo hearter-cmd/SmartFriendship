@@ -2,9 +2,9 @@ package com.yaonie.intelligent.assessment.feign.evaluation;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yaonie.intelligent.assessment.server.common.BaseResponse;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @CreateTime 2024-09-13
  * @ClassName AppClient
  * @Project backend
- * @Description : TODO
+ * @Description : App的Client
  */
 @FeignClient(value = "evaluation-server", path = "/api/evaluation-server")
 public interface EvaluationClient {

@@ -53,6 +53,7 @@
         <cloud.version>2023.0.3</cloud.version>
         <alibaba.version>2023.0.1.0</alibaba.version>
         <knife4j.version>4.5.0</knife4j.version>
+        <redission.version>3.34.1</redission.version>
     </properties>
 
     <dependencyManagement>

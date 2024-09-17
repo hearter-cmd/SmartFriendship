@@ -3,21 +3,20 @@ package com.yaonie.intelligent.assessment.server.springbootinit.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.constant.CommonConstant;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.model.dto.user.UserQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.enums.UserRoleEnum;
-import com.yaonie.intelligent.assessment.server.model.vo.LoginUserVO;
-import com.yaonie.intelligent.assessment.server.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.enums.UserRoleEnum;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.LoginUserVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.UserMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
 import com.yaonie.intelligent.assessment.server.springbootinit.utils.SqlUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,8 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.yaonie.intelligent.assessment.server.constant.CommonConstant.REDIS_CAPTCHA_PREFIX;
-import static com.yaonie.intelligent.assessment.server.constant.UserConstant.USER_LOGIN_STATE;
+import static com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant.REDIS_CAPTCHA_PREFIX;
+import static com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
 * @author 77160
@@ -176,10 +175,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 先判断是否已登录
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         User currentUser = (User) userObj;
-        log.info("userObj:{}, sessionId:{}", userObj, request.getSession().getId());
         if (currentUser == null || currentUser.getId() == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
+        log.info("SessionId: {}", request.getSession().getId());
         // TODO 从数据库查询（追求性能的话可以注释，直接走缓存）
         long userId = currentUser.getId();
         currentUser = this.getById(userId);
@@ -293,10 +292,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
         return queryWrapper;
-    }
-
-    @Override
-    public LoginUserVO userLoginByMpOpen(WxOAuth2UserInfo userInfo, HttpServletRequest request) {
-        return null;
     }
 }

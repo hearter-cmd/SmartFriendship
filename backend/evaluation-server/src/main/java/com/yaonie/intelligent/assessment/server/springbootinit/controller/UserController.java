@@ -2,33 +2,28 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wf.captcha.SpecCaptcha;
-import com.yaonie.intelligent.assessment.server.common.BaseResponse;
-import com.yaonie.intelligent.assessment.server.common.DeleteRequest;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.common.ResultUtils;
-import com.yaonie.intelligent.assessment.server.constant.UserConstant;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.exception.ThrowUtils;
-import com.yaonie.intelligent.assessment.server.model.dto.user.UserAddRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.user.UserLoginRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.user.UserQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.user.UserRegisterRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.user.UserUpdateMyRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.user.UserUpdateRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.vo.LoginUserVO;
-import com.yaonie.intelligent.assessment.server.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
+import com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserAddRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserLoginRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserRegisterRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserUpdateMyRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserUpdateRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.LoginUserVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
-import com.yaonie.intelligent.assessment.server.springbootinit.config.WxOpenConfig;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
-import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
-import me.chanjar.weixin.mp.api.WxMpService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -37,14 +32,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.yaonie.intelligent.assessment.server.constant.CommonConstant.REDIS_CAPTCHA_PREFIX;
+import static com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant.REDIS_CAPTCHA_PREFIX;
 import static com.yaonie.intelligent.assessment.server.springbootinit.service.impl.UserServiceImpl.SALT;
 
 /**
@@ -61,11 +55,6 @@ public class UserController {
 
     @Resource
     private RedisTemplate<String,String> redisTemplate;
-
-    @Resource
-    private WxOpenConfig wxOpenConfig;
-
-
 
     // region 登录相关
     /**
@@ -138,30 +127,6 @@ public class UserController {
     }
 
     /**
-     * 用户登录（微信开放平台）
-     */
-
-    @GetMapping("/login/wx_open")
-    public BaseResponse<LoginUserVO> userLoginByWxOpen(HttpServletRequest request, HttpServletResponse response,
-            @RequestParam("code") String code) {
-        WxOAuth2AccessToken accessToken;
-        try {
-            WxMpService wxService = wxOpenConfig.getWxMpService();
-            accessToken = wxService.getOAuth2Service().getAccessToken(code);
-            WxOAuth2UserInfo userInfo = wxService.getOAuth2Service().getUserInfo(accessToken, code);
-            String unionId = userInfo.getUnionId();
-            String mpOpenId = userInfo.getOpenid();
-            if (StringUtils.isAnyBlank(unionId, mpOpenId)) {
-                throw new BusinessException(ErrorCode.SYSTEM_ERROR, "登录失败，系统错误");
-            }
-            return ResultUtils.success(userService.userLoginByMpOpen(userInfo, request));
-        } catch (Exception e) {
-            log.error("userLoginByWxOpen error", e);
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "登录失败，系统错误");
-        }
-    }
-
-    /**
      * 用户注销
      *
      * @param request
@@ -189,20 +154,6 @@ public class UserController {
         User user = userService.getLoginUser(request);
         return ResultUtils.success(userService.getLoginUserVO(user));
     }
-
-//    /**
-//     * TODO:
-//     *  微信登录
-//     */
-//    @GetMapping("/wxLogin")
-//    public BaseResponse WxLogin() {
-////        restTemplate.getForEntity()
-//        return null;
-//    }
-
-    // endregion
-
-    // region 增删改查
 
     /**
      * 创建用户

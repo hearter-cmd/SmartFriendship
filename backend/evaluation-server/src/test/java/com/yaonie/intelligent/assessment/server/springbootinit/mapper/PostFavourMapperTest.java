@@ -3,7 +3,7 @@ package com.yaonie.intelligent.assessment.server.springbootinit.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

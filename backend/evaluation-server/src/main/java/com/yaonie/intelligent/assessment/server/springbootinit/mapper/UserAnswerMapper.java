@@ -1,9 +1,9 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yaonie.intelligent.assessment.server.model.dto.statistic.AppAnswerCountDTO;
-import com.yaonie.intelligent.assessment.server.model.dto.statistic.AppAnswerResultCountDTO;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.UserAnswer;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.statistic.AppAnswerCountDTO;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.statistic.AppAnswerResultCountDTO;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.UserAnswer;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

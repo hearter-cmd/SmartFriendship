@@ -5,10 +5,10 @@ import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.json.JSONUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.UserAnswer;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.UserAnswer;
 import com.yaonie.intelligent.assessment.server.springbootinit.scoring.impl.ScoringStrategyConfig;
 import com.yaonie.intelligent.assessment.server.springbootinit.utils.ZhiPuUtils;
 import jakarta.annotation.Resource;
@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @CreateTime 2024-08-19
  * @ClassName ScoringStrategyContext
  * @Project backend
- * @Description : TODO
+ * @Description : 评分策略执行器
  */
 @Service
 public class ScoringStrategyExecutor implements ScoringStrategy{

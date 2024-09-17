@@ -1,22 +1,22 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yaonie.intelligent.assessment.server.common.BaseResponse;
-import com.yaonie.intelligent.assessment.server.common.DeleteRequest;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.common.ResultUtils;
-import com.yaonie.intelligent.assessment.server.common.ReviewRequest;
-import com.yaonie.intelligent.assessment.server.constant.UserConstant;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.exception.ThrowUtils;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppAddRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppEditRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppUpdateRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.enums.ReviewStatusEnum;
-import com.yaonie.intelligent.assessment.server.model.vo.AppVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
+import com.yaonie.intelligent.assessment.server.common.model.common.ReviewRequest;
+import com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppAddRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppEditRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppUpdateRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.enums.ReviewStatusEnum;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.AppVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.QuestionService;
@@ -199,7 +199,6 @@ public class AppController {
         if (appEditRequest == null || appEditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // todo 在此处将实体类和 DTO 进行转换
         App app = new App();
         BeanUtils.copyProperties(appEditRequest, app);
         appService.edit(app, appEditRequest, request);

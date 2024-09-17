@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @CreateTime 2024-08-27
  * @ClassName RxJavaTest
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 public class RxJavaTest {
     @Test

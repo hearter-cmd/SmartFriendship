@@ -5,3 +5,5 @@ getApi
 *.jar
 *.iml
 private.properties
+application-prod.yaml
+application-prod.yml

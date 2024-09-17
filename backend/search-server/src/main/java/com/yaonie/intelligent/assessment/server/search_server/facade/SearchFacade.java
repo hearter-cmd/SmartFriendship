@@ -1,7 +1,7 @@
 package com.yaonie.intelligent.assessment.server.search_server.facade;
 
 
-import com.yaonie.intelligent.assessment.server.model.vo.SearchVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.SearchVO;
 import com.yaonie.intelligent.assessment.server.search_server.datasource.SearchDataSource;
 import com.yaonie.intelligent.assessment.server.search_server.model.dto.search.SearchRequest;
 import com.yaonie.intelligent.assessment.server.search_server.model.enums.SearchTypeEnum;

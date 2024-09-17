@@ -1,6 +1,6 @@
 package com.yaonie.intelligent.assessment.server.chat_server;
 
-
+import com.yaonie.intelligent.assessment.server.chat_server.websocket.handler.CustomHttpRequestHandler;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.handler.NettyWebSocketServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -11,6 +11,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.logging.LogLevel;
@@ -21,7 +22,6 @@ import io.netty.util.concurrent.Future;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Var;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -41,20 +41,21 @@ import java.util.concurrent.TimeUnit;
  * @CreateTime 2024-08-30
  * @ClassName ChatApplication
  * @Project backend
- * @Description : TODO
+ * @Description : 聊天主模块
  */
 // 开启异步
 @EnableAsync
 // 开启事务
 @EnableTransactionManagement
 // 扫描mapper
-@MapperScan("com.yaonie.intelligent.assessment.server.chat_server.mappers")
+@MapperScan("com.yaonie.intelligent.assessment.server.chat_server.user.mappers")
 @SpringBootApplication(scanBasePackages = "com.yaonie.intelligent.assessment.server")
 @EnableFeignClients(basePackages = {
         "com.yaonie.intelligent.assessment.feign.evaluation",
 })
 // 开启AOP
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
+// 开启分布式Session
 @EnableRedisHttpSession
 @Slf4j
 public class ChatApplication {
@@ -106,9 +107,13 @@ public class ChatApplication {
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
                             // 添加心跳
-                            pipeline.addLast(new IdleStateHandler(30, 60, 30, TimeUnit.SECONDS));
+                            pipeline.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.MINUTES));
                             // 添加Http编解码器
                             pipeline.addLast(new HttpServerCodec());
+                            //
+                            pipeline.addLast(new HttpObjectAggregator(65535));
+                            // 自定义Http请求处理器
+                            pipeline.addLast(new CustomHttpRequestHandler());
                             pipeline.addLast(new WebSocketServerProtocolHandler("/"));
                             pipeline.addLast(NETTY_WEB_SOCKET_SERVER_HANDLER);
                         }

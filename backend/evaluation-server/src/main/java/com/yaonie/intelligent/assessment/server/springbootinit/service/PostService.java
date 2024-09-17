@@ -3,9 +3,9 @@ package com.yaonie.intelligent.assessment.server.springbootinit.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yaonie.intelligent.assessment.server.model.dto.post.PostQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post;
-import com.yaonie.intelligent.assessment.server.model.vo.PostVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.post.PostQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.PostVO;
 import jakarta.servlet.http.HttpServletRequest;
 
 

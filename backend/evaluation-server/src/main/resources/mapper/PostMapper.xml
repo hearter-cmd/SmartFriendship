@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostMapper">
 
-    <resultMap id="BaseResultMap" type="com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post">
+    <resultMap id="BaseResultMap" type="com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         createTime,updateTime,isDelete
     </sql>
 
-    <select id="listPostWithDelete" resultType="com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post">
+    <select id="listPostWithDelete" resultType="com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post">
         select *
         from post
         where updateTime >= #{minUpdateTime}

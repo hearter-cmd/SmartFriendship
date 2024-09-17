@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.PostFavour;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.PostFavour;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

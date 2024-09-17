@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
  * @CreateTime 2024-08-19
  * @ClassName ScoringStrategyConfig
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

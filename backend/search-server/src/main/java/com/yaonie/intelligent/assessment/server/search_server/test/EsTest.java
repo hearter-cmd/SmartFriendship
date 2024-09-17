@@ -1,12 +1,13 @@
 package com.yaonie.intelligent.assessment.server.search_server.test;
 
 
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
 import com.yaonie.intelligent.assessment.server.search_server.esdao.AppEsDao;
 import jakarta.annotation.Resource;
-import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Date;
 
 
 /**
@@ -17,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @CreateTime 2024-09-14
  * @ClassName EsTest
  * @Project backend
- * @Description : TODO
+ * @Description : 测试ES
  */
 @SpringBootTest
 public class EsTest {

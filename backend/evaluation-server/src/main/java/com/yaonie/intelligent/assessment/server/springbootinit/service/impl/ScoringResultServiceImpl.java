@@ -5,14 +5,14 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.constant.CommonConstant;
-import com.yaonie.intelligent.assessment.server.exception.ThrowUtils;
-import com.yaonie.intelligent.assessment.server.model.dto.scoringResult.ScoringResultQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.ScoringResult;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.vo.ScoringResultVO;
-import com.yaonie.intelligent.assessment.server.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
+import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.scoringResult.ScoringResultQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.ScoringResult;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.ScoringResultVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.ScoringResultMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.ScoringResultService;
@@ -108,7 +108,6 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
         if (scoringResultQueryRequest == null) {
             return queryWrapper;
         }
-        // todo 从对象中取值
         Long id = scoringResultQueryRequest.getId();
         String resultName = scoringResultQueryRequest.getResultName();
         String resultDesc = scoringResultQueryRequest.getResultDesc();

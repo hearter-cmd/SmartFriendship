@@ -1,9 +1,9 @@
 package com.yaonie.intelligent.assessment.server.search_server.controller;
 
 
-import com.yaonie.intelligent.assessment.server.common.BaseResponse;
-import com.yaonie.intelligent.assessment.server.common.ResultUtils;
-import com.yaonie.intelligent.assessment.server.model.vo.SearchVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.SearchVO;
 import com.yaonie.intelligent.assessment.server.search_server.facade.SearchFacade;
 import com.yaonie.intelligent.assessment.server.search_server.model.dto.search.SearchRequest;
 import jakarta.annotation.Resource;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @CreateTime 2024-09-05
  * @ClassName SearchController
  * @Project backend
- * @Description : TODO
+ * @Description : 搜索操作控制器
  */
 @RestController
 @RequestMapping("/search")

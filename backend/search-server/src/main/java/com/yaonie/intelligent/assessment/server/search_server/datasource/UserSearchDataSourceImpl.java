@@ -3,9 +3,9 @@ package com.yaonie.intelligent.assessment.server.search_server.datasource;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.vo.SearchVO;
-import com.yaonie.intelligent.assessment.server.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.SearchVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.search_server.model.dto.search.SearchRequest;
 import com.yaonie.intelligent.assessment.server.search_server.service.UserService;
 import jakarta.annotation.Resource;

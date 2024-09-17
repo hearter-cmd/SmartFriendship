@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @CreateTime 2024-09-13
  * @ClassName GatewayApplication
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 @SpringBootApplication
 public class GatewayApplication {

@@ -1,6 +1,6 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.service;
 
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

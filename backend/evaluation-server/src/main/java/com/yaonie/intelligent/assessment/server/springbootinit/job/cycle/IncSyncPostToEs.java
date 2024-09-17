@@ -1,7 +1,7 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.job.cycle;
 
 import cn.hutool.core.collection.CollUtil;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Post;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

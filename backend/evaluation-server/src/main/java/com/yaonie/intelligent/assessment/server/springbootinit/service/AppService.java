@@ -3,13 +3,13 @@ package com.yaonie.intelligent.assessment.server.springbootinit.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yaonie.intelligent.assessment.server.common.DeleteRequest;
-import com.yaonie.intelligent.assessment.server.common.ReviewRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppEditRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.app.AppUpdateRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
-import com.yaonie.intelligent.assessment.server.model.vo.AppVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
+import com.yaonie.intelligent.assessment.server.common.model.common.ReviewRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppEditRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.app.AppUpdateRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.AppVO;
 import jakarta.servlet.http.HttpServletRequest;
 
 

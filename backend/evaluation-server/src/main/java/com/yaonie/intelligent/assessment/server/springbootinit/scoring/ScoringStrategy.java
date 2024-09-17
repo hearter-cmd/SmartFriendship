@@ -1,8 +1,8 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.scoring;
 
 
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.UserAnswer;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.UserAnswer;
 
 import java.util.List;
 

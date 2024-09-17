@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @CreateTime 2024-08-29
  * @ClassName RedissionConfig
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 @Configuration
 @Data
@@ -33,7 +33,7 @@ public class RedissonConfig {
         Config config = new Config();
         config.useSingleServer()
                 .setAddress(RedissonConfig.SUFFIX + host + ":" + port)
-                .setDatabase(8)
+                .setDatabase(10)
                 .setPassword(password);
         return Redisson.create(config);
     }

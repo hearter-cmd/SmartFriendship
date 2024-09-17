@@ -2,7 +2,7 @@ package com.yaonie.intelligent.assessment.server.search_server.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @CreateTime 2024-09-05
  * @ClassName AppMapper
  * @Project backend
- * @Description : TODO
+ * @Description : App的数据库映射
  */
 @Mapper
 public interface AppMapper extends BaseMapper<App> {

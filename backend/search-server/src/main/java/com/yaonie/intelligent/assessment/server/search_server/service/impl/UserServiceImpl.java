@@ -2,15 +2,15 @@ package com.yaonie.intelligent.assessment.server.search_server.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.search_server.mapper.UserMapper;
 import com.yaonie.intelligent.assessment.server.search_server.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
-import static com.yaonie.intelligent.assessment.server.constant.UserConstant.USER_LOGIN_STATE;
+import static com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * _*_ coding : utf-8 _*_
@@ -20,7 +20,7 @@ import static com.yaonie.intelligent.assessment.server.constant.UserConstant.USE
  * @CreateTime 2024-09-05
  * @ClassName UserServiceImpl
  * @Project backend
- * @Description : TODO
+ * @Description : User服务实现
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {

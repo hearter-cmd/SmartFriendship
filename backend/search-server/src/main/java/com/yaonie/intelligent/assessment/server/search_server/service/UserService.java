@@ -2,7 +2,7 @@ package com.yaonie.intelligent.assessment.server.search_server.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * @CreateTime 2024-09-05
  * @ClassName UserService
  * @Project backend
- * @Description : TODO
+ * @Description : User服务
  */
 public interface UserService extends IService<User> {
     User getLoginUser(HttpServletRequest request);

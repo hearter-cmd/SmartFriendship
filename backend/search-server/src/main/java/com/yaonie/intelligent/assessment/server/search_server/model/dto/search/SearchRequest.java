@@ -1,7 +1,7 @@
 package com.yaonie.intelligent.assessment.server.search_server.model.dto.search;
 
 
-import com.yaonie.intelligent.assessment.server.model.common.PageRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.common.PageRequest;
 import com.yaonie.intelligent.assessment.server.search_server.model.enums.SearchTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

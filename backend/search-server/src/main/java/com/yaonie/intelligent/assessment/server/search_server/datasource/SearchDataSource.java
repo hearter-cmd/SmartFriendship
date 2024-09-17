@@ -1,7 +1,7 @@
 package com.yaonie.intelligent.assessment.server.search_server.datasource;
 
 
-import com.yaonie.intelligent.assessment.server.model.vo.SearchVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.SearchVO;
 import com.yaonie.intelligent.assessment.server.search_server.model.dto.search.SearchRequest;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @CreateTime 2024-09-08
  * @ClassName SearchDataSource
  * @Project backend
- * @Description : TODO
+ * @Description : 搜索数据源抽象类
  */
 public interface SearchDataSource<T> {
     /**

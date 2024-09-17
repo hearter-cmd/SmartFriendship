@@ -6,7 +6,6 @@ server:
     session:
       cookie:
         path: /
-
 spring:
   application:
     name: chat-server
@@ -22,11 +21,10 @@ spring:
       maximum-pool-size: 5
   # 分布式session
   session:
-    # todo 取消注释开启分布式 session（须先配置 Redis）
     store-type: redis
     # 30 天过期
     # cookie 30 天过期
-    timeout: 2592000
+    timeout: 604800
   data:
     redis:
       host: 1.94.141.32
@@ -51,7 +49,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: false
-  mapper-locations: classpath:/mapper/**/*.xml
+  mapper-locations: classpath:/com/yaonie/intelligent/assessment/server/chat/server/mappers/**/*.xml
 # 接口文档配置
 knife4j:
   enable: true
@@ -65,8 +63,26 @@ knife4j:
           - com.yaonie.intelligent.assessment.server.springbootinit.controller
 wx:
   mp:
-    app-id: wxf161c2344129151f
-    secret:
+    callback: http://404x395b97.vicp.fun
+    use-redis: false
+    redis-config:
+      host: 1.94.141.32
+      port: 6379
+      password: ${MYSQL_PASSWORD}
+    configs: # 多个公众号配置信息
+      - appId: wxf161c2344129151f # 第一个公众号的appid
+        secret: 5a2f80848317270a542b633bb2f92f98 # 公众号的appSecret
+        token: ${WX_TOKEN} # 接口配置里的Token值
+#    callback: ${wx.callback}
+    config-storage:
+      http-client-type: HttpClient
+      key-prefix: wx
+      redis:
+        host: 1.94.141.32
+        port: 6379
+        password: ${MYSQL_PASSWORD}
+        database: 9
+      type: redistemplate
 # 项目目录
 project:
   folder: G:\Study\Intelligent-assessment-server\backend\assets
@@ -79,3 +95,6 @@ admin:
 dev: true
 ws:
   port: 8104
+# 密码加盐
+jwt:
+  slat: 39a4e2262b09439fb23e69f142514b76

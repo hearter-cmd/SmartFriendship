@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
  * @CreateTime 2024-09-12
  * @ClassName BeanConfig
  * @Project backend
- * @Description : TODO
+ * @Description : 
  */
 @Configuration
 public class BeanConfig {

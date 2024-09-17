@@ -5,18 +5,18 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.constant.CommonConstant;
-import com.yaonie.intelligent.assessment.server.exception.ThrowUtils;
-import com.yaonie.intelligent.assessment.server.model.dto.question.AiGenerateQuestionRequest;
-import com.yaonie.intelligent.assessment.server.model.dto.question.QuestionContextDto;
-import com.yaonie.intelligent.assessment.server.model.dto.question.QuestionQueryRequest;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.App;
-import com.yaonie.intelligent.assessment.server.model.entity.evaluation.Question;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.enums.AppTypeEnum;
-import com.yaonie.intelligent.assessment.server.model.vo.QuestionVO;
-import com.yaonie.intelligent.assessment.server.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
+import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.AiGenerateQuestionRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.QuestionContextDto;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.QuestionQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Question;
+import com.yaonie.intelligent.assessment.server.common.model.model.enums.AppTypeEnum;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.QuestionVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.QuestionMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.QuestionService;
@@ -64,7 +64,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     @Override
     public void validQuestion(Question question, boolean add) {
         ThrowUtils.throwIf(question == null, ErrorCode.PARAMS_ERROR);
-        // todo 从对象中取值
         String questionContent = question.getQuestionContent();
         Long appId = question.getAppId();
         Long userId = question.getUserId();

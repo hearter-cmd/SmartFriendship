@@ -1,9 +1,9 @@
 package com.yaonie.intelligent.assessment.server.search_server.aop;
 
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
-import com.yaonie.intelligent.assessment.server.model.entity.User;
-import com.yaonie.intelligent.assessment.server.model.enums.UserRoleEnum;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.enums.UserRoleEnum;
 import com.yaonie.intelligent.assessment.server.search_server.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.search_server.service.UserService;
 import jakarta.annotation.Resource;

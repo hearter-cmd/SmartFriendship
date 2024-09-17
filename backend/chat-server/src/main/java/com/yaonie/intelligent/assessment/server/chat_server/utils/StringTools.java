@@ -1,6 +1,6 @@
 package com.yaonie.intelligent.assessment.server.chat_server.utils;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

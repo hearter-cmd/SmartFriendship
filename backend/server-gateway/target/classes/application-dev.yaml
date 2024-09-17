@@ -3,10 +3,9 @@ spring:
     name: server-gateway
   servlet:
     session:
-      # todo 取消注释开启分布式 session（须先配置 Redis）
       store-type: redis
       # 30 天过期
-      timeout: 2592000
+      timeout: 604800
   data:
     redis:
       database: 1
@@ -40,12 +39,15 @@ spring:
             allowed-headers: "*"
             # 跨域检测的有效时间
             max-age: 36000
+#      default-filters:
+#        - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
       routes:
         - id: evaluation-server
           uri: lb://evaluation-server
           predicates:
             - Path=/*/evaluation-server/**
           filters:
+            - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
             - name: RewritePath
               args:
                 regexp: '/api/evaluation-server/(?<segment>.*)'
@@ -55,6 +57,7 @@ spring:
           predicates:
             - Path=/*/chat-server/**
           filters:
+            - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
             - name: RewritePath
               args:
                 regexp: '/api/chat-server/(?<segment>.*)'
@@ -64,10 +67,20 @@ spring:
           predicates:
             - Path=/*/search-server/**
           filters:
+            - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
             - name: RewritePath
               args:
                 regexp: '/api/search-server/(?<segment>.*)'
                 replacement: '/api/${segment}'
+        - id: websocket-server
+          uri: ws://127.0.0.1:8105
+          predicates:
+            - Path=/ws
+          filters:
+            - name: RewritePath
+              args:
+                regexp: '/ws/(?<segment>.*)'
+                replacement: '/${segment}'
 server:
   reactive:
     session:

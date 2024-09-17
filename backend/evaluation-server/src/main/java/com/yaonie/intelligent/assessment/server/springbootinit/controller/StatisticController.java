@@ -1,12 +1,12 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 
-import com.yaonie.intelligent.assessment.server.common.BaseResponse;
-import com.yaonie.intelligent.assessment.server.common.ErrorCode;
-import com.yaonie.intelligent.assessment.server.common.ResultUtils;
-import com.yaonie.intelligent.assessment.server.exception.ThrowUtils;
-import com.yaonie.intelligent.assessment.server.model.dto.statistic.AppAnswerCountDTO;
-import com.yaonie.intelligent.assessment.server.model.dto.statistic.AppAnswerResultCountDTO;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
+import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.statistic.AppAnswerCountDTO;
+import com.yaonie.intelligent.assessment.server.common.model.model.dto.statistic.AppAnswerResultCountDTO;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.UserAnswerMapper;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
