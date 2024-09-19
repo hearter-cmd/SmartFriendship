@@ -4,8 +4,6 @@ import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.Us
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import org.apache.ibatis.annotations.Param;
 
-import javax.management.Query;
-
 /**
  * 用户 数据库操作接口
  * @author 武春利

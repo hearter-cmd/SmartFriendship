@@ -70,7 +70,7 @@ public class WXMsgServiceImpl implements WXMsgService {
         // 如果已经存储过登录信息了，则直接返回, 如果名字为空则证明它没有授权, 也就没有登录
         if (Objects.nonNull(userInfo) && StringUtils.isNoneBlank(userInfo.getUserName())) {
             webSocketService.scanLoginSuccess(code, userInfo.getId());
-            return null;
+            return TextBuilder.build("登录成功!", wxMessage);
         }
         //user为空先注册,手动生成,以保存openId
         if (Objects.isNull(userInfo)) {

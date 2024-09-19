@@ -1,9 +1,6 @@
 package com.yaonie.intelligent.assessment.server.chat_server.common.enums;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * _*_ coding : utf-8 _*_
  *

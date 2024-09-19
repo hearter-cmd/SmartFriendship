@@ -271,13 +271,19 @@ declare namespace API {
   };
 
   type LoginUserVO = {
-    createTime?: string;
-    id?: number;
-    updateTime?: string;
-    userAvatar?: string;
+    id?: string; // 注意：在TypeScript中，Long类型通常转换为number，除非你需要处理非常大的数字
+    userAccount?: string;
+    email?: string;
+    sex?: number;
+    personSignature?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
+    areaName?: string;
+    lastLoginTime?: string; // TypeScript中的Date类型与JavaScript相同
+    lastLeaveTime?: number; // 在TypeScript中，Long类型通常转换为number
+    createTime?: string;
   };
 
   type Option = {

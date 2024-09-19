@@ -3,7 +3,6 @@ package com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.Date;
 
@@ -21,7 +20,6 @@ import java.util.Date;
 @Builder
 public class WSLoginSuccess {
     private String id;
-    private String token;
     private String userName;
     private String userAvatar;
     private String userRole;

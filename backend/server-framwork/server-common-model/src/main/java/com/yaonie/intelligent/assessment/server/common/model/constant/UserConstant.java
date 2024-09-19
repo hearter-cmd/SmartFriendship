@@ -11,6 +11,11 @@ public interface UserConstant {
      */
     String USER_LOGIN_STATE = "user_login";
 
+    /**
+     * 用户IP键
+     */
+    String USER_IP = "user_ip";
+
     //  region 权限
 
     /**

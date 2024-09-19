@@ -1,4 +1,5 @@
 package com.yaonie.intelligent.assessment.server.chat_server.utils;
+
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 
@@ -6,7 +7,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-
+/**
+ * @author 77160
+ */
 public class StringTools {
 
     public static void checkParam(Object param) {
@@ -17,7 +20,7 @@ public class StringTools {
                 String methodName = "get" + StringTools.upperCaseFirstLetter(field.getName());
                 Method method = param.getClass().getMethod(methodName);
                 Object object = method.invoke(param);
-                if (object != null && object instanceof java.lang.String && !StringTools.isEmpty(object.toString())
+                if (object instanceof String && !StringTools.isEmpty(object.toString())
                         || object != null && !(object instanceof java.lang.String)) {
                     notEmpty = true;
                     break;
@@ -46,12 +49,11 @@ public class StringTools {
     }
 
     public static boolean isEmpty(String str) {
-        if (null == str || "".equals(str) || "null".equals(str) || "\u0000".equals(str)) {
+        if (null == str || str.isEmpty() || "null".equals(str) || "\u0000".equals(str)) {
             return true;
-        } else if ("".equals(str.trim())) {
-            return true;
+        } else {
+            return str.trim().isEmpty();
         }
-        return false;
     }
 
     public static Long getGroupId() {

@@ -116,6 +116,10 @@ ais:
     tag: true
     temperature: 0.95
     apiKey: ${ZHIPU_API_KEY}
+# 获取IP地址所属地的工具
+area:
+  gaoDe:
+    key: ${GAODE_KEY}
 #logging:
 #  level:
 #    root: debug

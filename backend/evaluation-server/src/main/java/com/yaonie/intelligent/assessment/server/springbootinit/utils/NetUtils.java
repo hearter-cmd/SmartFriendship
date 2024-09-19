@@ -1,7 +1,12 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.utils;
 
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.area.GaoDeArea;
 import io.micrometer.core.instrument.util.NamedThreadFactory;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
@@ -16,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 网络工具类
  */
+@Slf4j
 public class NetUtils {
     /**
      * 获取IP归属地的线程池
@@ -105,19 +111,36 @@ public class NetUtils {
      * @param ip ip地址
      * @return IpDetail
      */
-//    public static IpDetail getIpDetail(String ip) {
-//        for (int i = 0; i < 3; i++) {
-//            IpDetail ipDetail = getIpDetailOrNull(ip);
-//            if (Objects.nonNull(ipDetail)) {
-//                return ipDetail;
-//            }
-//
-//            try {
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+    public static GaoDeArea getIpDetail(String ip) {
+        for (int i = 0; i < 3; i++) {
+            GaoDeArea ipDetail = getIpAreaByGaoDe(ip);
+            if (Objects.nonNull(ipDetail)) {
+                return ipDetail;
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private static final String URL = "https://restapi.amap.com/v3/ip?ip=%s&output=json&key=%s";
+
+    @Value("${area.gaoDe.key}")
+    private static String key;
+
+    public static GaoDeArea getIpAreaByGaoDe(String ip) {
+        try {
+            String url = String.format(URL, ip, key);
+            String res = HttpUtil.get(url);
+            GaoDeArea area = JSONUtil.toBean(res, GaoDeArea.class);
+            return area;
+        } catch (Exception e) {
+            log.info("evaluation-server-解析ip地址失败, ip: {}", ip);
+            return null;
+        }
+    }
 
 }

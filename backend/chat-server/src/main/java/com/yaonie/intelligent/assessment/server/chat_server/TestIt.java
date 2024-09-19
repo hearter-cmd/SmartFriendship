@@ -2,10 +2,7 @@ package com.yaonie.intelligent.assessment.server.chat_server;
 
 
 import com.yaonie.intelligent.assessment.server.chat_server.user.controller.UserController;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.UserQuery;
-import com.yaonie.intelligent.assessment.server.chat_server.user.mappers.UserMapper;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.UserService;
-import com.yaonie.intelligent.assessment.server.chat_server.utils.JwtUtil;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -14,7 +11,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Base64;
-import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * _*_ coding : utf-8 _*_
@@ -46,11 +43,18 @@ public class TestIt {
         lock.unlock();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 //        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE4MzQyNTYxMjM0ODIzNzAwNTMsImNyZWF0ZVRpbWUiOjE3MjY1MTU1MTZ9.TYvFJKZ2K1Gp3N9vpf6_vhl0grKFm1Ji7O8H3e7ZDbw";
 //        System.out.println(JwtUtil.getUidOrNull(token));
-        String sessionId = "YTNiMWQ4ZGItMmVmZC00Mzk0LWIxNWYtZWVkZjkxODViZDZh";
-        byte[] decodedBytes = Base64.getDecoder().decode(sessionId);;
-        System.out.println("decodedBytes = " + new String(decodedBytes));
+
+        //region 测试SESSION加密
+        String sessionId = "ec83a43e-2375-4f55-918a-8544b864fd90";
+//        byte[] decodedBytes = Base64.getDecoder().decode(sessionId);;
+//        System.out.println("decodedBytes = " + new String(decodedBytes));
+        byte[] encode = Base64.getEncoder().encode(sessionId.getBytes());
+        System.out.println("encode = " + new String(encode));
+        //endregion
+
+//        System.out.println(IpUtil.getIpAreaByGaoDe("106.119.59.252"));
     }
 }

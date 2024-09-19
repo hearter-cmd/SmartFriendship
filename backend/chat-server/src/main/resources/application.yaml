@@ -83,6 +83,8 @@ wx:
         password: ${MYSQL_PASSWORD}
         database: 9
       type: redistemplate
+
+# 自定义配置部分
 # 项目目录
 project:
   folder: G:\Study\Intelligent-assessment-server\backend\assets
@@ -98,3 +100,7 @@ ws:
 # 密码加盐
 jwt:
   slat: 39a4e2262b09439fb23e69f142514b76
+# 获取IP地址所属地的工具
+area:
+  gaoDe:
+    key: ${GAODE_KEY}

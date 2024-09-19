@@ -2,6 +2,7 @@ package com.yaonie.intelligent.assessment.server.common.model.model.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,9 +15,29 @@ import java.util.Date;
 public class LoginUserVO implements Serializable {
 
     /**
-     * 用户 id
+     * id
      */
     private Long id;
+
+    /**
+     * 账号
+     */
+    private String userAccount;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 性别 0:女 1:男  2:未知
+     */
+    private Integer sex;
+
+    /**
+     * 个性签名
+     */
+    private String personSignature;
 
     /**
      * 用户昵称
@@ -39,14 +60,25 @@ public class LoginUserVO implements Serializable {
     private String userRole;
 
     /**
+     * 地区名称
+     */
+    private String areaName;
+
+    /**
+     * 最后一次登录的时间
+     */
+    private Date lastLoginTime;
+
+    /**
+     * 最后离开时间
+     */
+    private Long lastLeaveTime;
+
+    /**
      * 创建时间
      */
     private Date createTime;
 
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
+    @Serial
     private static final long serialVersionUID = 1L;
 }

@@ -35,29 +35,22 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * _*_ coding : utf-8 _*_
- *
- * @Date 2024-08-30 19:33
  * @Author 武春利
- * @CreateTime 2024-08-30
- * @ClassName ChatApplication
- * @Project backend
+ * @CreateTime 2024-08-30 19:33
  * @Description : 聊天主模块
  */
+@Slf4j
 // 开启异步
 @EnableAsync
-// 开启事务
-@EnableTransactionManagement
-// 扫描mapper
-@MapperScan("com.yaonie.intelligent.assessment.server.chat_server.user.mappers")
-@SpringBootApplication(scanBasePackages = "com.yaonie.intelligent.assessment.server")
-@EnableFeignClients(basePackages = {
-        "com.yaonie.intelligent.assessment.feign.evaluation",
-})
 // 开启AOP
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 // 开启分布式Session
 @EnableRedisHttpSession
-@Slf4j
+// 开启事务
+@EnableTransactionManagement
+@MapperScan("com.yaonie.intelligent.assessment.server.chat_server.user.mappers")
+@SpringBootApplication(scanBasePackages = "com.yaonie.intelligent.assessment.server")
+@EnableFeignClients(basePackages = {"com.yaonie.intelligent.assessment.feign.evaluation"})
 public class ChatApplication {
     public static void main(String[] args) {
         SpringApplication.run(ChatApplication.class, args);
@@ -114,7 +107,6 @@ public class ChatApplication {
                             pipeline.addLast(new HttpObjectAggregator(65535));
                             // 自定义Http请求处理器
                             pipeline.addLast(new CustomHttpRequestHandler());
-                            pipeline.addLast(new WebSocketServerProtocolHandler("/"));
                             pipeline.addLast(NETTY_WEB_SOCKET_SERVER_HANDLER);
                         }
                     });

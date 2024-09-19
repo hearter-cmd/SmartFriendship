@@ -1,4 +1,4 @@
-package com.yaonie.intelligent.assessment.server.chat_server.config;
+package com.yaonie.intelligent.assessment.server.chat_server.common.config;
 
 
 import com.yaonie.intelligent.assessment.server.chat_server.thread.CustomThreadFactory;

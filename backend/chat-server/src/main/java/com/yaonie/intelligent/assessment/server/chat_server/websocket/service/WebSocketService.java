@@ -1,8 +1,10 @@
 package com.yaonie.intelligent.assessment.server.chat_server.websocket.service;
 
 
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import io.netty.channel.Channel;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.springframework.session.Session;
 
 /**
  * _*_ coding : utf-8 _*_
@@ -16,6 +18,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  */
 public interface WebSocketService {
     void addChannel(Channel channel);
+
     void handleWxUserLogin(Channel channel) throws WxErrorException;
 
     void remove(Channel channel);
@@ -27,5 +30,7 @@ public interface WebSocketService {
      */
     void scanLoginSuccess(Integer code, Long openid);
 
-    void authorize(Channel channel, String data);
+    void authorize(Channel channel);
+
+    void loginSuccess(Channel channel, User userInfo, Session session);
 }

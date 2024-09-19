@@ -10,6 +10,7 @@ import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSMsgMark;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSMsgRecall;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSOlineOfflineNotify;
+import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSSetSession;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -38,7 +39,8 @@ public enum WSRespTypeEnum {
     MARK( 8, WSMsgMark.class),
     RECALL( 9, WSMsgRecall.class),
     APPLY( 10, WSFriendApply.class),
-    MEMBER_CHANGE( 11, WSMemberChange.class);
+    MEMBER_CHANGE( 11, WSMemberChange.class),
+    SET_SESSION(12, WSSetSession.class);
 
     private final Integer type;
     private final Class<?> dataClass;

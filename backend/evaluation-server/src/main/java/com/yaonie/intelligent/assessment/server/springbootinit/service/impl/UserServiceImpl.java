@@ -8,11 +8,13 @@ import com.yaonie.intelligent.assessment.server.common.model.constant.CommonCons
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserQueryRequest;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.area.GaoDeArea;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.UserRoleEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.LoginUserVO;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.UserMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.server.springbootinit.utils.NetUtils;
 import com.yaonie.intelligent.assessment.server.springbootinit.utils.SqlUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -127,8 +129,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             log.info("user login failed, userAccount cannot match userPassword");
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在或密码错误");
         }
-        // 3. 记录用户的登录态
+
+        // 3. 获取用户IP以及地址
+        String ipAddress = NetUtils.getIpAddress(request);
+        GaoDeArea ipDetail = NetUtils.getIpDetail(ipAddress);
+        User newUser = new User();
+        newUser.setId(user.getId());
+        if (ipDetail != null && "OK".equals(ipDetail.getInfo())) {
+            newUser.setAreaName(ipDetail.getProvince());
+            newUser.setAreaCode(ipDetail.getAdcode());
+            updateById(newUser);
+        }
+        user.setAreaName(newUser.getAreaName());
+        user.setAreaCode(newUser.getAreaCode());
+        // 5. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
+        // 6. 返回
         return this.getLoginUserVO(user);
     }
 

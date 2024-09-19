@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author 77160
+ */
 public class DateUtil {
 
     private static final Object lockObj = new Object();

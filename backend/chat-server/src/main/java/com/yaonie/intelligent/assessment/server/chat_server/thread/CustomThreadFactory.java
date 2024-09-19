@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadFactory;
  * @CreateTime 2024-09-17
  * @ClassName CustomThreadFactory
  * @Project backend
- * @Description : TODO
+ * @Description : 装饰器模式, 线程工厂
  */
 @AllArgsConstructor
 public class CustomThreadFactory implements ThreadFactory {

@@ -15,5 +15,5 @@ import lombok.Data;
  */
 @Data
 public class WSChannelDTO {
-    private String uid;
+    private Long uid;
 }

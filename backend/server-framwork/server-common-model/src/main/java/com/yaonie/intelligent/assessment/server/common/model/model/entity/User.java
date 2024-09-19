@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.micrometer.common.util.StringUtils;
 import lombok.Data;
 import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -97,6 +98,9 @@ public class User implements Serializable {
     @Transient
     private Integer joinType;
 
+    @TableField(value = "ip")
+    private String ip;
+
     /**
      * 地区名称
      */
@@ -148,4 +152,12 @@ public class User implements Serializable {
     @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public void refreshIp(String ip) {
+        if (StringUtils.isBlank(this.ip)) {
+            // 第一次注册保存ip
+            this.ip = ip;
+        }
+        this.setLastLoginTime(new Date());
+    }
 }

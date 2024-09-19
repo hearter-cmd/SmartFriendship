@@ -1,11 +1,13 @@
 package com.yaonie.intelligent.assessment.server.chat_server.websocket.adepter;
 
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.enums.WSRespTypeEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSBaseResponse;
-import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSLoginSuccess;
+import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSSetSession;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
@@ -37,23 +39,22 @@ public class WebSocketAdepter {
         channel.writeAndFlush(textWebSocketFrame);
     }
 
-    public static void sendWSLoginSuccessMsg(Channel channel, User userInfo, String token) {
-        WSLoginSuccess loginSuccess = fillUserInfo(userInfo);
+    public static void sendWSLoginSuccessMsg(Channel channel, User userInfo) {
+        UserVO loginSuccess = fillUserInfo(userInfo);
         sendWSTextMsg(channel, WSRespTypeEnum.LOGIN_SUCCESS, loginSuccess);
     }
 
-    public static void sendAuthorizeSuccessMsg(Channel channel, User userInfo) {
-        sendWSTextMsg(channel, WSRespTypeEnum.LOGIN_SUCCESS, userInfo);
+    public static void sendUnAuthorizeSuccessMsg(Channel channel, String errorMessage) {
+        sendWSTextMsg(channel, WSRespTypeEnum.INVALIDATE_TOKEN, errorMessage);
     }
 
-    private static WSLoginSuccess fillUserInfo(User userInfo) {
-        return WSLoginSuccess.builder()
-                .userName(userInfo.getUserName())
-                .userRole(userInfo.getUserRole())
-                .userProfile(userInfo.getUserProfile())
-                .userAvatar(userInfo.getUserAvatar())
-                .createTime(userInfo.getCreateTime())
-                .updateTime(userInfo.getUpdateTime())
-                .build();
+    private static UserVO fillUserInfo(User userInfo) {
+        UserVO userVO = new UserVO();
+        BeanUtil.copyProperties(userInfo, userVO);
+        return userVO;
+    }
+
+    public static void sendNewSessionId(Channel channel, String sessionId) {
+        sendWSTextMsg(channel, WSRespTypeEnum.SET_SESSION, new WSSetSession(sessionId));
     }
 }

@@ -13,6 +13,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -112,7 +113,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
             }break;
             case AUTHORIZE:{
                 // 登录认证返回的data就是token
-                webSocketService.authorize(ctx.channel(), request.getData());
+                webSocketService.authorize(ctx.channel());
             }break;
             case HEARTBEAT: {
 
@@ -122,6 +123,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
             }break;
         }
         System.out.println(text);
+        ReferenceCountUtil.release(msg);
 //        super.channelRead(ctx, msg);
     }
 
