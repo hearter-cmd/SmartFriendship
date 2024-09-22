@@ -1,7 +1,7 @@
 package com.yaonie.intelligent.assessment.server.chat_server.common.config;
 
 
-import com.yaonie.intelligent.assessment.server.chat_server.thread.CustomThreadFactory;
+import com.yaonie.intelligent.assessment.server.chat_server.common.thread.CustomThreadFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

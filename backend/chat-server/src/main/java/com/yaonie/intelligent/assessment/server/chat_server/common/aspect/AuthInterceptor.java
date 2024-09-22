@@ -1,11 +1,11 @@
-package com.yaonie.intelligent.assessment.server.springbootinit.aop;
+package com.yaonie.intelligent.assessment.server.chat_server.common.aspect;
 
+import com.yaonie.intelligent.assessment.server.chat_server.common.annotation.AuthCheck;
+import com.yaonie.intelligent.assessment.server.chat_server.user.service.UserService;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.UserRoleEnum;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;

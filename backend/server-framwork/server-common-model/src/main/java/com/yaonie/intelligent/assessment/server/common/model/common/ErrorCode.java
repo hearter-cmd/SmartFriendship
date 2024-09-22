@@ -15,7 +15,8 @@ public enum ErrorCode {
     SYSTEM_ERROR(50000, "系统内部异常"),
     OPERATION_ERROR(50001, "操作失败"),
     GROUP_MAX_ERROR(50002, "群组数量上限"),
-    FEIGN_REQUEST(40001, "伪装请求!!!");
+    FEIGN_REQUEST(40001, "伪装请求!!!"),
+    MESSAGE_IS_EMPTY(60000, "消息为空");
 
     /**
      * 状态码

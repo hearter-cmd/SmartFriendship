@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -286,7 +287,7 @@ public class QuestionController {
      */
     @GetMapping("/ai/generate/sse")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
-    public SseEmitter addQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest, Boolean isVip, HttpServletRequest request) {
+    public SseEmitter generateQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest, Boolean isVip, HttpServletRequest request) {
         ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
         SseEmitter sseEmitter = new SseEmitter(0L);
 

@@ -2,12 +2,13 @@ package com.yaonie.intelligent.assessment.server.chat_server.websocket.adepter;
 
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSONUtil;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.enums.WSRespTypeEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSBaseResponse;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp.WSSetSession;
+import com.yaonie.intelligent.assessment.server.chat_server.websocket.utils.NettyUtil;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.util.JsonUtils;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
@@ -31,7 +32,7 @@ public class WebSocketAdepter {
 
     public static <T> TextWebSocketFrame buildWSText(WSRespTypeEnum type, T data) {
         WSBaseResponse<T> response = WebSocketAdepter.buildResp(type, data);
-        return new TextWebSocketFrame(JSONUtil.toJsonStr(response));
+        return new TextWebSocketFrame(JsonUtils.toStr(response));
     }
 
     public static <T> void sendWSTextMsg(Channel channel, WSRespTypeEnum type, T msg) {
@@ -40,7 +41,7 @@ public class WebSocketAdepter {
     }
 
     public static void sendWSLoginSuccessMsg(Channel channel, User userInfo) {
-        UserVO loginSuccess = fillUserInfo(userInfo);
+        UserVO loginSuccess = fillUserInfo(userInfo, channel);
         sendWSTextMsg(channel, WSRespTypeEnum.LOGIN_SUCCESS, loginSuccess);
     }
 
@@ -48,9 +49,10 @@ public class WebSocketAdepter {
         sendWSTextMsg(channel, WSRespTypeEnum.INVALIDATE_TOKEN, errorMessage);
     }
 
-    private static UserVO fillUserInfo(User userInfo) {
+    private static UserVO fillUserInfo(User userInfo, Channel channel) {
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(userInfo, userVO);
+        userVO.setSession(NettyUtil.getChannelAttr(channel, NettyUtil.TypeEnum.SESSION_ID));
         return userVO;
     }
 

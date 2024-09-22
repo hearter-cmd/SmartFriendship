@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @CreateTime 2024-09-15
  * @ClassName WxMpConfiguration
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @AllArgsConstructor
 @Configuration
@@ -58,7 +58,7 @@ public class WxMpConfiguration {
                 })
                 // 以APPID作为键, 同一存储不同的公众号配置
                 .collect(Collectors.toMap(WxMpDefaultConfigImpl::getAppId, config -> config, (o, e) -> o));
-    wxMpService.setMultiConfigStorages(map);
+        wxMpService.setMultiConfigStorages(map);
         return wxMpService;
     }
 

@@ -1,7 +1,7 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.service.impl;
 
 import com.yaonie.intelligent.assessment.server.chat_server.common.config.ExecutorConfig;
-import com.yaonie.intelligent.assessment.server.chat_server.common.enums.RedisKey;
+import com.yaonie.intelligent.assessment.server.chat_server.common.constants.RedisKey;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.LoginService;
 import com.yaonie.intelligent.assessment.server.chat_server.utils.JwtUtil;
 import com.yaonie.intelligent.assessment.server.common.util.RedisUtils;

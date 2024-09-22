@@ -70,10 +70,10 @@ public class SessionUtil {
         if (StringUtils.isBlank(cookies)) {
             return null;
         }
-        String[] cookieArr = cookies.split(",");
+        String[] cookieArr = cookies.split(";");
         for (String cookie : cookieArr) {
             String[] kv = cookie.split("=");
-            if ("SESSION".equals(kv[0])) {
+            if ("SESSION".equals(kv[0]) && !kv[1].startsWith("[")) {
                 return kv[1];
             }
         }

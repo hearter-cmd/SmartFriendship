@@ -1,4 +1,4 @@
-package com.yaonie.intelligent.assessment.server.chat_server.thread;
+package com.yaonie.intelligent.assessment.server.chat_server.common.thread;
 
 import lombok.extern.slf4j.Slf4j;
 

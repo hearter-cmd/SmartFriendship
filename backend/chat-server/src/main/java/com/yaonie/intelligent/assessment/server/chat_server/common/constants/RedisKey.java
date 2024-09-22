@@ -1,4 +1,4 @@
-package com.yaonie.intelligent.assessment.server.chat_server.common.enums;
+package com.yaonie.intelligent.assessment.server.chat_server.common.constants;
 
 
 /**

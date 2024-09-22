@@ -13,7 +13,6 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
-import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -123,7 +122,6 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
             }break;
         }
         System.out.println(text);
-        ReferenceCountUtil.release(msg);
 //        super.channelRead(ctx, msg);
     }
 
@@ -134,5 +132,10 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
         //  3. 关闭连接
         webSocketService.remove(channel);
         channel.close();
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        log.error("NettyWebSocketServerHandler exceptionCaught: {}", cause.getMessage(), cause);
     }
 }

@@ -1,4 +1,8 @@
 declare namespace API {
+  type WsLoginRequest = {
+    type?: number;
+    data?: API.LoginUserVO;
+  }
   type App = {
     appDesc?: string;
     appIcon?: string;
@@ -49,7 +53,7 @@ declare namespace API {
     searchText?: string;
     sortField?: string;
     sortOrder?: string;
-    userId?: number;
+    userId?: string;
   };
 
   type AppUpdateRequest = {
@@ -281,6 +285,7 @@ declare namespace API {
     userProfile?: string;
     userRole?: string;
     areaName?: string;
+    session?: string;
     lastLoginTime?: string; // TypeScript中的Date类型与JavaScript相同
     lastLeaveTime?: number; // 在TypeScript中，Long类型通常转换为number
     createTime?: string;
@@ -705,7 +710,7 @@ declare namespace API {
   type UserAnswer = {
     appId?: number;
     appType?: number;
-    choices?: string;
+    choices?: string[];
     createTime?: string;
     id?: number;
     isDelete?: number;
@@ -750,7 +755,7 @@ declare namespace API {
     sortField?: string;
     sortOrder?: string;
     updateTime?: string;
-    userId?: number;
+    userId?: string;
   };
 
   type UserAnswerUpdateRequest = {

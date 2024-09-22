@@ -22,7 +22,8 @@ import java.util.Objects;
 public enum WSReqTypeEnum {
     LOGIN(1, "请求登录二维码"),
     HEARTBEAT(2, "心跳包"),
-    AUTHORIZE(3, "登录认证");
+    AUTHORIZE(3, "登录认证"),
+    MESSAGE(4, "发送消息");
 
     // 定义了两个私有成员变量
     private final Integer type;
