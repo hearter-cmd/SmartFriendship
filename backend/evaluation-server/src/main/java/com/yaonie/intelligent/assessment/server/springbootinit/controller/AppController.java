@@ -219,5 +219,9 @@ public class AppController {
         appService.review(reviewRequest, request);
         return ResultUtils.success(true);
     }
+
+    /**
+     * 点赞部分
+     */
     // endregion
 }

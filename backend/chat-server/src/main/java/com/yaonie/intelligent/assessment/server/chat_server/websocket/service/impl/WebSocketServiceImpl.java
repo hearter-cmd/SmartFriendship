@@ -72,7 +72,6 @@ public class WebSocketServiceImpl implements WebSocketService {
      */
     public static final int MAXIMUM_SIZE = 1000;
     public static final Duration DURATION = Duration.ofHours(3);
-
     /**
      * 管理所有的在线链接
      * 登录态游客
@@ -121,6 +120,10 @@ public class WebSocketServiceImpl implements WebSocketService {
         WebSocketAdepter.sendWSTextMsg(channel, WSRespTypeEnum.LOGIN_URL, wsLoginUrl);
     }
 
+    /**
+     * 离线之后的移除操作
+     * @param channel websocket通道
+     */
     @Override
     public void remove(Channel channel) {
         WSChannelDTO remove = ONLINE_WS_MAP.remove(channel);
@@ -128,9 +131,17 @@ public class WebSocketServiceImpl implements WebSocketService {
             return;
         }
         Long uid = remove.getUid();
+        if (Objects.isNull(uid)) {
+            return;
+        }
         ONLINE_UID_MAP.remove(uid);
     }
 
+    /**
+     * 扫码登录成功进行的操作
+     * @param code 事件码
+     * @param uid 用户openid
+     */
     @Override
     public void scanLoginSuccess(Integer code, Long uid) {
         // 确认机器链接还在, 并校验Code
@@ -139,10 +150,10 @@ public class WebSocketServiceImpl implements WebSocketService {
             return;
         }
         User userInfo = userMapper.selectById(uid);
-        // 调用登录模块获取token
         Session session = findByChannelSessionId(channel);
         if (session == null) {
             WebSocketAdepter.sendUnAuthorizeSuccessMsg(channel, "登录失败");
+            return;
         }
         String ip = NettyUtil.getChannelAttr(channel, NettyUtil.TypeEnum.IP);
         GaoDeArea gaoDeArea = IpUtil.getIpAreaByGaoDe(ip);
@@ -185,12 +196,18 @@ public class WebSocketServiceImpl implements WebSocketService {
                 if (!Objects.isNull(attribute)) {
                     loginSuccess(channel, (User) attribute, session);
                     return;
+                } else {
+                    return;
                 }
             }
         }
         WebSocketAdepter.sendWSTextMsg(channel, WSRespTypeEnum.INVALIDATE_TOKEN, new WSSetSession(sessionId));
     }
 
+    /**
+     * 处理消息
+     * @param message  消息
+     */
     @Override
     public void handleMsg(Message message) {
         // todo 处理消息
@@ -207,6 +224,12 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
     }
 
+    /**
+     * 登录成功
+     * @param channel websocket通道
+     * @param userInfo 用户信息
+     * @param session session
+     */
     @Override
     public void loginSuccess(Channel channel, User userInfo, Session session) {
         Long userId = userInfo.getId();

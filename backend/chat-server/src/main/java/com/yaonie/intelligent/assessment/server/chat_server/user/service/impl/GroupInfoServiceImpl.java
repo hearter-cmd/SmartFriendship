@@ -22,6 +22,8 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -151,11 +153,12 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 
 	@Resource
 	private SysSettingDto sysSetting;
+	@Autowired
+	private ApplicationEventPublisher publisher;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Integer saveGroup(HttpServletRequest request, GroupInfo groupInfo) {
-		request.getSession().setAttribute("测试Session是否正常","测试Session是否正常");
 		if (groupInfo == null || groupInfo.getGroupAvatar() == null) {
 			throw new BusinessException(ErrorCode.PARAMS_ERROR);
 		}
@@ -181,10 +184,12 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 			userContactMapper.insert(userContact);
 			// TODO: 创建会话
 			// TODO: 发送消息
+//			publisher.publishEvent();
 //			avatarFile, avatarCover
 			return add(groupInfo);
 		} else {
-			GroupInfo dbGroupInfo = groupInfoMapper.selectByGroupId(groupInfo.getGroupId());//loginUser.getId()
+			//loginUser.getId()
+			GroupInfo dbGroupInfo = groupInfoMapper.selectByGroupId(groupInfo.getGroupId());
 			ThrowUtils.throwIf(!Objects.equals(dbGroupInfo.getGroupOwnerId(), groupInfo.getGroupOwnerId()), ErrorCode.NO_AUTH_ERROR);
 			this.updateGroupInfoByGroupId(groupInfo, groupInfo.getGroupId());
 			// TODO: 更新相关表冗余信息

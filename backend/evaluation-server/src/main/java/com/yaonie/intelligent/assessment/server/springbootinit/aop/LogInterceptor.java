@@ -27,6 +27,7 @@ public class LogInterceptor {
 
     /**
      * 执行拦截
+     * Unbound pointcut parameter 'request'
      */
     @Around("execution(* com.yaonie.intelligent.assessment.server.springbootinit.controller.*.*(..))")
     public Object doInterceptor(ProceedingJoinPoint point, HttpServletRequest request) throws Throwable {

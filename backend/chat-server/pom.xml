@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.yaonie.intelligent.assessment.server</groupId>
         <artifactId>springboot-init</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>chat-server</artifactId>
@@ -35,21 +35,21 @@
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.9-SNAPSHOT</version>
         </dependency>
 
         <!--公共工具模块-->
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-util</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.9-SNAPSHOT</version>
         </dependency>
 
         <!--公共对象模块-->
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.9-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>evaluation-server-client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.9-SNAPSHOT</version>
         </dependency>
 
         <!-- netty -->
@@ -121,13 +121,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-<!--        &lt;!&ndash;Nacos 注册中心&ndash;&gt;-->
+        <!--Nacos 注册中心-->
 <!--        <dependency>-->
 <!--            <groupId>com.alibaba.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
 <!--        </dependency>-->
 
-<!--        &lt;!&ndash;loadbalancer 均衡负载&ndash;&gt;-->
+        <!--loadbalancer 均衡负载-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-loadbalancer</artifactId>-->
@@ -170,6 +170,12 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--RabbitMQ-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
     </dependencies>
 </project>

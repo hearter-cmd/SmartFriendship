@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 
 /**
  * 群聊存档 Controller
+ * @author 77160
  */
 @Slf4j
 @RestController("groupInfoController")
@@ -47,26 +46,8 @@ public class GroupInfoController extends ABaseController{
 	 * 根据条件分页查询
 	 */
 	@RequestMapping("/loadDataList")
-	public ResponseVO loadDataList(GroupInfoQuery query){
+	public ResponseVO loadDataList(@RequestBody GroupInfoQuery query){
 		return getSuccessResponseVO(groupInfoService.findListByPage(query));
-	}
-
-	/**
-	 * 批量新增
-	 */
-	@RequestMapping("/addBatch")
-	public ResponseVO addBatch(@RequestBody List<GroupInfo> listBean) {
-		groupInfoService.addBatch(listBean);
-		return getSuccessResponseVO(null);
-	}
-
-	/**
-	 * 批量新增/修改
-	 */
-	@RequestMapping("/addOrUpdateBatch")
-	public ResponseVO addOrUpdateBatch(@RequestBody List<GroupInfo> listBean) {
-		groupInfoService.addBatch(listBean);
-		return getSuccessResponseVO(null);
 	}
 
 	/**

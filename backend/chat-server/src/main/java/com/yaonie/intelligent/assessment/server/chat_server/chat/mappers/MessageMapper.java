@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
 /**
  * _*_ coding : utf-8 _*_
  *

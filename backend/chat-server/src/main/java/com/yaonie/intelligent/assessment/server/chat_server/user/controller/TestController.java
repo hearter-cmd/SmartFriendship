@@ -4,7 +4,6 @@ package com.yaonie.intelligent.assessment.server.chat_server.user.controller;
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.service.WebSocketService;
 import jakarta.annotation.Resource;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +31,7 @@ public class TestController {
         message.setUserId(0L);
         message.setMessage("测试一下");
         message.setType(0);
-        message.setCreatTime(new Date());
+        message.setCreateTime(new Date());
         message.setUpdateTime(new Date());
         webSocketService.handleMsg(message);
     }

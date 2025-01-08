@@ -1,8 +1,9 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.entity.dto;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.yaonie.intelligent.assessment.server.chat_server.constants.Constants;
+import com.yaonie.intelligent.assessment.server.chat_server.common.constants.Constants;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -64,5 +65,6 @@ public class SysSettingDto implements Serializable {
     private String robotWelcome = "欢迎使用聊天系统";
 
     @Serial
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

@@ -4,10 +4,13 @@ package com.yaonie.intelligent.assessment.server.chat_server.chat.event.listener
 import com.yaonie.intelligent.assessment.server.chat_server.chat.event.SendMessageEvent;
 import com.yaonie.intelligent.assessment.server.chat_server.chat.service.MessageService;
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
+import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactTypeEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.service.WebSocketService;
 import jakarta.annotation.Resource;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * _*_ coding : utf-8 _*_
@@ -29,6 +32,13 @@ public class SendMessageListener {
     public void onSendMessage(SendMessageEvent event) {
         Message message = event.getMessage();
         // 1. 发送消息
+        Long contactId = message.getContactId();
+        switch (Objects.requireNonNull(UserContactTypeEnum.getEnumByLen(contactId))) {
+            case USER:
+                messageService.sendToUser(message);
+            case GROUP:
+                messageService.sendToGroup(message);
+        }
         webSocketService.handleMsg(message);
     }
 

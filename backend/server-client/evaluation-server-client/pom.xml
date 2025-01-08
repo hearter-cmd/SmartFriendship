@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.yaonie.intelligent.assessment.server</groupId>
         <artifactId>server-client</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>evaluation-server-client</artifactId>

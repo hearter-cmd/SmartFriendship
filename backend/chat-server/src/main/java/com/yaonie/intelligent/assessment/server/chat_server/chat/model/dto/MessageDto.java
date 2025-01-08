@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 public class MessageDto {
     /**
-     * 目标ID (群组 / 好友)
+     * 目标ID
      */
     private Long contactId;
 
@@ -25,7 +25,7 @@ public class MessageDto {
     private String message;
 
     /**
-     * 消息类型
+     * 消息类型(0:好友 , 1:群组)
      */
     private String type;
 

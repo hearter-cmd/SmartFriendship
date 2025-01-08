@@ -21,12 +21,7 @@ public class DateUtil {
             synchronized (lockObj) {
                 tl = sdfMap.get(pattern);
                 if (tl == null) {
-                    tl = new ThreadLocal<SimpleDateFormat>() {
-                        @Override
-                        protected SimpleDateFormat initialValue() {
-                            return new SimpleDateFormat(pattern);
-                        }
-                    };
+                    tl = ThreadLocal.withInitial(() -> new SimpleDateFormat(pattern));
                     sdfMap.put(pattern, tl);
                 }
             }

@@ -128,9 +128,9 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
     private void userOffline(Channel channel) {
         // TODO: 用户下线
         //  1. 从在线用户列表中移除
+        webSocketService.remove(channel);
         //  - > 2. 通知其他用户, 用户下线
         //  3. 关闭连接
-        webSocketService.remove(channel);
         channel.close();
     }
 

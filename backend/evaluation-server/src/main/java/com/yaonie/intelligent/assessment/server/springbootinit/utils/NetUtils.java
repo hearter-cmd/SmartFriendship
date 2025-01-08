@@ -128,7 +128,7 @@ public class NetUtils {
 
     private static final String URL = "https://restapi.amap.com/v3/ip?ip=%s&output=json&key=%s";
 
-    @Value("${area.gaoDe.key}")
+    @Value("${area.gao-de.key}")
     private static String key;
 
     public static GaoDeArea getIpAreaByGaoDe(String ip) {

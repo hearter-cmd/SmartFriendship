@@ -6,9 +6,10 @@
     <parent>
         <groupId>com.yaonie.intelligent.assessment.server</groupId>
         <artifactId>springboot-init</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.9-SNAPSHOT</version>
     </parent>
 
+    <description>匹配服务</description>
     <artifactId>match-server</artifactId>
 
     <properties>
@@ -21,12 +22,12 @@
         <dependency>
                 <groupId>com.yaonie.intelligent.assessment.server</groupId>
                 <artifactId>server-common-starter</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.9-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

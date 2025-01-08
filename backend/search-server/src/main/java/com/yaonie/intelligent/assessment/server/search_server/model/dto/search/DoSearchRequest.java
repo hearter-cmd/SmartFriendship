@@ -1,6 +1,7 @@
 package com.yaonie.intelligent.assessment.server.search_server.model.dto.search;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.yaonie.intelligent.assessment.server.common.model.model.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,5 +31,6 @@ public class DoSearchRequest extends PageRequest implements Serializable {
      * 序列化标志
      */
     @Serial
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

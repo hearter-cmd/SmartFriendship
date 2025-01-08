@@ -19,7 +19,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @SpringBootApplication(scanBasePackages = {
         "com.yaonie.intelligent.assessment.server",
 })
-@MapperScan("com.yaonie.intelligent.assessment.server.springbootinit.mapper")
 @EnableScheduling
 // 开启AOP
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)

@@ -7,3 +7,4 @@ getApi
 private.properties
 application-prod.yaml
 application-prod.yml
+.xcodemap
