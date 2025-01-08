@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationEvent;
  *
  * @Author 武春利
  * @CreateTime 2024-09-23 0:41
- * @Description : TODO
+ * @Description : 用户不活跃事件
  */
 @Getter
 public class UserInactiveEvent extends ApplicationEvent {

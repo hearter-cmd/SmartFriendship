@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  *
  * @Author 武春利
  * @CreateTime 2024-09-22 21:27
- * @Description : TODO
+ * @Description : 聊天消息服务实现类
  */
 @Service
 public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> implements MessageService {

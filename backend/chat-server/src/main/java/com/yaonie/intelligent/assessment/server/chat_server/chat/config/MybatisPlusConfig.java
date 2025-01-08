@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @Author 武春利
  * @CreateTime 2024-09-22 23:26
- * @Description : TODO
+ * @Description : MybatisPlus配置
  */
 @Configuration
 @MapperScan("com.yaonie.intelligent.assessment.server.chat_server.chat.mappers")

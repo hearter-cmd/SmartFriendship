@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @Author 武春利
  * @CreateTime 2024-09-24 16:51
- * @Description : TODO
+ * @Description : 群聊消息
  */
 @Data
 public class GroupMessage {

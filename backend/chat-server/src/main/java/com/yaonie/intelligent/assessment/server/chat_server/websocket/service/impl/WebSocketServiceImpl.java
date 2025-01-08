@@ -218,7 +218,6 @@ public class WebSocketServiceImpl implements WebSocketService {
                 WebSocketAdepter.sendWSTextMsg(channel, WSRespTypeEnum.MESSAGE, message);
             });
         } else if (UserContactTypeEnum.getEnumByLen(contactId) == UserContactTypeEnum.GROUP) {
-            // todo 群聊
             // 创建群聊
             ONLINE_GROUP_MAP.put(contactId, new CopyOnWriteArrayList<>(Collections.singleton(message.getUserId())));
         }

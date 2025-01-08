@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @CreateTime 2024-09-18
  * @ClassName GaoDeResp
  * @Project backend
- * @Description : TODO
+ * @Description : 高德返回结果
  */
 @Data
 @Builder

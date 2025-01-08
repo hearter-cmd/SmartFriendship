@@ -27,8 +27,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 获取当前登录用户
      *
-     * @param request
-     * @return
+     * @param request 请求
+     * @return 当前登录用户
      */
     @Override
     public User getLoginUser(HttpServletRequest request) {

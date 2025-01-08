@@ -8,7 +8,7 @@ import lombok.Data;
  *
  * @Author 武春利
  * @CreateTime 2024-09-24 16:51
- * @Description : TODO
+ * @Description : 好友消息
  */
 @Data
 public class FriendMessage {

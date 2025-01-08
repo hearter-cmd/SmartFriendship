@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Async;
  *
  * @Author 武春利
  * @CreateTime 2024-10-13 18:53
- * @Description : TODO
+ * @Description : App点赞事件监听器
  */
 public class AppLikeEventListener {
 //    @Resource

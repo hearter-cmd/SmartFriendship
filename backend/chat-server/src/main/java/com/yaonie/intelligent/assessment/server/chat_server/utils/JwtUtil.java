@@ -22,7 +22,7 @@ import java.util.Optional;
  * @CreateTime 2024-09-17
  * @ClassName JwtUtil
  * @Project backend
- * @Description : TODO
+ * @Description : Jwt工具类
  */
 @Slf4j
 public class JwtUtil {

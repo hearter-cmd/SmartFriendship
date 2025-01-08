@@ -20,7 +20,7 @@ import java.util.Objects;
  * @CreateTime 2024-09-18
  * @ClassName UserRegisterListener
  * @Project backend
- * @Description : TODO
+ * @Description : 用户注册监听器
  */
 @Slf4j
 @Component

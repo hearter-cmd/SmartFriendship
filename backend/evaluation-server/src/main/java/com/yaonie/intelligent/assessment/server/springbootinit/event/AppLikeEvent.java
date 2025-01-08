@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationEvent;
  *
  * @Author 武春利
  * @CreateTime 2024-10-13 18:52
- * @Description : TODO
+ * @Description : App点赞事件
  */
 @Getter
 public class AppLikeEvent extends ApplicationEvent {

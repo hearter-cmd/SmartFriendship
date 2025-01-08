@@ -9,7 +9,7 @@ package com.yaonie.intelligent.assessment.server.common.util;
  * @CreateTime 2024-09-18
  * @ClassName NetUtil
  * @Project backend
- * @Description : TODO
+ * @Description : Net工具类
  */
 public class NetUtil {
 }

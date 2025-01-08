@@ -43,7 +43,7 @@ import static com.yaonie.intelligent.assessment.server.springbootinit.service.im
 
 /**
  * 用户接口
- *
+ * @author yaonie
  */
 @RestController
 @RequestMapping("/user")

@@ -21,7 +21,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @CreateTime 2024-09-17
  * @ClassName ExecutorConfig
  * @Project backend
- * @Description : TODO
+ * @Description ： 线程池配置
  */
 @Configuration
 @EnableAsync

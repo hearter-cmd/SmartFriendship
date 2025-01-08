@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  * @Author 武春利
  * @CreateTime 2024-09-22 21:27
- * @Description : TODO
+ * @Description : 聊天消息服务
  */
 public interface MessageService extends IService<Message> {
     /**

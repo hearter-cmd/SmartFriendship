@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @CreateTime 2024-09-18
  * @ClassName IpUtil
  * @Project backend
- * @Description : TODO
+ * @Description : ip工具类
  */
 @Slf4j
 public class IpUtil implements DisposableBean {

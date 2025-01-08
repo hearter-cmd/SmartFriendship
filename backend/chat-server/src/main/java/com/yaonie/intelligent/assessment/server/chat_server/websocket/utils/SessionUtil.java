@@ -20,7 +20,7 @@ import java.util.Objects;
  * @CreateTime 2024-09-17
  * @ClassName SessionUtil
  * @Project backend
- * @Description : TODO
+ * @Description : Session工具类
  */
 @Slf4j
 public class SessionUtil {

@@ -9,7 +9,7 @@ package com.yaonie.intelligent.assessment.server.chat_server.common.constants;
  * @CreateTime 2024-09-17
  * @ClassName RedisKeyEnum
  * @Project backend
- * @Description : TODO
+ * @Description : RedisKey枚举
  */
 public class RedisKey {
     private static final String BASE_KEY = "yaonie:chat:";

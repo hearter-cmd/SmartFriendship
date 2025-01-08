@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
  * @CreateTime 2024-09-18
  * @ClassName NettyIpUtil
  * @Project backend
- * @Description : TODO
+ * @Description : NettyIp工具类
  */
 public class NettyIpUtil {
     public static String parseForGetIp(ChannelHandlerContext ctx, HttpHeaders headers) {

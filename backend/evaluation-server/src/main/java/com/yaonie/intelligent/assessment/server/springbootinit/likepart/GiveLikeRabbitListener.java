@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  *
  * @Author 武春利
  * @CreateTime 2024-10-14 20:02
- * @Description : TODO 点赞
+ * @Description : 点赞监听
  */
 @Component
 public class GiveLikeRabbitListener {

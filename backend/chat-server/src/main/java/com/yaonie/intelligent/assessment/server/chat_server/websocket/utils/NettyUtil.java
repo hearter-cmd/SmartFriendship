@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
  * @CreateTime 2024-09-18
  * @ClassName ChannelAttrUtil
  * @Project backend
- * @Description : TODO
+ * @Description : Netty工具类
  */
 public class NettyUtil {
     @AllArgsConstructor

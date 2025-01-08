@@ -8,7 +8,7 @@ import lombok.Data;
  *
  * @Author 武春利
  * @CreateTime 2024-10-13 19:15
- * @Description : TODO
+ * @Description : App点赞DTO
  */
 @Data
 public class AppGiveLikeAllDto {

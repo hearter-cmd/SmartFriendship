@@ -27,7 +27,7 @@ import java.util.Objects;
  *
  * @Author 武春利
  * @CreateTime 2024-09-22 21:26
- * @Description : TODO
+ * @Description : 聊天消息控制器
  */
 @RestController
 @RequestMapping("/chat/msg")

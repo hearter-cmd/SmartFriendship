@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @Author 武春利
  * @CreateTime 2024-09-24 16:49
- * @Description : TODO
+ * @Description : RabbitMQ配置
  */
 @Configuration
 public class RabbitMQConfig {

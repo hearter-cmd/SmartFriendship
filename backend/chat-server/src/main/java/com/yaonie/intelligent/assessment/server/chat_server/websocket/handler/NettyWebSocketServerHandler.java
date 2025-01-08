@@ -66,7 +66,6 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
             } else if (event.state() == IdleState.WRITER_IDLE) {
                 log.info("用户写空闲~~~");
             }
-            // TODO:
             //  用户下线
             //  30秒内用户未发送到消息, 就进行下线
             ctx.channel().close();
@@ -119,7 +118,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
     }
 
     private void userOffline(Channel channel) {
-        // TODO: 用户下线
+        // 用户下线
         //  1. 从在线用户列表中移除
         webSocketService.remove(channel);
         //  - > 2. 通知其他用户, 用户下线
