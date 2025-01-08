@@ -14,7 +14,7 @@ import org.springframework.context.ApplicationEvent;
  */
 @Getter
 public class AppLikeEvent extends ApplicationEvent {
-    private AppGiveLikeAllDto appGiveLikeAllDto;
+    private final AppGiveLikeAllDto appGiveLikeAllDto;
 
     public AppLikeEvent(AppGiveLikeAllDto appGiveLikeAllDto) {
         super(appGiveLikeAllDto);

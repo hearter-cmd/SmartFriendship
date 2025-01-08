@@ -5,16 +5,20 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 用户答案表视图
- *
+ * @author yaonie
  */
 @Data
 public class UserAnswerVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

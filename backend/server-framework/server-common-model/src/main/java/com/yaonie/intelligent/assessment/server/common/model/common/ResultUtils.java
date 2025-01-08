@@ -3,15 +3,16 @@ package com.yaonie.intelligent.assessment.server.common.model.common;
 /**
  * 返回工具类
  *
+ * @author yaonie
  */
 public class ResultUtils {
 
     /**
      * 成功
      *
-     * @param data
-     * @param <T>
-     * @return
+     * @param data 数据
+     * @param <T> 数据类型
+     * @return 成功信息响应对象
      */
     public static <T> BaseResponse<T> success(T data) {
         return new BaseResponse<>(0, data, "ok");
@@ -34,17 +35,17 @@ public class ResultUtils {
      * @param message 错误信息
      * @return 错误信息响应对象
      */
-    public static BaseResponse error(int code, String message) {
-        return new BaseResponse(code, null, message);
+    public static BaseResponse<Object> error(int code, String message) {
+        return new BaseResponse<Object>(code, null, message);
     }
 
     /**
      * 失败
      *
-     * @param errorCode
-     * @return
+     * @param errorCode 错误码枚举
+     * @return 错误信息响应对象
      */
-    public static BaseResponse error(ErrorCode errorCode, String message) {
-        return new BaseResponse(errorCode.getCode(), null, message);
+    public static BaseResponse<Object> error(ErrorCode errorCode, String message) {
+        return new BaseResponse<Object>(errorCode.getCode(), null, message);
     }
 }

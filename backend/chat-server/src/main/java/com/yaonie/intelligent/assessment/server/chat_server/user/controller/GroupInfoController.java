@@ -37,7 +37,7 @@ public class GroupInfoController extends ABaseController{
 	@PostMapping("/saveGroup")
 	@Operation(summary = "保存群组")
 //	@Auth
-	public ResponseVO saveGroup(@RequestBody GroupInfo groupInfo,
+	public ResponseVO<Object> saveGroup(@RequestBody GroupInfo groupInfo,
 								HttpServletRequest request) {
 		return getSuccessResponseVO(groupInfoService.saveGroup(request, groupInfo));
 	}
@@ -46,7 +46,7 @@ public class GroupInfoController extends ABaseController{
 	 * 根据条件分页查询
 	 */
 	@RequestMapping("/loadDataList")
-	public ResponseVO loadDataList(@RequestBody GroupInfoQuery query){
+	public ResponseVO<Object> loadDataList(@RequestBody GroupInfoQuery query){
 		return getSuccessResponseVO(groupInfoService.findListByPage(query));
 	}
 
@@ -54,7 +54,7 @@ public class GroupInfoController extends ABaseController{
 	 * 根据GroupId查询对象
 	 */
 	@RequestMapping("/getGroupInfoByGroupId")
-	public ResponseVO getGroupInfoByGroupId(Long groupId) {
+	public ResponseVO<Object> getGroupInfoByGroupId(Long groupId) {
 		return getSuccessResponseVO(groupInfoService.getGroupInfoByGroupId(groupId));
 	}
 
@@ -62,7 +62,7 @@ public class GroupInfoController extends ABaseController{
 	 * 根据GroupId修改对象
 	 */
 	@RequestMapping("/updateGroupInfoByGroupId")
-	public ResponseVO updateGroupInfoByGroupId(GroupInfo bean,Long groupId) {
+	public ResponseVO<Object> updateGroupInfoByGroupId(GroupInfo bean,Long groupId) {
 		groupInfoService.updateGroupInfoByGroupId(bean,groupId);
 		return getSuccessResponseVO(null);
 	}
@@ -71,7 +71,7 @@ public class GroupInfoController extends ABaseController{
 	 * 根据GroupId删除
 	 */
 	@RequestMapping("/deleteGroupInfoByGroupId")
-	public ResponseVO deleteGroupInfoByGroupId(Long groupId) {
+	public ResponseVO<Object> deleteGroupInfoByGroupId(Long groupId) {
 		groupInfoService.deleteGroupInfoByGroupId(groupId);
 		return getSuccessResponseVO(null);
 	}

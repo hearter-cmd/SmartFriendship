@@ -13,7 +13,6 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        groupId,userId,createTime,
-        updateTime,isDelete
+        groupId,userId,createTime,updateTime,isDelete
     </sql>
 </mapper>

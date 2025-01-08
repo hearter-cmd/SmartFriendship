@@ -66,9 +66,9 @@ public class QuestionController {
     /**
      * 创建题目
      *
-     * @param questionAddRequest
-     * @param request
-     * @return
+     * @param questionAddRequest 题目请求
+     * @param request 请求
+     * @return 新题目id
      */
     @PostMapping("/add")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
@@ -95,9 +95,9 @@ public class QuestionController {
     /**
      * 删除题目
      *
-     * @param deleteRequest
-     * @param request
-     * @return
+     * @param deleteRequest 删除请求
+     * @param request 请求
+     * @return 是否删除成功
      */
     @PostMapping("/delete")
     @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
@@ -123,8 +123,8 @@ public class QuestionController {
     /**
      * 更新题目（仅管理员可用）
      *
-     * @param questionUpdateRequest
-     * @return
+     * @param questionUpdateRequest 更新请求
+     * @return 是否更新成功
      */
     @PostMapping("/update")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
@@ -152,8 +152,8 @@ public class QuestionController {
     /**
      * 根据 id 获取题目（封装类）
      *
-     * @param id
-     * @return
+     * @param id 题目 id
+     * @return 题目
      */
     @GetMapping("/get/vo")
     public BaseResponse<QuestionVO> getQuestionVOById(long id, HttpServletRequest request) {
@@ -168,8 +168,8 @@ public class QuestionController {
     /**
      * 分页获取题目列表（仅管理员可用）
      *
-     * @param questionQueryRequest
-     * @return
+     * @param questionQueryRequest 查询请求
+     * @return 题目列表
      */
     @PostMapping("/list/page")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)

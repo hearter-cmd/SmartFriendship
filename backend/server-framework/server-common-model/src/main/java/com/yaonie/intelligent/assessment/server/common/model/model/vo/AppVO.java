@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * 应用视图
- *
+ * @author yaonie
  */
 @Data
 public class AppVO implements Serializable {
@@ -87,8 +87,8 @@ public class AppVO implements Serializable {
     /**
      * 封装类转对象
      *
-     * @param appVO
-     * @return
+     * @param appVO 封装类
+     * @return 封装类对应的对象
      */
     public static App voToObj(AppVO appVO) {
         if (appVO == null) {
@@ -102,8 +102,8 @@ public class AppVO implements Serializable {
     /**
      * 对象转封装类
      *
-     * @param app
-     * @return
+     * @param app 对象
+     * @return 对象对应的封装类
      */
     public static AppVO objToVo(App app) {
         if (app == null) {

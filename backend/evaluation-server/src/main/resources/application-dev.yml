@@ -1,4 +1,5 @@
 server:
+  frequency: 2  #2秒只能请求一次
   address: 0.0.0.0
   port: 8101
   servlet:
@@ -8,14 +9,6 @@ server:
         path: /
 # 线上配置文件
 spring:
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: evaluation-server
-  # 支持 swagger3
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   # session 配置
   session:
     store-type: redis
@@ -23,29 +16,27 @@ spring:
     timeout: 604800
   # 数据库配置
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://1.94.141.32:3306/intelligent
+    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动类名
+    url: jdbc:mysql://${BASE_HOST:127.0.0.1}:3306/intelligent?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: ${MYSQL_PASSWORD}
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       maximum-pool-size: 5
       max-lifetime: 800000
-  # 文件上传
-  servlet:
-    multipart:
-      # 大小限制
-      max-file-size: 10MB
   data:
     redis:
       database: 1
-      host: 1.94.141.32
+      host: ${BASE_HOST:127.0.0.1}
       port: 6379
       timeout: 5000
-      password: ${MYSQL_PASSWORD}
-  jackson:
-    serialization:
-      write-dates-as-timestamps: true
+#  rabbitmq:
+#    host: 192.168.182.128
+#    port: 5672
+#    username: yaonie
+#    password: ${MYSQL_PASSWORD}
+#    virtual-host: /
+#      password: ${MYSQL_PASSWORD}
 #  shardingsphere:
 #    mode:
 #      type: Standalone
@@ -81,33 +72,13 @@ spring:
 #    props:
 #      sql-show: true  # 显示SQL语句，方便调试和验证分表规则是否正确
 #    enabled: true
-mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
-      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
-      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
 # 对象存储
 cos:
   client:
-    accessKey: ${COS_ACCESSKEY}
-    secretKey: ${COS_SECRETKEY}
+    access-key: ${COS_ACCESSKEY}
+    secret-key: ${COS_SECRETKEY}
     region: ap-beijing
     bucket: part-one-1306321377
-# 接口文档配置
-knife4j:
-  enable: true
-  openapi:
-    title: "接口文档"
-    version: 1.0
-    group:
-      default:
-        api-rule: package
-        api-rule-resources:
-          - com.yaonie.intelligent.assessment.server.springbootinit.controller
 # AI 配置
 ais:
   tag: true
@@ -118,10 +89,11 @@ ais:
     apiKey: ${ZHIPU_API_KEY}
 # 获取IP地址所属地的工具
 area:
-  gaoDe:
+  gao-de:
     key: ${GAODE_KEY}
-#logging:
-#  level:
+logging:
+  level:
+    web: debug
 #    root: debug
 #logging:
 #  level:

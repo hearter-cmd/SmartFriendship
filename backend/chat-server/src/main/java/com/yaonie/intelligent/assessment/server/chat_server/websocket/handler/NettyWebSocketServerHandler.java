@@ -17,11 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 /**
- * "vite-plugin-optimize-persist": "^0.1.2",
- *     "vite-plugin-package-config": "^0.1.1",
- */
-
-/**
  * _*_ coding : utf-8 _*_
  *
  * @Date 2024-09-15 0:44
@@ -41,10 +36,9 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
     /**
      * 当前ws服务器被连接一次就执行一次这个方法, 只在刚刚建立连接的时候调用
      * @param ctx 通道处理器上下文
-     * @throws Exception 报错
      */
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         webSocketService = SpringUtil.getBean(WebSocketService.class);
         webSocketService.addChannel(ctx.channel());
     }
@@ -60,9 +54,8 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
         if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
             // 握手完成事件
             log.info("用户连接建立~~~");
-        } else if (evt instanceof IdleStateEvent) {
+        } else if (evt instanceof IdleStateEvent event) {
             // 空闲事件, 强转之后才能调用API
-            IdleStateEvent event = (IdleStateEvent) evt;
             /*
                 IdleState.READER_IDLE 读空闲事件
                 IdleState.WRITER_IDLE 写空闲事件
@@ -135,7 +128,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         log.error("NettyWebSocketServerHandler exceptionCaught: {}", cause.getMessage(), cause);
     }
 }

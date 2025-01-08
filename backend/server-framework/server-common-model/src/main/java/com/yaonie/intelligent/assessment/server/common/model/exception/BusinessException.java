@@ -1,11 +1,13 @@
 package com.yaonie.intelligent.assessment.server.common.model.exception;
 
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import lombok.Getter;
 
 /**
  * 自定义异常类
- *
+ * @author yaonie
  */
+@Getter
 public class BusinessException extends RuntimeException {
 
     /**
@@ -28,7 +30,4 @@ public class BusinessException extends RuntimeException {
         this.code = errorCode.getCode();
     }
 
-    public Integer getCode() {
-        return code;
-    }
 }

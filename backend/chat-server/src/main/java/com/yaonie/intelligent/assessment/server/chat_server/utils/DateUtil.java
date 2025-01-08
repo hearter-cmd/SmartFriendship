@@ -12,17 +12,17 @@ import java.util.Map;
  */
 public class DateUtil {
 
-    private static final Object lockObj = new Object();
-    private static Map<String, ThreadLocal<SimpleDateFormat>> sdfMap = new HashMap<String, ThreadLocal<SimpleDateFormat>>();
+    private static final Object LOCK_OBJ = new Object();
+    private static final Map<String, ThreadLocal<SimpleDateFormat>> SDF_MAP = new HashMap<String, ThreadLocal<SimpleDateFormat>>();
 
     private static SimpleDateFormat getSdf(final String pattern) {
-        ThreadLocal<SimpleDateFormat> tl = sdfMap.get(pattern);
+        ThreadLocal<SimpleDateFormat> tl = SDF_MAP.get(pattern);
         if (tl == null) {
-            synchronized (lockObj) {
-                tl = sdfMap.get(pattern);
+            synchronized (LOCK_OBJ) {
+                tl = SDF_MAP.get(pattern);
                 if (tl == null) {
                     tl = ThreadLocal.withInitial(() -> new SimpleDateFormat(pattern));
-                    sdfMap.put(pattern, tl);
+                    SDF_MAP.put(pattern, tl);
                 }
             }
         }

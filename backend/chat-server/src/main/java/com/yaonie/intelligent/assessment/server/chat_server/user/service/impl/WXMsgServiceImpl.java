@@ -106,7 +106,7 @@ public class WXMsgServiceImpl implements WXMsgService {
     private Integer getEventKey(WxMpXmlMessage wxMessage) {
         String eventKey = wxMessage.getEventKey();
         try {
-            String code = null;
+            String code;
             if (eventKey.startsWith("qrscene_")) {
                 code = eventKey.substring(8);
             } else {

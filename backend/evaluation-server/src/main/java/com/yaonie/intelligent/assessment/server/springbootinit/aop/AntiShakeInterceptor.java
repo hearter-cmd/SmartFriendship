@@ -7,6 +7,7 @@ import com.yaonie.intelligent.assessment.server.common.util.RedisUtils;
 import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AntiShake;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -31,14 +32,13 @@ public class AntiShakeInterceptor implements HandlerInterceptor {
     private static Integer FREQUENCY;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) {
         // 非方法不处理
-        if (!(handler instanceof HandlerMethod)) {
+        if (!(handler instanceof HandlerMethod handlerMethod)) {
             return true;
         }
 
         // 获取方法
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         AntiShake annotation = method.getAnnotation(AntiShake.class);
         if (Objects.isNull(annotation)) {

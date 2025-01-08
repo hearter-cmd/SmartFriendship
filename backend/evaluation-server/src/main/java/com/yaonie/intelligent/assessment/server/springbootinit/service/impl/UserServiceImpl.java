@@ -33,18 +33,9 @@ import static com.yaonie.intelligent.assessment.server.common.model.constant.Com
 import static com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
-* @author 77160
-* @description 针对表【user(用户)】的数据库操作Service实现
-* @createDate 2024-08-18 00:16:57
-*/
-/**
- * 用户服务
- *
- */
-/**
  * 用户服务实现
  *
- * @author 77160
+ * @author yaonie
  */
 @Service
 @Slf4j
@@ -185,8 +176,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 获取当前登录用户
      *
-     * @param request
-     * @return
+     * @param request Request请求对象
+     * @return 登录用户信息
      */
     @Override
     public User getLoginUser(HttpServletRequest request) {
@@ -209,8 +200,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 获取当前登录用户（允许未登录）
      *
-     * @param request
-     * @return
+     * @param request Request请求对象
+     * @return 登录用户信息
      */
     @Override
     public User getLoginUserPermitNull(HttpServletRequest request) {
@@ -228,8 +219,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 是否为管理员
      *
-     * @param request
-     * @return
+     * @param request Request请求对象
+     * @return 是否为管理员
      */
     @Override
     public boolean isAdmin(HttpServletRequest request) {
@@ -247,7 +238,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 用户注销
      *
-     * @param request
+     * @param request Request请求对象
      */
     @Override
     public boolean userLogout(HttpServletRequest request) {

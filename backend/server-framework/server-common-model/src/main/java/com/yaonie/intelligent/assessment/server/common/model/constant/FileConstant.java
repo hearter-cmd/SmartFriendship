@@ -3,6 +3,7 @@ package com.yaonie.intelligent.assessment.server.common.model.constant;
 /**
  * 文件常量
  *
+ * @author yaonie
  */
 public interface FileConstant {
 

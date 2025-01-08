@@ -11,21 +11,11 @@ spring:
     name: evaluation-server
   # 默认 dev 环境
   profiles:
-    active: prod
+    active: dev
   # 支持 swagger3
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  # 数据库配置
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.182.128:3306/intelligent
-    username: root #${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      maximum-pool-size: 5
-      max-lifetime: 300000
   # session 配置
   session:
     store-type: redis
@@ -36,58 +26,19 @@ spring:
     multipart:
       # 大小限制
       max-file-size: 10MB
-  data:
-    redis:
-      database: 1
-      host: 1.94.141.32
-      port: 6379
-      timeout: 5000
-      password: ${MYSQL_PASSWORD}
+#      password: ${MYSQL_PASSWORD}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
   cloud:
     nacos:
       discovery:
         enabled: true
-        server-addr: 192.168.182.128:8848
+        server-addr: ${BASE_HOST:127.0.0.1}:8848
         namespace: 3df35b9e-228b-42c9-bdf8-fc10c45a0875
     loadbalancer:
       nacos:
         enabled: true
-#      password:
-#  shardingsphere:
-#    mode:
-#      type: Standalone
-#    #数据源配置
-#    datasource:
-#      # 多数据源以逗号隔开即可
-#      names: intelligent
-#      intelligent:
-#        type: com.zaxxer.hikari.HikariDataSource
-#        driver-class-name: com.mysql.cj.jdbc.Driver
-#        jdbc-url: jdbc:mysql://192.168.182.128:3306/intelligent
-#        username: ${MYSQL_USERNAME:root}
-#        password: ${MYSQL_PASSWORD}
-#    # 规则配置
-#    rules:
-#      sharding:
-#        tables:
-#          user_answer:
-#            actual-data-nodes: intelligent.user_answer_$->{0..1}
-#            # 分表策略
-#            table-strategy:
-#              standard:
-#                sharding-column: appId
-#                sharding-algorithm-name: answer-table-inline
-#        # 分片算法配置
-#        sharding-algorithms:
-#          # 自定义分片规则名
-#          answer-table-inline:
-#            ## inline 类型是简单的配置文件里面就能写的类型，其他还有自定义类等等
-#            type: INLINE
-#            props:
-#              algorithm-expression: user_answer_$->{appId % 2}
-#    props:
-#      sql-show: true  # 显示SQL语句，方便调试和验证分表规则是否正确
-#    enabled: true
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -97,12 +48,6 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
-cos:
-  client:
-    accessKey: ${COS_ACCESSKEY}
-    secretKey: ${COS_SECRETKEY}
-    region: ap-beijing
-    bucket: part-one-1306321377
 # 接口文档配置
 knife4j:
   enable: true
@@ -114,14 +59,3 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.yaonie.intelligent.assessment.server.springbootinit.controller
-# AI 配置
-ais:
-  tag: true
-  # 智普 AI
-  zhi-pu:
-    tag: true
-    temperature: 0.95
-    apiKey: ${ZHIPU_API_KEY}
-#logging:
-#  level:
-#    root: debug

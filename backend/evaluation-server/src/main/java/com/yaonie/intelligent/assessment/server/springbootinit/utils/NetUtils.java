@@ -5,6 +5,8 @@ import cn.hutool.json.JSONUtil;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.area.GaoDeArea;
 import io.micrometer.core.instrument.util.NamedThreadFactory;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -20,12 +22,16 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 网络工具类
+ *
+ * @author yaonie
  */
 @Slf4j
 public class NetUtils {
     /**
      * 获取IP归属地的线程池
      */
+    @Getter
+    @Setter
     private static ExecutorService executorService =
             new ThreadPoolExecutor(1, 1, 0, TimeUnit.MILLISECONDS,
                     new LinkedBlockingQueue<>(500),
@@ -36,7 +42,7 @@ public class NetUtils {
      */
 
     public static String getIpAddress(HttpServletRequest request) {
-        String ipAddress = null;
+        String ipAddress;
         try {
             ipAddress = request.getHeader("x-forwarded-for");
             if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
@@ -53,8 +59,9 @@ public class NetUtils {
                     try {
                         inet = InetAddress.getLocalHost();
                     } catch (UnknownHostException e) {
-                        e.printStackTrace();
+                        System.out.println("获取本机IP失败");
                     }
+                    assert inet != null;
                     ipAddress = inet.getHostAddress();
                 }
             }
@@ -120,7 +127,7 @@ public class NetUtils {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("解析ip归属地失败, ip: " + ip);
             }
         }
         return null;
@@ -142,5 +149,4 @@ public class NetUtils {
             return null;
         }
     }
-
 }

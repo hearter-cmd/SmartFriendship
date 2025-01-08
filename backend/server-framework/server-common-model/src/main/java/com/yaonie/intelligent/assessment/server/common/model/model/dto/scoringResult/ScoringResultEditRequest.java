@@ -2,13 +2,13 @@ package com.yaonie.intelligent.assessment.server.common.model.model.dto.scoringR
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * 编辑评分结果表请求
- *
- */
+ * * @author yaonie */
 @Data
 public class ScoringResultEditRequest implements Serializable {
 
@@ -47,5 +47,6 @@ public class ScoringResultEditRequest implements Serializable {
      */
     private Long appId;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

@@ -254,7 +254,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     }
 
     private Integer generateLoginCode(Channel channel) {
-        Integer code = null;
+        Integer code;
         // 生成随机标识, 并必然不重复
         do {
             code = RandomUtil.randomInt(Integer.MAX_VALUE);

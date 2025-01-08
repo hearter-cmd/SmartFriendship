@@ -4,11 +4,12 @@ import com.yaonie.intelligent.assessment.server.common.model.model.common.PageRe
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * 查询题目请求
- *
+ * @author yaonie
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -44,5 +45,6 @@ public class QuestionQueryRequest extends PageRequest implements Serializable {
      */
     private Long userId;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

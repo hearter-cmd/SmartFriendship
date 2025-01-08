@@ -2,11 +2,13 @@ package com.yaonie.intelligent.assessment.server.common.model.model.dto.app;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * 更新应用请求
  *
+ * @author yaonie
  */
 @Data
 public class AppUpdateRequest implements Serializable {
@@ -56,5 +58,6 @@ public class AppUpdateRequest implements Serializable {
      */
     private Long reviewerId;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

@@ -6,12 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 帖子点赞
- *
+ * @author yaonie
  */
 @TableName(value = "post_thumb")
 @Data
@@ -43,6 +44,7 @@ public class PostThumb implements Serializable {
      */
     private Date updateTime;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

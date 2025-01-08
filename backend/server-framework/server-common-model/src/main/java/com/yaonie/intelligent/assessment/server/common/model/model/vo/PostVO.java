@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * 帖子视图
- *
+ * @author yaonie
  */
 @Data
 public class PostVO implements Serializable {
@@ -79,8 +79,8 @@ public class PostVO implements Serializable {
     /**
      * 包装类转对象
      *
-     * @param postVO
-     * @return
+     * @param postVO 包装类
+     * @return Post 对象
      */
     public static Post voToObj(PostVO postVO) {
         if (postVO == null) {
@@ -96,8 +96,8 @@ public class PostVO implements Serializable {
     /**
      * 对象转包装类
      *
-     * @param post
-     * @return
+     * @param post 对象
+     * @return PostVO 包装类
      */
     public static PostVO objToVo(Post post) {
         if (post == null) {

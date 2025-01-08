@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.context.request.RequestAttributes;
@@ -25,11 +26,14 @@ import java.util.UUID;
 @Slf4j
 public class LogInterceptor {
 
+    @Pointcut("execution(* com.yaonie.intelligent.assessment.server.springbootinit.controller.*.*(..))")
+    public void Pointcut() {}
+
     /**
      * 执行拦截
      * Unbound pointcut parameter 'request'
      */
-    @Around("execution(* com.yaonie.intelligent.assessment.server.springbootinit.controller.*.*(..))")
+    @Around("Pointcut() && args(request)")
     public Object doInterceptor(ProceedingJoinPoint point, HttpServletRequest request) throws Throwable {
         // 计时
         StopWatch stopWatch = new StopWatch();

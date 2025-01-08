@@ -58,7 +58,7 @@ public class WebSocketStart {
     private static final EventLoopGroup WORKER_GROUP = new NioEventLoopGroup(NettyRuntime.availableProcessors());
 
     @PostConstruct
-    public void run() throws Exception {
+    public void run() {
         /*
         2. 创建Netty的启动器
             2.1 划分组
@@ -80,7 +80,7 @@ public class WebSocketStart {
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch) {
                             ChannelPipeline pipeline = ch.pipeline();
                             // 添加心跳
                             pipeline.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.SECONDS));
@@ -94,7 +94,7 @@ public class WebSocketStart {
                         }
                     });
             // 3.同步运行, 并且监听返回值
-            ChannelFuture sync = serverBootstrap.bind(PORT).sync();
+            serverBootstrap.bind(PORT).sync();
 
             log.info("WebSocket服务启动成功~~~");
             /*
@@ -104,7 +104,7 @@ public class WebSocketStart {
              */
         } catch (InterruptedException e) {
             // 处理中断异常
-            e.printStackTrace();
+            System.out.println("WebSocket服务启动失败" + "-error:" + e.getLocalizedMessage());
         }
     }
 

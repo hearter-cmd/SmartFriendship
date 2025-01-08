@@ -4,6 +4,7 @@ import com.yaonie.intelligent.assessment.server.common.model.model.common.PageRe
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -80,5 +81,6 @@ public class AppQueryRequest extends PageRequest implements Serializable {
      */
     private String searchText;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

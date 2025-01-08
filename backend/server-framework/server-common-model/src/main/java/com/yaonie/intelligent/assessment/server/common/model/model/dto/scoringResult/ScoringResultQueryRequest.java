@@ -4,13 +4,14 @@ import com.yaonie.intelligent.assessment.server.common.model.model.common.PageRe
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 查询评分结果表请求
- *
+ * @author yaonie
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -72,5 +73,6 @@ public class ScoringResultQueryRequest extends PageRequest implements Serializab
     private String searchText;
 
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

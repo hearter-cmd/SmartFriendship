@@ -3,6 +3,7 @@ package com.yaonie.intelligent.assessment.server.common.model.common;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -33,5 +34,6 @@ public class ReviewRequest implements Serializable {
      */
     private String reviewMessage;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

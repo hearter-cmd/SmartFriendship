@@ -1,7 +1,6 @@
 package com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo.resp;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

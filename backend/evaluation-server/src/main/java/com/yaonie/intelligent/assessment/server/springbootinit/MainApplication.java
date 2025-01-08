@@ -1,7 +1,6 @@
 package com.yaonie.intelligent.assessment.server.springbootinit;
 
 import com.yaonie.intelligent.assessment.server.springbootinit.properties.ZhiPuAi;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

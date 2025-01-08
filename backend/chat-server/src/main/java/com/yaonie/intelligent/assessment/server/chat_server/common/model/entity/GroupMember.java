@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * 
  * @TableName group_member
+ *
+ * @author yaonie
  */
 @TableName(value ="group_member")
 @Data
@@ -44,6 +47,7 @@ public class GroupMember implements Serializable {
     @TableField(value = "isDelete")
     private Integer isDelete;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

@@ -9,38 +9,14 @@ server:
 spring:
   application:
     name: chat-server
-  # 数据库
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root #${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD}
-    url: jdbc:mysql://1.94.141.32:3306/intelligent?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      max-lifetime: 800000
-      maximum-pool-size: 5
+  profiles:
+    active: dev
   # 分布式session
   session:
     store-type: redis
     # 30 天过期
     # cookie 30 天过期
     timeout: 604800
-  data:
-    redis:
-      host: 1.94.141.32
-      port: 6379
-      timeout: 5000
-      database: 8
-      password: ${MYSQL_PASSWORD}
-  cloud:
-    nacos:
-      discovery:
-        enabled: true
-        server-addr: 192.168.182.128:8848
-        namespace: 3df35b9e-228b-42c9-bdf8-fc10c45a0875
-    loadbalancer:
-      nacos:
-        enabled: true
   # 存入时间, 自动变成时间戳
   jackson:
     serialization:
@@ -61,29 +37,6 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.yaonie.intelligent.assessment.server.springbootinit.controller
-wx:
-  mp:
-    callback: http://404x395b97.vicp.fun
-    use-redis: false
-    redis-config:
-      host: 1.94.141.32
-      port: 6379
-      password: ${MYSQL_PASSWORD}
-    configs: # 多个公众号配置信息
-      - appId: wxf161c2344129151f # 第一个公众号的appid
-        secret: 5a2f80848317270a542b633bb2f92f98 # 公众号的appSecret
-        token: ${WX_TOKEN} # 接口配置里的Token值
-#    callback: ${wx.callback}
-    config-storage:
-      http-client-type: HttpClient
-      key-prefix: wx
-      redis:
-        host: 1.94.141.32
-        port: 6379
-        password: ${MYSQL_PASSWORD}
-        database: 9
-      type: redistemplate
-
 # 自定义配置部分
 # 项目目录
 project:
@@ -93,10 +46,8 @@ log:
     level: info
 admin:
   email: 771603162@qq.com
-# 是否是开发环境
-dev: true
 ws:
-  port: 8104
+  port: 8105
 # 密码加盐
 jwt:
   slat: 39a4e2262b09439fb23e69f142514b76

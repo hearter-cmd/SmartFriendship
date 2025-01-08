@@ -3,6 +3,7 @@ package com.yaonie.intelligent.assessment.server.common.model.model.dto.question
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -33,6 +34,7 @@ public class AiGenerateQuestionRequest implements Serializable {
      */
     int optionNumber = 2;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }
 

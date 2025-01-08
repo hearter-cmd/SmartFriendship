@@ -3,6 +3,7 @@ package com.yaonie.intelligent.assessment.server.common.model.constant;
 /**
  * 用户常量
  *
+ * @author yaonie
  */
 public interface UserConstant {
 

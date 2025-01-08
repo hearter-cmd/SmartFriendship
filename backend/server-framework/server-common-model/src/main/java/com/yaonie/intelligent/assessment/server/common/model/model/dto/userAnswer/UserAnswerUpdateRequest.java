@@ -2,12 +2,13 @@ package com.yaonie.intelligent.assessment.server.common.model.model.dto.userAnsw
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * 更新用户答案表请求
- *
+ * @author yaonie
  */
 @Data
 public class UserAnswerUpdateRequest implements Serializable {
@@ -27,5 +28,6 @@ public class UserAnswerUpdateRequest implements Serializable {
      */
     private List<String> choices;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

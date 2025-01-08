@@ -11,7 +11,6 @@ import java.util.Date;
  * @since 2024-10-13 18:10:56
  */
 @Data
-@SuppressWarnings("serial")
 public class AppLike {
     //AppId
     private Long appId;
