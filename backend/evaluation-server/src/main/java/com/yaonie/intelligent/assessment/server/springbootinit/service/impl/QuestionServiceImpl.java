@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yaonie.intelligent.assessment.ai.service.impl.ZhiPuService;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
 import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
@@ -17,20 +18,19 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.AppTypeEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.QuestionVO;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.util.SqlUtils;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.QuestionMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.QuestionService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
-import com.yaonie.intelligent.assessment.server.springbootinit.utils.SqlUtils;
 import com.yaonie.intelligent.assessment.server.springbootinit.utils.ZhiPuUtils;
-import com.zhipu.oapi.service.v4.model.ModelData;
-import io.reactivex.Flowable;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
@@ -213,6 +213,8 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
             "5. 返回的题目列表格式必须为 JSON 数组\n" +
             "6. 如果题目中包含特殊字符，请删除特殊字符\n" +
             "...7. 坚决不要反问我任何问题, 只需要直接给出结果...";
+    @Resource
+    private ZhiPuService zhiPuService;
 
     private String getGenerateQuestionUserMessage(App app, int questionNumber, int optionNumber) {
         StringBuilder userMessage = new StringBuilder();
@@ -242,7 +244,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         // 获取prompt
         //  sampleData
         String userMessage = getGenerateQuestionUserMessage(app, questionNumber, optionNumber);
-        String result = zhiPuUtils.doRequest(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage, null);
+        String result = zhiPuService.getMessage(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage);
         int start = result.indexOf("[");
         int end = result.lastIndexOf("]");
         result = result.substring(start, end+1);
@@ -251,7 +253,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     @Override
-    public Flowable<ModelData> generateQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest) {
+    public Flux<String> generateQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest) {
         // 1. 获取需要的数据
         Long appId = aiGenerateQuestionRequest.getAppId();
         int questionNumber = aiGenerateQuestionRequest.getQuestionNumber();
@@ -261,7 +263,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         // 3. 获取生成题目的prompt
         String generateQuestionUserMessage = getGenerateQuestionUserMessage(app, questionNumber, optionNumber);
         // 4. 通过AI生成流式数据
-        return zhiPuUtils.doStreamRequest(GENERATE_QUESTION_SYSTEM_MESSAGE, generateQuestionUserMessage, null);
+        return zhiPuService.getMessageByStream(GENERATE_QUESTION_SYSTEM_MESSAGE, generateQuestionUserMessage);
     }
 
     @Override

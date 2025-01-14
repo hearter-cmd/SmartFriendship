@@ -27,10 +27,10 @@ public class CodeGenerator {
      */
     public static void main(String[] args) throws TemplateException, IOException {
         // 指定生成参数
-        String packageName = "com.yaonie.intelligent.assessment.server.chat_server";
-        String dataName = "用户表";
-        String dataKey = "user";
-        String upperDataKey = "User";
+        String packageName = "com.yaonie.intelligent.assessment.ai";
+        String dataName = "模型类型字典";
+        String dataKey = "modelTypeDict";
+        String upperDataKey = "ModelTypeDict";
 
         // 封装生成参数
         Map<String, Object> dataModel = new HashMap<>();
@@ -48,7 +48,7 @@ public class CodeGenerator {
         // 1、生成 Controller
         // 指定生成路径
         inputPath = projectPath + File.separator + "src/main/resources/templates/TemplateController.java.ftl";
-        outputPath = String.format("%s/generator/controller/%sController.java", projectPath, upperDataKey);
+        outputPath = String.format("%s/generator/com.yaonie.intelligent.assessment.controller/%sController.java", projectPath, upperDataKey);
         // 生成
         doGenerate(inputPath, outputPath, dataModel);
         System.out.println("生成 Controller 成功，文件路径：" + outputPath);
@@ -56,12 +56,12 @@ public class CodeGenerator {
         // 2、生成 Service 接口和实现类
         // 生成 Service 接口
         inputPath = projectPath + File.separator + "src/main/resources/templates/TemplateService.java.ftl";
-        outputPath = String.format("%s/generator/service/%sService.java", projectPath, upperDataKey);
+        outputPath = String.format("%s/generator/com.yaonie.intelligent.assessment.service/%sService.java", projectPath, upperDataKey);
         doGenerate(inputPath, outputPath, dataModel);
         System.out.println("生成 Service 接口成功，文件路径：" + outputPath);
         // 生成 Service 实现类
         inputPath = projectPath + File.separator + "src/main/resources/templates/TemplateServiceImpl.java.ftl";
-        outputPath = String.format("%s/generator/service/impl/%sServiceImpl.java", projectPath, upperDataKey);
+        outputPath = String.format("%s/generator/com.yaonie.intelligent.assessment.service/impl/%sServiceImpl.java", projectPath, upperDataKey);
         doGenerate(inputPath, outputPath, dataModel);
         System.out.println("生成 Service 实现类成功，文件路径：" + outputPath);
 

@@ -1,6 +1,7 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
@@ -14,7 +15,7 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.PostVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostFavourService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class PostFavourController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // 登录才能操作
-        final User loginUser = userService.getLoginUser(request);
+        final User loginUser = UserHolder.getUser();
         long postId = postFavourAddRequest.getPostId();
         int result = postFavourService.doPostFavour(postId, loginUser);
         return ResultUtils.success(result);
@@ -75,7 +76,7 @@ public class PostFavourController {
         if (postQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
         // 限制爬虫

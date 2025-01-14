@@ -1,4 +1,4 @@
-package com.yaonie.intelligent.assessment.server.chat_server.common.annotation;
+package com.yaonie.intelligent.assessment.server.common.model.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -19,7 +19,7 @@ public @interface AuthCheck {
      *
      * @return
      */
-    String mustRole() default "";
+    long mustRole();
 
 }
 

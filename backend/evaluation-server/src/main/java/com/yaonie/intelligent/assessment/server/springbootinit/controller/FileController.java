@@ -2,6 +2,7 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 
 import cn.hutool.core.io.FileUtil;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
@@ -11,7 +12,7 @@ import com.yaonie.intelligent.assessment.server.common.model.model.dto.file.Uplo
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.FileUploadBizEnum;
 import com.yaonie.intelligent.assessment.server.springbootinit.manager.CosManager;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class FileController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         validFile(multipartFile, fileUploadBizEnum);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         // 文件目录：根据业务、用户来划分
         String uuid = RandomStringUtils.randomAlphanumeric(8);
         String filename = uuid + "-" + multipartFile.getOriginalFilename();

@@ -2,6 +2,8 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
+import com.yaonie.intelligent.assessment.server.common.model.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
@@ -18,10 +20,8 @@ import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Question;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.QuestionVO;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.QuestionService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
-import com.zhipu.oapi.service.v4.model.ModelData;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
@@ -36,7 +36,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.publisher.Flux;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -71,7 +73,7 @@ public class QuestionController {
      * @return 新题目id
      */
     @PostMapping("/add")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Long> addQuestion(@RequestBody QuestionAddRequest questionAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(questionAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 在此处将实体类和 DTO 进行转换
@@ -82,7 +84,7 @@ public class QuestionController {
         // 数据校验
         questionService.validQuestion(question, true);
         // 填充默认值
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         question.setUserId(loginUser.getId());
         // 写入数据库
         boolean result = questionService.save(question);
@@ -100,12 +102,12 @@ public class QuestionController {
      * @return 是否删除成功
      */
     @PostMapping("/delete")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Boolean> deleteQuestion(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        User user = UserHolder.getUser();
         long id = deleteRequest.getId();
         // 判断是否存在
         Question oldQuestion = questionService.getById(id);
@@ -215,7 +217,7 @@ public class QuestionController {
                                                                  HttpServletRequest request) {
         ThrowUtils.throwIf(questionQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         questionQueryRequest.setUserId(loginUser.getId());
         long current = questionQueryRequest.getCurrent();
         long size = questionQueryRequest.getPageSize();
@@ -247,7 +249,7 @@ public class QuestionController {
         question.setQuestionContent(questionContent);
         // 数据校验
         questionService.validQuestion(question, false);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         // 判断是否存在
         long id = questionEditRequest.getId();
         Question oldQuestion = questionService.getById(id);
@@ -269,7 +271,7 @@ public class QuestionController {
      * @return
      */
     @PostMapping("/ai/generate")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<List<QuestionContextDto>> addQuestionByAi(@RequestBody AiGenerateQuestionRequest aiGenerateQuestionRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
         List<QuestionContextDto> questionContextDtoList = questionService.generateQuestionByAi(aiGenerateQuestionRequest);
@@ -285,12 +287,12 @@ public class QuestionController {
      * @return 流式题目数据
      */
     @GetMapping("/ai/generate/sse")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public SseEmitter generateQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest, Boolean isVip, HttpServletRequest request) {
         ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
         SseEmitter sseEmitter = new SseEmitter(0L);
 
-        Flowable<ModelData> questionFlowable = questionService.generateQuestionByAiStream(aiGenerateQuestionRequest);
+        Flux<String> questionFlowable = questionService.generateQuestionByAiStream(aiGenerateQuestionRequest);
 
         AtomicInteger count = new AtomicInteger();
         StringBuilder result = new StringBuilder();
@@ -299,8 +301,6 @@ public class QuestionController {
             scheduler = vipScheduler;
         }
         questionFlowable
-                // 过滤返回的语句
-                .map(modelData -> modelData.getChoices().get(0).getDelta().getContent())
                 // 去除特殊字符
                 .map(modelData -> modelData.replaceAll("\\s", ""))
                 // 过滤空字符串
@@ -324,14 +324,18 @@ public class QuestionController {
                         // count --
                         if (count.decrementAndGet() == 0) {
                             log.info("当前问题: {}", result.toString());
-                            sseEmitter.send(result.toString());
+                            try {
+                                sseEmitter.send(result.toString());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                             result.setLength(0);
                         }
                     } else if (count.get() != 0) {
                         result.append(modelData);
                     }
                 })
-                .subscribeOn(scheduler)
+                .subscribeOn((reactor.core.scheduler.Scheduler) scheduler)
                 .doOnError(error -> {
                     throw new BusinessException(ErrorCode.SYSTEM_ERROR, error.getMessage());
                 })

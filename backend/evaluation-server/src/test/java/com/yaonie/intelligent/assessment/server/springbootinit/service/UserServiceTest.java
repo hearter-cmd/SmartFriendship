@@ -1,6 +1,7 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.service;
 
 
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

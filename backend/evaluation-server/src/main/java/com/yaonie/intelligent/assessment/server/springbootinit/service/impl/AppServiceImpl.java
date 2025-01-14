@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ReviewRequest;
@@ -20,10 +21,10 @@ import com.yaonie.intelligent.assessment.server.common.model.model.enums.AppType
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.ReviewStatusEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.AppVO;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.util.SqlUtils;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.AppMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
-import com.yaonie.intelligent.assessment.server.springbootinit.utils.SqlUtils;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -184,7 +185,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     /**
      * 获取应用封装
      *
-     * @param app
+     * @param app     应用
      * @param request
      * @return
      */
@@ -251,7 +252,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
         // 数据校验
         validApp(app, true);
         // todo 填充默认值
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         app.setUserId(loginUser.getId());
         // 写入数据库
         boolean result = save(app);
@@ -303,7 +304,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
         App app = new App();
         BeanUtils.copyProperties(reviewRequest, app);
         // 数据校验
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         Long userId = loginUser.getId();
         // 判断是否存在
         long id = reviewRequest.getId();
@@ -319,7 +320,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     }
 
     private long isAdminOrMe(Long id, HttpServletRequest request) {
-        User user = userService.getLoginUser(request);
+        User user = UserHolder.getUser();
         // 判断是否存在
         App oldApp = getById(id);
         ThrowUtils.throwIf(oldApp == null, ErrorCode.NOT_FOUND_ERROR);

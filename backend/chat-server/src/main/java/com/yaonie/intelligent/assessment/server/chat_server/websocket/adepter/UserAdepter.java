@@ -33,7 +33,7 @@ public class UserAdepter {
     public static User buildAuthorizeUser(WxOAuth2UserInfo userInfo) {
         // 更新对象
         User user = new User();
-        user.setSex(0);
+        user.setSex('0');
         user.setPersonSignature("这是一条个性的签名~~");
         user.setUnionId(userInfo.getUnionId());
         user.setUserName(userInfo.getNickname());

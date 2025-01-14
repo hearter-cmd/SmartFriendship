@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  * 主类（项目启动入口）
@@ -17,13 +16,14 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 //    (exclude = {RedisAutoConfiguration.class})
 @SpringBootApplication(scanBasePackages = {
         "com.yaonie.intelligent.assessment.server",
+        "com.yaonie.intelligent.assessment.ai",
+        "com.yaonie.intelligent.assessment.system"
 })
 @EnableScheduling
 // 开启AOP
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
-@EnableRedisHttpSession
 @EnableConfigurationProperties({
-        ZhiPuAi.class
+        ZhiPuAi.class,
 })
 public class MainApplication {
 

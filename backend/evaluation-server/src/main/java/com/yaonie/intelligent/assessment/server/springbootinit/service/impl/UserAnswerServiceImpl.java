@@ -15,12 +15,12 @@ import com.yaonie.intelligent.assessment.server.common.model.model.enums.AppScor
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.AppTypeEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserAnswerVO;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.util.SqlUtils;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.UserAnswerMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.ScoringResultService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserAnswerService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
-import com.yaonie.intelligent.assessment.server.springbootinit.utils.SqlUtils;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +36,8 @@ import java.util.stream.Collectors;
 /**
  * 用户答案表服务实现
  *
+ * @author 武春利
+ * @since 2025-01-09
  */
 @Service
 @Slf4j

@@ -4,12 +4,10 @@ package com.yaonie.intelligent.assessment.server.chat_server.chat.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yaonie.intelligent.assessment.server.chat_server.chat.model.dto.MessageDto;
 import com.yaonie.intelligent.assessment.server.chat_server.chat.service.MessageService;
-import com.yaonie.intelligent.assessment.server.chat_server.common.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
-import com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant;
 import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,7 +53,6 @@ public class MessageController {
      * @return 消息列表
      */
     @GetMapping("/msg/list/{id}")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
     public BaseResponse<Page<Message>> getMsgList(@PathVariable("id") Long id, HttpServletRequest request) {
         ThrowUtils.throwIf(Objects.isNull(id), ErrorCode.PARAMS_ERROR);
         return ResultUtils.success(messageService.getMsgList(id, request));

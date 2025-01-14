@@ -1,20 +1,20 @@
 package com.yaonie.intelligent.assessment.server.chat_server;
 
 
+import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.FriendMessage;
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
-import com.yaonie.intelligent.assessment.server.chat_server.user.controller.UserController;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.UserService;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.service.WebSocketService;
-import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.common.util.JsonUtils;
 import jakarta.annotation.Resource;
+import org.junit.jupiter.api.Test;
+import org.redisson.api.RedissonClient;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-import org.junit.jupiter.api.Test;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
-import org.springframework.boot.test.context.SpringBootTest;
 
 
 
@@ -30,8 +30,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 public class TestIt {
-    @Resource
-    private UserController userController;
 
     @Resource
     private UserService userService;
@@ -42,13 +40,21 @@ public class TestIt {
     @Resource
     private WebSocketService webSocketService;
 
+    @Resource
+    private RabbitTemplate rabbitTemplate;
+
     @Test
     void test1(){
-        RLock lock = redissonClient.getLock("lock");
-        lock.lock();
-        User userByMpOpenId = userService.getUserByMpOpenId("1");
-        System.out.println(userByMpOpenId);
-        lock.unlock();
+//        RLock lock = redissonClient.getLock("lock");
+//        lock.lock();
+//        User userByMpOpenId = userService.getUserByMpOpenId("1");
+//        System.out.println(userByMpOpenId);
+//        lock.unlock();
+        FriendMessage friendMessage = new FriendMessage();
+        friendMessage.setFromUserId(0L);
+        friendMessage.setToUserId(1834256123482370058L);
+        friendMessage.setMessage("测试一下");
+        rabbitTemplate.convertAndSend("chat.message.routing.key.friend", friendMessage);
     }
 
     @Test

@@ -9,5 +9,5 @@ COPY src ./src
 # Build a release artifact.
 RUN mvn package -DskipTests
 
-# Run the web service on container startup.
+# Run the web com.yaonie.intelligent.assessment.service on container startup.
 CMD ["java","-jar","/app/target/springboot-init-${project.version}.jar","--spring.profiles.active=prod"]

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.yaonie.intelligent.assessment.server</groupId>
+        <artifactId>springboot-init</artifactId>
+        <version>0.0.9-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ai-model</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-ai-starter.version>1.0.3</spring-ai-starter.version>
+    </properties>
+
+    <dependencies>
+        <!-- 基本依赖 -->
+        <dependency>
+            <groupId>com.yaonie.intelligent.assessment.server</groupId>
+            <artifactId>server-common-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yaonie.intelligent.assessment.server</groupId>
+            <artifactId>server-common-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yaonie.intelligent.assessment.server</groupId>
+            <artifactId>server-common-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yaonie.intelligent.assessment.server</groupId>
+            <artifactId>system-server</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 模型依赖 -->
+        <dependency>
+            <groupId>group.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>group.springframework.ai</groupId>
+            <artifactId>spring-ai-zhipuai-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

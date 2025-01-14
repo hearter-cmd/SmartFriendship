@@ -50,7 +50,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     @Override
     public void sendMsg(MessageDto msg, HttpServletRequest request) {
         // 转换
-//        User loginUser = userService.getLoginUser(request);
+//        User loginUser = UserHolder.getUser();
         Message message = new Message();
         Long userId = 1L;
         BeanUtil.copyProperties(msg, message);

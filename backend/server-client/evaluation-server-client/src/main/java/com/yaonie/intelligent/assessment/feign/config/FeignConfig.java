@@ -43,7 +43,7 @@ public class FeignConfig implements RequestInterceptor {
                 String values = request.getHeader(name);
 
                 // 跳过 content-length，解决too many bites written的问题
-                if (name.equalsIgnoreCase("content-length")){
+                if ("content-length".equalsIgnoreCase(name)){
                     continue;
                 }
                 template.header(name, values);

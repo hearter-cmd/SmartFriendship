@@ -1,6 +1,8 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
+import com.yaonie.intelligent.assessment.server.common.model.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
@@ -17,10 +19,9 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.ReviewStatusEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.AppVO;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.QuestionService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -57,11 +58,10 @@ public class AppController {
      * 创建应用
      *
      * @param appAddRequest 应用信息
-     * @param request 请求
+     * @param request       请求
      * @return 新应用id
      */
     @PostMapping("/add")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
     public BaseResponse<Long> addApp(@RequestBody AppAddRequest appAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(appAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 在此处将实体类和 DTO 进行转换
@@ -75,11 +75,10 @@ public class AppController {
      * 删除应用
      *
      * @param deleteRequest 应用id
-     * @param request 请求
+     * @param request       请求
      * @return 是否删除成功
      */
     @PostMapping("/delete")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
     @Transactional(rollbackFor = Exception.class)
     public BaseResponse<Boolean> deleteApp(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
@@ -113,7 +112,7 @@ public class AppController {
      * @return 应用信息
      */
     @GetMapping("/get/vo")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+
     public BaseResponse<AppVO> getAppVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
@@ -144,12 +143,12 @@ public class AppController {
      * 分页获取应用列表（封装类）
      *
      * @param appQueryRequest 应用查询条件对象
-     * @param request 请求
+     * @param request         请求
      * @return 应用列表
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<AppVO>> listAppVOByPage(@RequestBody AppQueryRequest appQueryRequest,
-                                                               HttpServletRequest request) {
+                                                     HttpServletRequest request) {
         long current = appQueryRequest.getCurrent();
         long size = appQueryRequest.getPageSize();
         // 限制爬虫
@@ -171,10 +170,10 @@ public class AppController {
      */
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<AppVO>> listMyAppVOByPage(@RequestBody AppQueryRequest appQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                       HttpServletRequest request) {
         ThrowUtils.throwIf(appQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         appQueryRequest.setUserId(loginUser.getId());
         long current = appQueryRequest.getCurrent();
         long size = appQueryRequest.getPageSize();
@@ -191,7 +190,7 @@ public class AppController {
      * 编辑应用（给用户使用）
      *
      * @param appEditRequest 应用编辑请求对象
-     * @param request 请求
+     * @param request        请求
      * @return 是否编辑成功
      */
     @PostMapping("/edit")
@@ -207,6 +206,7 @@ public class AppController {
 
     /**
      * 应用审核(管理员使用)
+     *
      * @param reviewRequest 审核请求对象
      * @return 是否审核成功
      */

@@ -1,5 +1,6 @@
 package com.yaonie.intelligent.assessment.server.common.model.model.dto.user;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serial;
@@ -14,6 +15,7 @@ public class UserUpdateRequest implements Serializable {
     /**
      * id
      */
+    @NotNull
     private Long id;
 
     /**

@@ -4,7 +4,6 @@ package com.yaonie.intelligent.assessment.server.chat_server.websocket;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.handler.CustomHttpRequestHandler;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.handler.NettyWebSocketServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -83,7 +82,7 @@ public class WebSocketStart {
                         protected void initChannel(SocketChannel ch) {
                             ChannelPipeline pipeline = ch.pipeline();
                             // 添加心跳
-                            pipeline.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.SECONDS));
+                            pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
                             // 添加Http编解码器
                             pipeline.addLast(new HttpServerCodec());
                             //

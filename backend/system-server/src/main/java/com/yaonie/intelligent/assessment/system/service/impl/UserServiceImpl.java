@@ -1,35 +1,48 @@
-package com.yaonie.intelligent.assessment.server.springbootinit.service.impl;
+package com.yaonie.intelligent.assessment.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
+import com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
+import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserQueryRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.SecurityUser;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.area.GaoDeArea;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.UserRoleEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.LoginUserVO;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.RoleVO;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
-import com.yaonie.intelligent.assessment.server.springbootinit.mapper.UserMapper;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
-import com.yaonie.intelligent.assessment.server.springbootinit.utils.NetUtils;
-import com.yaonie.intelligent.assessment.server.springbootinit.utils.SqlUtils;
+import com.yaonie.intelligent.assessment.server.common.util.NetUtils;
+import com.yaonie.intelligent.assessment.server.common.util.SecurityUtils;
+import com.yaonie.intelligent.assessment.server.common.util.SqlUtils;
+import com.yaonie.intelligent.assessment.system.domain.dto.UserPatchPassDto;
+import com.yaonie.intelligent.assessment.system.domain.entity.SysRole;
+import com.yaonie.intelligent.assessment.system.domain.vo.AdminUserInfoVO;
+import com.yaonie.intelligent.assessment.system.mapper.UserMapper;
+import com.yaonie.intelligent.assessment.system.service.SysRoleService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant.REDIS_CAPTCHA_PREFIX;
+import static com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant.SALT;
 import static com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -40,31 +53,20 @@ import static com.yaonie.intelligent.assessment.server.common.model.constant.Use
 @Service
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-
-    /**
-     * 盐值，混淆密码
-     */
-    public static final String SALT = "yaonie";
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private SysRoleService sysRoleService;
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword, HttpServletRequest request, String captcha) {
         // 1. 校验
-        if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
-        }
-        if (userAccount.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户账号过短");
-        }
-        if (userPassword.length() < 8 || checkPassword.length() < 8) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户密码过短");
-        }
-        // 密码和校验密码相同
-        if (!userPassword.equals(checkPassword)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "两次输入的密码不一致");
-        }
         // 验证码校验
         String captchaKey = request.getSession().getAttribute(REDIS_CAPTCHA_PREFIX).toString();
         if (StringUtils.isAnyBlank(captchaKey, captcha)) {
@@ -79,15 +81,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("userAccount", userAccount);
             long count = this.baseMapper.selectCount(queryWrapper);
-            if (count > 0) {
-                throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
-            }
+            ThrowUtils.throwIf(count > 0, ErrorCode.PARAMS_ERROR, "账号重复");
             // 2. 加密
             String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
             // 3. 插入数据
             User user = new User();
+            user.setUserName(userAccount);
             user.setUserAccount(userAccount);
             user.setUserPassword(encryptPassword);
+            user.setUserRoleStr(UserConstant.DEFAULT_ROLE_ID);
             boolean saveResult = this.save(user);
             if (!saveResult) {
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");
@@ -99,15 +101,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request) {
         // 1. 校验
-        if (StringUtils.isAnyBlank(userAccount, userPassword)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
-        }
-        if (userAccount.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号错误");
-        }
-        if (userPassword.length() < 8) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码错误");
-        }
 
         // 2. 加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
@@ -174,30 +167,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //    }
 
     /**
-     * 获取当前登录用户
-     *
-     * @param request Request请求对象
-     * @return 登录用户信息
-     */
-    @Override
-    public User getLoginUser(HttpServletRequest request) {
-        // 先判断是否已登录
-        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
-        User currentUser = (User) userObj;
-        if (currentUser == null || currentUser.getId() == null) {
-            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-        }
-        log.info("SessionId: {}", request.getSession().getId());
-        // TODO 从数据库查询（追求性能的话可以注释，直接走缓存）
-//        long userId = currentUser.getId();
-//        currentUser = this.getById(userId);
-//        if (currentUser == null) {
-//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-//        }
-        return currentUser;
-    }
-
-    /**
      * 获取当前登录用户（允许未登录）
      *
      * @param request Request请求对象
@@ -232,7 +201,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean isAdmin(User user) {
-        return user != null && UserRoleEnum.ADMIN.getValue().equals(user.getUserRole());
+        return user != null &&  user.getUserRoleStr().matches(".*" + UserRoleEnum.ADMIN.getValue() + ".*");
     }
 
     /**
@@ -265,8 +234,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user == null) {
             return null;
         }
+
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
+
+        List<SysRole> roles = sysRoleService.listByIds(Arrays.stream(user.getUserRoleStr().split(",")).toList());
+        List<RoleVO> roleVOList = roles.stream()
+                .map(item -> new RoleVO(item.getRoleId(),  item.getRoleKey(), item.getRoleName(),item.getEnable().equals('0')))
+                .toList();
+        userVO.setRoles(roleVOList);
         return userVO;
     }
 
@@ -291,15 +267,82 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String userRole = userQueryRequest.getUserRole();
         String sortField = userQueryRequest.getSortField();
         String sortOrder = userQueryRequest.getSortOrder();
+        Integer sex = userQueryRequest.getSex();
+        Integer enable = userQueryRequest.getEnable();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(id != null, "id", id);
         queryWrapper.eq(StringUtils.isNotBlank(unionId), "unionId", unionId);
         queryWrapper.eq(StringUtils.isNotBlank(mpOpenId), "mpOpenId", mpOpenId);
         queryWrapper.eq(StringUtils.isNotBlank(userRole), "userRole", userRole);
+        queryWrapper.eq(Objects.nonNull(sex), "sex", sex);
+        queryWrapper.eq(Objects.nonNull(enable), "enable", enable);
         queryWrapper.like(StringUtils.isNotBlank(userProfile), "userProfile", userProfile);
         queryWrapper.like(StringUtils.isNotBlank(userName), "userName", userName);
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
         return queryWrapper;
+    }
+
+    /**
+     * 获取用户信息，包括用户基本信息和角色信息
+     *
+     * @return 用户信息的VO对象
+     */
+    @Override
+    public AdminUserInfoVO getAdminUserInfo() {
+        // 查询用户信息
+        SecurityUser securityUser = SecurityUtils.getSecurityUser();
+        User user = securityUser.getUser();
+
+        // 查询用户角色信息
+        List<SysRole> roles = sysRoleService.listByIds(securityUser.getRoleIds());
+
+        // 构建 UserInfoVO
+        AdminUserInfoVO userInfoVO = new AdminUserInfoVO();
+        userInfoVO.setId(user.getId());
+        userInfoVO.setUsername(user.getUserName());
+        userInfoVO.setEnable(user.getEnable().equals('0'));
+        userInfoVO.setCreateTime(user.getCreateTime().toString());
+        userInfoVO.setUpdateTime(user.getUpdateTime().toString());
+
+        AdminUserInfoVO.Profile profile = new AdminUserInfoVO.Profile();
+        profile.setId(user.getId());
+        profile.setNickName(user.getUserName());
+        profile.setGender(user.getSex());
+        profile.setAvatar(user.getUserAvatar());
+        profile.setAddress(user.getAreaName());
+        profile.setEmail(user.getEmail());
+        profile.setUserId(user.getId());
+        userInfoVO.setProfile(profile);
+
+        List<AdminUserInfoVO.Role> roleVOs = roles.stream().map(role -> {
+            AdminUserInfoVO.Role roleVO = new AdminUserInfoVO.Role();
+            roleVO.setId(role.getRoleId());
+            roleVO.setCode(role.getRoleKey());
+            roleVO.setName(role.getRoleName());
+            roleVO.setEnable("0".equals(role.getEnable()));
+            return roleVO;
+        }).collect(Collectors.toList());
+        userInfoVO.setRoles(roleVOs);
+
+        // 假设第一个角色为当前角色
+        if (!roles.isEmpty()) {
+            SysRole currentRole = roles.get(0);
+            AdminUserInfoVO.Role currentRoleVO = new AdminUserInfoVO.Role();
+            currentRoleVO.setId(currentRole.getRoleId());
+            currentRoleVO.setCode(currentRole.getRoleKey());
+            currentRoleVO.setName(currentRole.getRoleName());
+            currentRoleVO.setEnable("0".equals(currentRole.getEnable()));
+            userInfoVO.setCurrentRole(currentRoleVO);
+        }
+
+        return userInfoVO;
+    }
+
+    @Override
+    public boolean resetPassword(UserPatchPassDto newPass, Long id) {
+        String encode = passwordEncoder.encode(newPass.getPassword());
+        boolean update = lambdaUpdate().eq(User::getId, id).set(User::getUserPassword, encode).update();
+        return update;
     }
 }

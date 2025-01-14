@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
@@ -15,12 +16,12 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.PostThumb;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.PostVO;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
+import com.yaonie.intelligent.assessment.server.common.util.SqlUtils;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostFavourMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostThumbMapper;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
-import com.yaonie.intelligent.assessment.server.springbootinit.utils.SqlUtils;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -260,7 +261,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         User loginUser = userService.getLoginUserPermitNull(request);
         if (loginUser != null) {
             Set<Long> postIdSet = postList.stream().map(Post::getId).collect(Collectors.toSet());
-            loginUser = userService.getLoginUser(request);
+            loginUser = UserHolder.getUser();
             // 获取点赞
             QueryWrapper<PostThumb> postThumbQueryWrapper = new QueryWrapper<>();
             postThumbQueryWrapper.in("postId", postIdSet);

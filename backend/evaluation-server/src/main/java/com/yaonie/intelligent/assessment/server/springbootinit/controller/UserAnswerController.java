@@ -3,6 +3,8 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
+import com.yaonie.intelligent.assessment.server.common.model.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
@@ -19,11 +21,10 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.UserAnswer;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.ReviewStatusEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserAnswerVO;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.springbootinit.scoring.ScoringStrategyExecutor;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserAnswerService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -68,7 +69,7 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/add")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Long> addUserAnswer(@RequestBody UserAnswerAddRequest userAnswerAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(userAnswerAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 在此处将实体类和 DTO 进行转换
@@ -84,7 +85,7 @@ public class UserAnswerController {
         // 数据校验
         userAnswerService.validUserAnswer(userAnswer, true);
         // 填充默认值
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         userAnswer.setUserId(loginUser.getId());
         // 写入数据库
         try {
@@ -114,12 +115,12 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/delete")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Boolean> deleteUserAnswer(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        User user = UserHolder.getUser();
         long id = deleteRequest.getId();
         // 判断是否存在
         UserAnswer oldUserAnswer = userAnswerService.getById(id);
@@ -170,7 +171,7 @@ public class UserAnswerController {
      * @return
      */
     @GetMapping("/get/vo")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<UserAnswerVO> getUserAnswerVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
@@ -205,7 +206,7 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/list/page/vo")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Page<UserAnswerVO>> listUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
                                                                HttpServletRequest request) {
         long current = userAnswerQueryRequest.getCurrent();
@@ -227,12 +228,12 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/my/list/page/vo")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Page<UserAnswerVO>> listMyUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
                                                                  HttpServletRequest request) {
         ThrowUtils.throwIf(userAnswerQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         userAnswerQueryRequest.setUserId(loginUser.getId());
         long current = userAnswerQueryRequest.getCurrent();
         long size = userAnswerQueryRequest.getPageSize();
@@ -253,7 +254,7 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/edit")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Boolean> editUserAnswer(@RequestBody UserAnswerEditRequest userAnswerEditRequest, HttpServletRequest request) {
         if (userAnswerEditRequest == null || userAnswerEditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -265,7 +266,7 @@ public class UserAnswerController {
         userAnswer.setChoices(choices);
         // 数据校验
         userAnswerService.validUserAnswer(userAnswer, false);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         // 判断是否存在
         long id = userAnswerEditRequest.getId();
         UserAnswer oldUserAnswer = userAnswerService.getById(id);

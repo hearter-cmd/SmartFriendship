@@ -1,5 +1,6 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
@@ -7,7 +8,7 @@ import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessE
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.postthumb.PostThumbAddRequest;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostThumbService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public class PostThumbController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // 登录才能点赞
-        final User loginUser = userService.getLoginUser(request);
+        final User loginUser = UserHolder.getUser();
         long postId = postThumbAddRequest.getPostId();
         int result = postThumbService.doPostThumb(postId, loginUser);
         return ResultUtils.success(result);

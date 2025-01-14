@@ -50,6 +50,8 @@ public class CustomHttpRequestHandler extends ChannelInboundHandlerAdapter {
         if (httpObject instanceof HttpRequest) {
             final HttpRequest req = (HttpRequest) httpObject;
             HttpHeaders headers = req.headers();
+            headers.get("Cookie");
+
             //region 自定义IP获取流程
             // 自定义IP获取流程
             String ip = NettyIpUtil.parseForGetIp(ctx, headers);
@@ -64,18 +66,24 @@ public class CustomHttpRequestHandler extends ChannelInboundHandlerAdapter {
                 WebSocketAdepter.sendNewSessionId(ctx.channel(), sessionId);
             } else {
                 Session session = SessionUtil.findSessionBySessionId(sessionId);
+                // SESSION存在, 判断用户是否登录
                 if (session != null) {
+                    // 通过Session获取用户信息
                     User currentUser = session.getAttribute(USER_LOGIN_STATE);
+                    // 用户不存在就去登录页面授权
                     if (currentUser != null) {
                         NettyUtil.setChannelAttr(ctx, NettyUtil.TypeEnum.SESSION_ID, sessionId);
                         webSocketService.loginSuccess(ctx.channel(), currentUser, session);
                     }
                     log.info("userObj:{}, sessionId:{}", currentUser, session.getId());
                 } else {
+                    // SESSION不存在, 创建新的SESSION
                     sessionId = SessionUtil.createSessionId();
                     log.info("channel设置sessionId : {}", sessionId);
                 }
             }
+            // 到这里一定已经登录了
+            // 保存SessionID给其他地方用
             NettyUtil.setChannelAttr(ctx, NettyUtil.TypeEnum.SESSION_ID, sessionId);
             //endregion
 
@@ -90,19 +98,17 @@ public class CustomHttpRequestHandler extends ChannelInboundHandlerAdapter {
             } else {
                 ctx.pipeline().remove(this);
                 ChannelFuture handshakeFuture = handshaker.handshake(ctx.channel(), req);
-                handshakeFuture.addListener(new ChannelFutureListener() {
-                    public void operationComplete(ChannelFuture future) {
-                        if (!future.isSuccess()) {
-                            ctx.fireExceptionCaught(future.cause());
-                        } else {
-                            ctx.fireUserEventTriggered(WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE);
-                            ctx.fireUserEventTriggered(new WebSocketServerProtocolHandler.HandshakeComplete(req.uri(), req.headers(), handshaker.selectedSubprotocol()));
-                        }
+                handshakeFuture.addListener((ChannelFutureListener) future -> {
+                    if (!future.isSuccess()) {
+                        ctx.fireExceptionCaught(future.cause());
+                    } else {
+                        ctx.fireUserEventTriggered(WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE);
+                        ctx.fireUserEventTriggered(new WebSocketServerProtocolHandler.HandshakeComplete(req.uri(), req.headers(), handshaker.selectedSubprotocol()));
                     }
                 });
             }
             // 处理机只需要一次
-//            ctx.pipeline().remove(this);
+            ctx.pipeline().remove(this);
         } else {
             ctx.fireChannelRead(msg);
         }

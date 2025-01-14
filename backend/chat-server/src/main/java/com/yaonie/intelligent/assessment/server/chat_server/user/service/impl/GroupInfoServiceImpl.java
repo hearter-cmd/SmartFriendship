@@ -15,6 +15,7 @@ import com.yaonie.intelligent.assessment.server.chat_server.user.mappers.UserCon
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.GroupInfoService;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.UserService;
 import com.yaonie.intelligent.assessment.server.chat_server.utils.StringTools;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
@@ -162,7 +163,7 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 		if (groupInfo == null || groupInfo.getGroupAvatar() == null) {
 			throw new BusinessException(ErrorCode.PARAMS_ERROR);
 		}
-		User loginUser = userService.getLoginUser(request);
+		User loginUser = UserHolder.getUser();
 		if (groupInfo.getGroupId() == null) {
 			// 新增群组
 			GroupInfoQuery groupInfoQuery = new GroupInfoQuery();

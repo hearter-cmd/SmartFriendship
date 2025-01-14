@@ -23,7 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 帖子收藏服务实现
  *
-  */
+ * @author yaonie
+ * @since 2025-01-10
+ */
 @Service
 public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFavour>
         implements PostFavourService {

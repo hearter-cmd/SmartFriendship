@@ -8,6 +8,7 @@ import com.github.rholder.retry.Retryer;
 import com.github.rholder.retry.RetryerBuilder;
 import com.github.rholder.retry.StopStrategies;
 import com.github.rholder.retry.WaitStrategies;
+import com.yaonie.intelligent.assessment.ai.service.impl.ZhiPuService;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.QuestionAnswerDTO;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.QuestionContextDto;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.App;
@@ -62,6 +63,8 @@ public class CustomAiTestScoringStrategy implements ScoringStrategy {
     private QuestionService questionService;
     @Resource
     private ZhiPuUtils zhiPuUtils;
+    @Resource
+    private ZhiPuService zhiPuService;
 
     private String getAiTestScoringUserMessage(List<String> choices, App app) throws ExecutionException, RetryException {
         // 使用retry进行重试
@@ -95,8 +98,8 @@ public class CustomAiTestScoringStrategy implements ScoringStrategy {
     public UserAnswer doScore(List<String> choices, App app) throws Exception {
         // 1. 从AI获取用户答案
         return RETRYER.call(() -> {
-            String result = zhiPuUtils
-                    .doAsyncStableRequest(AI_TEST_SCORING_SYSTEM_MESSAGE, getAiTestScoringUserMessage(choices, app), null)
+            String result = zhiPuService
+                    .getMessage(AI_TEST_SCORING_SYSTEM_MESSAGE, getAiTestScoringUserMessage(choices, app))
                     .replaceAll("用户|你", "您");
 
             // 结果处理

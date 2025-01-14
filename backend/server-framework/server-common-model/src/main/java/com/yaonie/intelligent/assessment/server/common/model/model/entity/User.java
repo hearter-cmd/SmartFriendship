@@ -6,27 +6,77 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.micrometer.common.util.StringUtils;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户
  *
  * @author 77160
  */
+@JsonTypeName("User")
 @Data
 @TableName(value = "sys_user")
 public class User implements Serializable {
 
+    public User() {
+    }
+
+    public User(@JsonProperty("id")Long id, @JsonProperty("userAccount")String userAccount,
+                 @JsonProperty("email")String email,
+                @JsonProperty("sex")Character sex, @JsonProperty("personSignature")String personSignature,
+                @JsonProperty("unionId")String unionId, @JsonProperty("mpOpenId")String mpOpenId,
+                @JsonProperty("userName")String userName, @JsonProperty("userAvatar")String userAvatar,
+                @JsonProperty("userProfile")String userProfile, @JsonProperty("userRoleStr")String userRoleStr,
+                @JsonProperty("userRole")List<Long> userRole, @JsonProperty("joinType")Integer joinType,
+                @JsonProperty("ip")String ip, @JsonProperty("areaName")String areaName,
+                @JsonProperty("areaCode")String areaCode, @JsonProperty("lastLoginTime")Date lastLoginTime,
+                @JsonProperty("lastLeaveTime")Long lastLeaveTime, @JsonProperty("createTime")Date createTime,
+                @JsonProperty("updateTime")Date updateTime, @JsonProperty("tags")String tags,
+                 @JsonProperty("isDelete")Integer isDelete,
+                @JsonProperty("enable")Character enable) {
+        this.id = id;
+        this.userAccount = userAccount;
+        this.enable = enable;
+        this.email = email;
+        this.sex = sex;
+        this.personSignature = personSignature;
+        this.unionId = unionId;
+        this.mpOpenId = mpOpenId;
+        this.userName = userName;
+        this.userAvatar = userAvatar;
+        this.userProfile = userProfile;
+        this.userRoleStr = userRoleStr;
+        this.userRole = userRole;
+        this.joinType = joinType;
+        this.ip = ip;
+        this.areaName = areaName;
+        this.areaCode = areaCode;
+        this.lastLoginTime = lastLoginTime;
+        this.lastLeaveTime = lastLeaveTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.tags = tags;
+        this.isDelete = isDelete;
+    }
+
     /**
      * id
      */
+    @Getter
+    @Setter
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
@@ -38,6 +88,7 @@ public class User implements Serializable {
     /**
      * 密码
      */
+    @JsonIgnore
     @Transient
     private String userPassword;
 
@@ -49,7 +100,7 @@ public class User implements Serializable {
     /**
      * 性别 0:女 1:男  2:未知
      */
-    private Integer sex;
+    private Character sex;
 
     /**
      * 个性签名
@@ -69,6 +120,11 @@ public class User implements Serializable {
     @Transient
     private String mpOpenId;
 
+    @TableField(value = "enable")
+    private Character enable;
+
+
+
     /**
      * 用户昵称
      */
@@ -86,11 +142,12 @@ public class User implements Serializable {
      */
     private String userProfile;
 
+    @TableField(value = "userRole")
+    private String userRoleStr;
     /**
      * 用户角色：user/admin/ban
      */
-    @Transient
-    private String userRole;
+    private List<Long> userRole;
 
     /**
      * 添加好友的方式 0 : 直接添加; 1 : 同意后添加

@@ -1,4 +1,4 @@
-package com.yaonie.intelligent.assessment.server.springbootinit.annotation;
+package com.yaonie.intelligent.assessment.server.common.model.annotation;
 
 
 import java.lang.annotation.ElementType;

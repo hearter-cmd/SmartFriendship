@@ -2,9 +2,9 @@ package com.yaonie.intelligent.assessment.server.springbootinit.aop;
 
 
 import cn.hutool.crypto.SecureUtil;
+import com.yaonie.intelligent.assessment.server.common.model.annotation.AntiShake;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.util.RedisUtils;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AntiShake;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +54,7 @@ public class AntiShakeInterceptor implements HandlerInterceptor {
         if (RedisUtils.hasKey(md5Id)) {
             throw new BusinessException(500, "请求过于频繁");
         }
-        RedisUtils.set(md5Id, 1, FREQUENCY, TimeUnit.MINUTES);
+        RedisUtils.set(md5Id, 2, FREQUENCY, TimeUnit.SECONDS);
         return true;
     }
 }

@@ -106,7 +106,7 @@ public class RedisUtils {
      * 根据 key 获取过期时间
      *
      * @param key 键 不能为null
-     * @return 时间(秒) 返回0代表为永久有效
+     * @return 时间(秒) 返回 0 代表为永久有效
      */
     public static Long getExpire(String key) {
         return stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
@@ -116,7 +116,7 @@ public class RedisUtils {
      * 根据 key 获取过期时间
      *
      * @param key 键 不能为null
-     * @return 时间(秒) 返回0代表为永久有效
+     * @return 时间(秒) 返回 0 代表为永久有效
      */
     public static Long getExpire(String key, TimeUnit timeUnit) {
         return stringRedisTemplate.getExpire(key, timeUnit);
@@ -368,7 +368,7 @@ public class RedisUtils {
      * @param map 对应多个键值
      * @return true 成功 false 失败
      */
-    public static Boolean hmset(String key, Map<String, Object> map) {
+    public static <T> Boolean hmset(String key, Map<String, T> map) {
         try {
             stringRedisTemplate.opsForHash().putAll(key, map);
             return true;
@@ -386,7 +386,7 @@ public class RedisUtils {
      * @param time 时间(秒)
      * @return true成功 false失败
      */
-    public static Boolean hmset(String key, Map<String, Object> map, long time) {
+    public static <T> Boolean hmset(String key, Map<String, T> map, long time) {
         try {
             stringRedisTemplate.opsForHash().putAll(key, map);
             if (time > 0) {
@@ -429,6 +429,19 @@ public class RedisUtils {
     public static Boolean hset(String key, String item, Object value, long time) {
         try {
             stringRedisTemplate.opsForHash().put(key, item, value);
+            if (time > 0) {
+                expire(key, time);
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return false;
+        }
+    }
+
+    public  static <T> Boolean hset(String key, Map<String,T> map, long time) {
+        try {
+            stringRedisTemplate.opsForHash().putAll(key, map);
             if (time > 0) {
                 expire(key, time);
             }
@@ -600,7 +613,7 @@ public class RedisUtils {
      *
      * @param key   键
      * @param start 开始
-     * @param end   结束 0 到 -1代表所有值
+     * @param end   结束 0 到 -1 代表所有值
      * @return List<String>数据 list
      */
     public static List<String> lGet(String key, long start, long end) {
@@ -1135,4 +1148,13 @@ public class RedisUtils {
                 destKey);
     }
 
+    /**
+     * 获取并删除指定键的值。
+     *
+     * @param key 键名
+     * @return 返回被删除的值，如果键不存在则返回null
+     */
+    public static String getAndDelete(String key) {
+        return stringRedisTemplate.opsForValue().getAndDelete(key);
+    }
 }

@@ -14,15 +14,15 @@ import java.util.stream.Collectors;
 @Getter
 public enum UserRoleEnum {
 
-    USER("用户", "user"),
-    ADMIN("管理员", "admin"),
-    BAN("被封号", "ban");
+    USER("用户", 2L),
+    ADMIN("管理员", 1L),
+    BAN("被封号", 3L);
 
     private final String text;
 
-    private final String value;
+    private final Long value;
 
-    UserRoleEnum(String text, String value) {
+    UserRoleEnum(String text, Long value) {
         this.text = text;
         this.value = value;
     }
@@ -32,7 +32,7 @@ public enum UserRoleEnum {
      *
      * @return List<String> 枚举值列表
      */
-    public static List<String> getValues() {
+    public static List<Long> getValues() {
         return Arrays.stream(values()).map(item -> item.value).collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public enum UserRoleEnum {
      * @param value 枚举值
      * @return UserRoleEnum 枚举
      */
-    public static UserRoleEnum getEnumByValue(String value) {
+    public static UserRoleEnum getEnumByValue(Long value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }

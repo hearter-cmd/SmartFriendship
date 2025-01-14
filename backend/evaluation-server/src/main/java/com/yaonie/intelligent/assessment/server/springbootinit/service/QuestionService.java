@@ -8,9 +8,8 @@ import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.question.QuestionQueryRequest;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Question;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.QuestionVO;
-import com.zhipu.oapi.service.v4.model.ModelData;
-import io.reactivex.Flowable;
 import jakarta.servlet.http.HttpServletRequest;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -66,7 +65,7 @@ public interface QuestionService extends IService<Question> {
      * @param aiGenerateQuestionRequest Ai生成题目需要的参数
      * @return 流式对象
      */
-    Flowable<ModelData> generateQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest);
+    Flux<String> generateQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest);
 
     void removeByAppId(Long appId);
 }

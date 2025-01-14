@@ -22,4 +22,36 @@ public interface CommonConstant {
      */
     String REDIS_CAPTCHA_PREFIX = "user:captcha:";
 
+    /**
+     * 禁用
+     */
+    Character IS_DISABLE = '0';
+    /**
+     * 启动
+     */
+    Character IS_ENABLE = '1';
+
+    /**
+     * 已经删除
+     */
+    String IS_DELETED = "0";
+    /**
+     * 未删除
+     */
+    String IS_NOT_DELETED = "0";
+
+    /**
+     * 菜单路径, 通过path匹配菜单对象
+     */
+    String MENU_PATH = "menu::path::obj";
+
+    /**
+     * 删除
+     */
+    String IS_DEL = "1";
+    /**
+     * 还在
+     */
+    String IS_NOT_DEL = "0";
+
 }

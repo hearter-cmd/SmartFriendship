@@ -2,6 +2,8 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
+import com.yaonie.intelligent.assessment.server.common.model.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
@@ -16,9 +18,8 @@ import com.yaonie.intelligent.assessment.server.common.model.model.dto.post.Post
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.Post;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.PostVO;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.PostService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -67,7 +68,7 @@ public class PostController {
             post.setTags(JSONUtil.toJsonStr(tags));
         }
         postService.validPost(post, true);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         post.setUserId(loginUser.getId());
         post.setFavourNum(0);
         post.setThumbNum(0);
@@ -89,7 +90,7 @@ public class PostController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        User user = UserHolder.getUser();
         long id = deleteRequest.getId();
         // 判断是否存在
         Post oldPost = postService.getById(id);
@@ -196,7 +197,7 @@ public class PostController {
         if (postQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         postQueryRequest.setUserId(loginUser.getId());
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
@@ -246,7 +247,7 @@ public class PostController {
         }
         // 参数校验
         postService.validPost(post, false);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         long id = postEditRequest.getId();
         // 判断是否存在
         Post oldPost = postService.getById(id);

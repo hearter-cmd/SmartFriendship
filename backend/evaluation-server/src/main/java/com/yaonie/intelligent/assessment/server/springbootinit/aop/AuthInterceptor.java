@@ -1,20 +1,19 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.aop;
 
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
+import com.yaonie.intelligent.assessment.server.common.model.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.UserRoleEnum;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
-import jakarta.annotation.Resource;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.List;
 
 
 /**
@@ -22,11 +21,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  *
  * @author 77160
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class AuthInterceptor {
 
-    @Resource
+//    @Resource
     private UserService userService;
 
     /**
@@ -36,31 +35,34 @@ public class AuthInterceptor {
      * @param authCheck
      * @return
      */
-    @Around("@annotation(authCheck)")
+//    @Around("@annotation(authCheck)")
     public Object doInterceptor(ProceedingJoinPoint joinPoint, AuthCheck authCheck) throws Throwable {
-        String mustRole = authCheck.mustRole();
+        Long mustRole = authCheck.mustRole();
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         // 当前登录用户
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         UserRoleEnum mustRoleEnum = UserRoleEnum.getEnumByValue(mustRole);
         // 不需要权限，放行
         if (mustRoleEnum == null) {
             return joinPoint.proceed();
         }
         // 必须有该权限才通过
-        UserRoleEnum userRoleEnum = UserRoleEnum.getEnumByValue(loginUser.getUserRole());
-        if (userRoleEnum == null) {
+        List<UserRoleEnum> roleEnumList = loginUser.getUserRole()
+                .stream()
+                .map(UserRoleEnum::getEnumByValue)
+                .toList();
+        if (roleEnumList.isEmpty()) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         // 如果被封号，直接拒绝
-        if (UserRoleEnum.BAN.equals(userRoleEnum)) {
+        if (roleEnumList.contains(UserRoleEnum.BAN)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         // 必须有管理员权限
         if (UserRoleEnum.ADMIN.equals(mustRoleEnum)) {
             // 用户没有管理员权限，拒绝
-            if (!UserRoleEnum.ADMIN.equals(userRoleEnum)) {
+            if (!roleEnumList.contains(UserRoleEnum.ADMIN)) {
                 throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
             }
         }

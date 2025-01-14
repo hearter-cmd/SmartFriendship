@@ -6,10 +6,10 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 已登录用户视图（脱敏）
- *
  *
  * @author 77160*/
 @Data
@@ -58,7 +58,7 @@ public class LoginUserVO implements Serializable {
     /**
      * 用户角色：user/admin/ban
      */
-    private String userRole;
+    private List<String> userRole;
 
     /**
      * 地区名称

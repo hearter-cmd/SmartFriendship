@@ -27,13 +27,13 @@ import java.util.UUID;
 public class LogInterceptor {
 
     @Pointcut("execution(* com.yaonie.intelligent.assessment.server.springbootinit.controller.*.*(..))")
-    public void Pointcut() {}
+    public void pointcut() {}
 
     /**
      * 执行拦截
      * Unbound pointcut parameter 'request'
      */
-    @Around("Pointcut() && args(request)")
+    @Around("pointcut() && args(request)")
     public Object doInterceptor(ProceedingJoinPoint point, HttpServletRequest request) throws Throwable {
         // 计时
         StopWatch stopWatch = new StopWatch();

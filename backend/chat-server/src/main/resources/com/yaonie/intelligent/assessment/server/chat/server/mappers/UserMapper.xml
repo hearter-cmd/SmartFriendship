@@ -197,7 +197,7 @@
 
 	<!-- 查询集合-->
 	<select id="selectList" resultMap="base_result_map" >
-		 SELECT <include refid="base_column_list" /> FROM user <include refid="query_condition" />
+		 SELECT <include refid="base_column_list" /> FROM sys_user <include refid="query_condition" />
 		 <if test="query.orderBy!=null">
 			 order by ${query.orderBy}
 		 </if>
@@ -208,7 +208,7 @@
 
 	<!-- 查询数量-->
 	<select id="selectCount" resultType="java.lang.Integer" >
-		 SELECT count(1) FROM user <include refid="query_condition" />
+		 SELECT count(1) FROM sys_user <include refid="query_condition" />
 	</select>
 
 	<!-- 插入 （匹配有值的字段）-->
@@ -732,7 +732,7 @@
 
 	<!--多条件删除-->
 	<delete id="deleteByParam">
-		 delete from user
+		 delete from sys_user
  		 <include refid="query_condition" />
 	</delete>
 
@@ -806,12 +806,12 @@
 
 	<!-- 根据Id删除-->
 	<delete id="deleteById">
-		delete from user where id=#{id}
+		delete from sys_user where id=#{id}
 	</delete>
 
 	<!-- 根据PrimaryKey获取对象-->
 	<select id="selectById" resultMap="base_result_map" >
-		select <include refid="base_column_list" /> from user where id=#{id}
+		select <include refid="base_column_list" /> from sys_user where id=#{id}
 	</select>
 
 	<!-- 根据Email修改-->
@@ -881,17 +881,17 @@
 
 	<!-- 根据Email删除-->
 	<delete id="deleteByEmail">
-		delete from intelligent.user where email=#{email}
+		delete from intelligent.sys_user where email=#{email}
 	</delete>
 
 	<!-- 根据PrimaryKey获取对象-->
 	<select id="selectByEmail" resultMap="base_result_map" >
-		select <include refid="base_column_list" /> from user where email=#{email}
+		select <include refid="base_column_list" /> from sys_user where email=#{email}
 	</select>
 
 	<!-- 根据MpOpenId获取对象-->
 	<select id="selectByMpOpenId" resultType="com.yaonie.intelligent.assessment.server.common.model.model.entity.User" >
-		select <include refid="base_column_list" /> from user where mpOpenId=#{mpOpenId}
+		select <include refid="base_column_list" /> from sys_user where mpOpenId=#{mpOpenId}
 	</select>
 
 </mapper>

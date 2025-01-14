@@ -32,7 +32,7 @@ public class GaoDeArea implements Serializable {
     private String info;
     /**
      * 状态码
-     * 返回状态说明,10000代表正确,详情参阅 info 状态表
+     * 返回状态说明, 10000 代表正确,详情参阅 info 状态表
      */
     private String infocode;
     /**

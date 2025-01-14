@@ -3,6 +3,7 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.appLike.AppGiveLikeAllDto;
@@ -11,7 +12,7 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.AppLike;
 import com.yaonie.intelligent.assessment.server.springbootinit.event.AppLikeEvent;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppLikeService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class AppLikeController {
      */
     @PostMapping
     public void giveLike(@RequestBody AppGiveLikeDto appGiveLikeDto, HttpServletRequest request) {
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         AppGiveLikeAllDto appGiveLikeAllDto = new AppGiveLikeAllDto();
         appGiveLikeAllDto.setUserId(loginUser.getId());
         appGiveLikeAllDto.setAppId(appGiveLikeDto.getAppId());

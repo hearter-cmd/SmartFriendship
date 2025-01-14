@@ -21,6 +21,7 @@ public enum ErrorCode {
     GROUP_MAX_ERROR(50002, "群组数量上限"),
     FEIGN_REQUEST(40001, "伪装请求!!!"),
     MESSAGE_IS_EMPTY(60000, "消息为空"),
+    AUTH_ERROR(40102, "认证失败"),
     ;
 
     /**

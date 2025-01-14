@@ -2,6 +2,8 @@ package com.yaonie.intelligent.assessment.server.springbootinit.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
+import com.yaonie.intelligent.assessment.server.common.model.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.DeleteRequest;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
@@ -16,9 +18,8 @@ import com.yaonie.intelligent.assessment.server.common.model.model.dto.scoringRe
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.ScoringResult;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.ScoringResultVO;
-import com.yaonie.intelligent.assessment.server.springbootinit.annotation.AuthCheck;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.ScoringResultService;
-import com.yaonie.intelligent.assessment.server.springbootinit.service.UserService;
+import com.yaonie.intelligent.assessment.system.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class ScoringResultController {
      * @return 创建的评分结果的ID
      */
     @PostMapping("/add")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Long> addScoringResult(@RequestBody ScoringResultAddRequest scoringResultAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(scoringResultAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 在此处将实体类和 DTO 进行转换
@@ -68,7 +69,7 @@ public class ScoringResultController {
         // 数据校验
         scoringResultService.validScoringResult(scoringResult, true);
         // 填充默认值
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         scoringResult.setUserId(loginUser.getId());
         // 写入数据库
         boolean result = scoringResultService.save(scoringResult);
@@ -86,12 +87,12 @@ public class ScoringResultController {
      * @return 是否删除成功
      */
     @PostMapping("/delete")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Boolean> deleteScoringResult(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        User user = UserHolder.getUser();
         long id = deleteRequest.getId();
         // 判断是否存在
         ScoringResult oldScoringResult = scoringResultService.getById(id);
@@ -142,7 +143,7 @@ public class ScoringResultController {
      * @return 评分结果表
      */
     @GetMapping("/get/vo")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<ScoringResultVO> getScoringResultVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
@@ -198,12 +199,12 @@ public class ScoringResultController {
      * @return 评分结果表列表
      */
     @PostMapping("/my/list/page/vo")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Page<ScoringResultVO>> listMyScoringResultVOByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest,
                                                                  HttpServletRequest request) {
         ThrowUtils.throwIf(scoringResultQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         scoringResultQueryRequest.setUserId(loginUser.getId());
         long current = scoringResultQueryRequest.getCurrent();
         long size = scoringResultQueryRequest.getPageSize();
@@ -224,7 +225,7 @@ public class ScoringResultController {
      * @return 评分结果表列表
      */
     @PostMapping("/edit")
-    @AuthCheck(mustRole = UserConstant.USER_LOGIN_STATE)
+    
     public BaseResponse<Boolean> editScoringResult(@RequestBody ScoringResultEditRequest scoringResultEditRequest, HttpServletRequest request) {
         if (scoringResultEditRequest == null || scoringResultEditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -236,7 +237,7 @@ public class ScoringResultController {
         scoringResult.setResultProp(resultProp);
         // 数据校验
         scoringResultService.validScoringResult(scoringResult, false);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = UserHolder.getUser();
         // 判断是否存在
         long id = scoringResultEditRequest.getId();
         ScoringResult oldScoringResult = scoringResultService.getById(id);

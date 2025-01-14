@@ -36,7 +36,7 @@ knife4j:
       default:
         api-rule: package
         api-rule-resources:
-          - com.yaonie.intelligent.assessment.server.springbootinit.controller
+          - com.yaonie.intelligent.assessment.server.springbootinit.com.yaonie.intelligent.assessment.controller
 # 自定义配置部分
 # 项目目录
 project:
