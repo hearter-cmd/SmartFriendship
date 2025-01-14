@@ -1,0 +1,25 @@
+
+spring:
+  application:
+    name: system-server
+  security:
+    user:
+      name: admin
+      password: admin
+      roles:
+        - admin
+  jackson:
+    default-property-inclusion: non_null
+  profiles:
+    active: dev
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8100

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaonie.intelligent.assessment.system.mapper.AuthMapper">
+    <resultMap id="BaseMenuResultMap" type="com.yaonie.intelligent.assessment.system.domain.entity.SysMenu">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parentId" jdbcType="BIGINT"/>
+        <result property="orderNum" column="orderNum" jdbcType="INTEGER"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="isFrame" column="isFrame" jdbcType="INTEGER"/>
+        <result property="isCache" column="isCache" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="CHAR"/>
+        <result property="visible" column="visible" jdbcType="CHAR"/>
+        <result property="enable" column="enable" jdbcType="CHAR"/>
+        <result property="perms" column="perms" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Menu_Column_List">
+        id,name,parentId,
+        orderNum,path,component,
+        isFrame,isCache,type,visible,
+        enable,perms,icon,
+        createBy,createTime,updateBy,
+        updateTime,remark
+    </sql>
+    <select id="selectMenuByPath" resultType="com.yaonie.intelligent.assessment.system.domain.entity.SysMenu">
+        select <include refid="Base_Menu_Column_List"/>
+        from sys_menu
+        where path = #{path} and status = '0' and visible = '0' AND isDeleted = '0'
+    </select>
+</mapper>

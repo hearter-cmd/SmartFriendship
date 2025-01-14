@@ -1,0 +1,61 @@
+
+# 线上配置文件
+spring:
+  # session 配置
+  session:
+    store-type: redis
+    # 30 天过期
+    timeout: 604800
+    redis:
+      flush-mode: immediate
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动类名
+    url: jdbc:mysql://${BASE_HOST:127.0.0.1}:3306/intelligent?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: ${MYSQL_PASSWORD}
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 5
+      max-lifetime: 800000
+  data:
+    redis:
+      database: 1
+      host: ${BASE_HOST:127.0.0.1}
+      port: 6379
+      timeout: 5000
+# 微信相关
+wx:
+  # 微信公众平台
+  # todo 需替换配置
+  mp:
+    token: xxx
+    aesKey: xxx
+    appId: xxx
+    secret: xxx
+    config-storage:
+      http-client-type: HttpClient
+      key-prefix: wx
+      redis:
+        host: 127.0.0.1
+        port: 6379
+      type: Memory
+  # 微信开放平台
+  # todo 需替换配置
+  open:
+    appId: xxx
+    appSecret: xxx
+# 获取IP地址所属地的工具
+area:
+  gao-de:
+    key: ${GAODE_KEY}
+knife4j:
+  enable: true
+logging:
+  level:
+#    org.springframework.security: debug
+    web: debug
+server:
+  tomcat:
+    threads:
+      max: 2

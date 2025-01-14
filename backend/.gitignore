@@ -8,3 +8,6 @@ private.properties
 application-prod.yaml
 application-prod.yml
 .xcodemap
+*.java.ftl
+../web
+rebel.xml
