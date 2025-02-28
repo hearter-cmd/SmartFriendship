@@ -7,6 +7,10 @@ package com.yaonie.intelligent.assessment.server.common.model.constant;
  */
 public interface CommonConstant {
 
+    /** 校验是否唯一的返回标识 */
+    boolean UNIQUE = true;
+    boolean NOT_UNIQUE = false;
+
     /**
      * 升序
      */
@@ -34,7 +38,7 @@ public interface CommonConstant {
     /**
      * 已经删除
      */
-    String IS_DELETED = "0";
+    String IS_DELETED = "1";
     /**
      * 未删除
      */

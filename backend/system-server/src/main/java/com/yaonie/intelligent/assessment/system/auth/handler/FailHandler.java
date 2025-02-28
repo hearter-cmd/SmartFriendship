@@ -39,9 +39,7 @@ public class FailHandler implements AuthenticationEntryPoint {
             log.error("权限不足", authException);
             error = ResultUtils.error(ErrorCode.AUTH_ERROR, authException.getLocalizedMessage());
             response.setContentType("application/json;charset=UTF-8");
-
         }
         response.getWriter().write(JsonUtils.toStr(error));
-
     }
 }

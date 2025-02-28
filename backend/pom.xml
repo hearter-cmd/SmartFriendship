@@ -16,30 +16,29 @@
     <name>springboot-init</name>
     <modules>
         <module>server-gateway</module>
-        <module>evaluation-server</module>
-        <module>chat-server</module>
         <module>server-framework</module>
-        <module>search-server</module>
         <module>server-client</module>
-        <module>match-server</module>
         <module>system-server</module>
         <module>ai-model</module>
+        <module>biz-server</module>
+        <module>application-starter</module>
     </modules>
     <properties>
         <project.version>0.0.9-SNAPSHOT</project.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
         <skipTests>true</skipTests>
         <lombok.version>1.18.34</lombok.version>
         <commons.version>3.16.0</commons.version>
+        <apache.commons.io.version>2.18.0</apache.commons.io.version>
         <spring.version>3.4.1</spring.version>
-        <hutool.version>5.8.31</hutool.version>
+        <hutool.version>5.8.35</hutool.version>
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <swagger-models.version>1.6.0</swagger-models.version>
-        <mybatis-plus-generator.version>3.5.7</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.10.1</mybatis-plus-generator.version>
         <mybatis-spring.version>3.0.4</mybatis-spring.version>
         <mybatis.version>3.5.16</mybatis.version>
         <mysql-connector.version>8.0.33</mysql-connector.version>
@@ -50,12 +49,12 @@
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <netty-all.version>4.1.115.Final</netty-all.version>
         <weixin-java-mp.version>4.6.3.B</weixin-java-mp.version>
-        <mybatis-plus-boot-starter.version>3.5.9</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot3-starter.version>3.5.10.1</mybatis-plus-boot3-starter.version>
         <jsoup.version>1.15.3</jsoup.version>
         <okhttp.version>4.12.0</okhttp.version>
         <redisson-spring-boot-starter.version>3.34.1</redisson-spring-boot-starter.version>
         <cloud.version>2024.0.0</cloud.version>
-        <alibaba.version>2023.0.3.2</alibaba.version>
+        <alibaba.version>2023.0.1.0</alibaba.version>
         <knife4j.version>4.5.0</knife4j.version>
         <redission.version>3.34.1</redission.version>
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
@@ -72,10 +71,41 @@
         <sharding-jdbc-spring.version>4.1.1</sharding-jdbc-spring.version>
         <xstream.version>1.4.21</xstream.version>
         <spring-boot.maven.plugin.version>3.4.1</spring-boot.maven.plugin.version>
+        <fastexcel.version>1.1.0</fastexcel.version>
+        <commons.compress.version>1.27.1</commons.compress.version>
     </properties>
     <dependencyManagement>
 
         <dependencies>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus-boot3-starter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yaonie.intelligent.assessment.server</groupId>
+                <artifactId>system-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons.compress.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.idev.excel</groupId>
+                <artifactId>fastexcel</artifactId>
+                <version>${fastexcel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${apache.commons.io.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi</artifactId>
@@ -215,8 +245,8 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus-boot-starter.version}</version>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus-boot3-starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.binarywang</groupId>
@@ -275,36 +305,36 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.maven.plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--                <version>${spring-boot.maven.plugin.version}</version>-->
+    <!--                <configuration>-->
+    <!--                    <excludes>-->
+    <!--                        <exclude>-->
+    <!--                            <groupId>org.projectlombok</groupId>-->
+    <!--                            <artifactId>lombok</artifactId>-->
+    <!--                        </exclude>-->
+    <!--                    </excludes>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
 
 
     <repositories>
-        <!--            <repository>-->
-        <!--                <id>central</id>-->
-        <!--                <url>https://maven.aliyun.com/repository/central</url>-->
-        <!--                <releases>-->
-        <!--                    <enabled>true</enabled>-->
-        <!--                </releases>-->
-        <!--                <snapshots>-->
-        <!--                    <enabled>true</enabled>-->
-        <!--                </snapshots>-->
-        <!--            </repository>-->
+        <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/repository/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>aliyun_google</id>
             <name>Aliyun_google</name>

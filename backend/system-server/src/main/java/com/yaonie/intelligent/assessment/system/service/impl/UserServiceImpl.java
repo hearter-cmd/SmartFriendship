@@ -226,6 +226,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         LoginUserVO loginUserVO = new LoginUserVO();
         BeanUtils.copyProperties(user, loginUserVO);
+        loginUserVO.setUserRole(user.getUserRole());
         return loginUserVO;
     }
 
@@ -344,5 +345,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String encode = passwordEncoder.encode(newPass.getPassword());
         boolean update = lambdaUpdate().eq(User::getId, id).set(User::getUserPassword, encode).update();
         return update;
+    }
+
+    @Override
+    public User getUserByMpOpenId(String mpOpenId) {
+        User one = lambdaQuery()
+                .eq(User::getMpOpenId, mpOpenId)
+                .eq(User::getIsDelete, CommonConstant.IS_NOT_DELETED)
+                .eq(User::getEnable, CommonConstant.IS_ENABLE)
+                .one();
+        return one;
     }
 }

@@ -1,6 +1,8 @@
 package com.yaonie.intelligent.assessment.system.controller;
 
-import com.yaonie.intelligent.assessment.system.domain.AjaxResult;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
 import com.yaonie.intelligent.assessment.system.domain.entity.SysDictType;
 import com.yaonie.intelligent.assessment.system.domain.page.TableDataInfo;
 import com.yaonie.intelligent.assessment.system.service.SysDictTypeService;
@@ -45,8 +47,8 @@ public class SysDictTypeController extends BaseController {
      */
     @Operation(summary = "获取字典类型详细")
     @GetMapping(value = "/{dictId}")
-    public AjaxResult getInfo(@PathVariable Long dictId) {
-        return success(dictTypeService.selectDictTypeById(dictId));
+    public BaseResponse<?> getInfo(@PathVariable Long dictId) {
+        return ResultUtils.success(dictTypeService.selectDictTypeById(dictId));
     }
 
     /**
@@ -54,9 +56,9 @@ public class SysDictTypeController extends BaseController {
      */
     @Operation(summary = "新增字典类型")
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDictType dict) {
+    public BaseResponse<?> add(@Validated @RequestBody SysDictType dict) {
         if (!dictTypeService.checkDictTypeUnique(dict)) {
-            return error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
+            return ResultUtils.error(ErrorCode.OPERATION_ERROR,"新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dict.setCreateBy(getUsername());
         return toAjax(dictTypeService.insertDictType(dict));
@@ -67,9 +69,9 @@ public class SysDictTypeController extends BaseController {
      */
     @Operation(summary = "修改字典类型")
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDictType dict) {
+    public BaseResponse<?> edit(@Validated @RequestBody SysDictType dict) {
         if (!dictTypeService.checkDictTypeUnique(dict)) {
-            return error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
+            return ResultUtils.error(ErrorCode.OPERATION_ERROR, "修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dict.setUpdateBy(getUsername());
         return toAjax(dictTypeService.updateDictType(dict));
@@ -80,9 +82,9 @@ public class SysDictTypeController extends BaseController {
      */
     @Operation(summary = "删除字典类型")
     @DeleteMapping("/{dictIds}")
-    public AjaxResult remove(@PathVariable Long[] dictIds) {
+    public BaseResponse<?> remove(@PathVariable Long[] dictIds) {
         dictTypeService.deleteDictTypeByIds(dictIds);
-        return success();
+        return ResultUtils.success(null);
     }
 
     /**
@@ -90,9 +92,9 @@ public class SysDictTypeController extends BaseController {
      */
     @Operation(summary = "刷新字典缓存")
     @DeleteMapping("/refreshCache")
-    public AjaxResult refreshCache() {
+    public BaseResponse<?> refreshCache() {
         dictTypeService.resetDictCache();
-        return success();
+        return ResultUtils.success(null);
     }
 
     /**
@@ -100,8 +102,8 @@ public class SysDictTypeController extends BaseController {
      */
     @Operation(summary = "获取字典选择框列表")
     @GetMapping("/optionselect")
-    public AjaxResult optionselect() {
+    public BaseResponse<?> optionselect() {
         List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
-        return success(dictTypes);
+        return ResultUtils.success(dictTypes);
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -29,6 +30,8 @@ public class ServerAuthorizationManager implements AuthorizationManager<RequestA
 
     @Autowired
     private AuthService authService;
+
+    private static final Pattern PATTERN = Pattern.compile(".*/auth/.* | .*/login | .*/logout");
 
     private static final String[] STATIC_RESOURCE = {
             "/css/**", "/fonts/**", "/images/**",
@@ -62,7 +65,7 @@ public class ServerAuthorizationManager implements AuthorizationManager<RequestA
         String method = request.getMethod();
         log.info("请求方法：{}", method);
         // 放行OPTIONS请求, 放行白名单
-        if (isStatic(requestURI) || requestURI.matches(".*/auth/.* | .*/login | .*/logout") || "OPTIONS".equals(method)) {
+        if (isStatic(requestURI) || PATTERN.matcher(requestURI).matches() || "OPTIONS".equals(method)) {
             return new AuthorizationDecision(true);
         }
         // 验证权限

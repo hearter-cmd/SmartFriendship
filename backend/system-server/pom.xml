@@ -12,31 +12,26 @@
     <artifactId>system-server</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <fastjson.version>2.0.53</fastjson.version>
     </properties>
+
 
     <dependencies>
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
-            <artifactId>server-common-util</artifactId>
+            <artifactId>server-common-starter</artifactId>
             <version>${project.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
         </dependency>
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-starter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yaonie.intelligent.assessment.server</groupId>
-            <artifactId>server-common-model</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
             <scope>compile</scope>
         </dependency>
         <!--快速生成验证码-->
@@ -56,21 +51,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!-- https://github.com/ben-manes/caffeine/wiki/Home-zh-CN -->
+        <!--Redisson 分布式锁-->
         <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-            <version>4.5.0</version>
+            <version>4.3.0</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>weixin-java-mp</artifactId>
             <version>4.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 

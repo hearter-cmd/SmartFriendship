@@ -1,0 +1,89 @@
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: ai-model
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://${BASE_HOST}:3306/intelligent?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: intelligent
+    password: ADwh4jMLpNRadnb3
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maxLifetime: 27000
+      connection-test-query: SELECT 1
+      keepalive-time: 30000
+  data:
+    redis:
+      database: 1
+      host: ${BASE_HOST:127.0.0.1}
+      port: 6379
+      timeout: 5000
+      password: ${MYSQL_PASSWORD}
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      embedding:
+        enabled: false
+    zhipuai:
+      api-key: ${ZHIPU_API_KEY}
+      chat:
+        options:
+          stop: "停下来ZhiPu"
+          model: "glm-4v-plus"
+      image:
+        options:
+          model: "cogview-3-plus"
+      embedding:
+        enabled: true
+        options:
+          model: "embedding-2"
+    vectorstore:
+      milvus:
+        client:
+          host: localhost
+          port: 19530
+        database-name: userMatch
+        collection-name: user_match
+        embedding-dimension: 1024
+          # 当向量库为空时，是否自动初始化
+    #          username: root
+    #          password: Milvus
+  cloud:
+    loadbalancer:
+      nacos:
+        enabled: true
+      retry:
+        enabled: true
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 117.72.97.218
+        port: 8848
+        namespace: 0a65c55a-c301-4293-821b-fa269a621d9f
+        group: DEFAULT_GROUP
+        username: nacos
+        password: ${MYSQL_PASSWORD}
+knife4j:
+  enable: true
+mybatis-plus:
+  mapper-locations: classpath:mapper/*Mapper.xml,classpath*:com/**/mapper/*Mapper.xml
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    #    org.springframework.security: debug
+    web: debug
+server:
+  tomcat:
+    threads:
+      max: 2
+  port: 8101

@@ -18,10 +18,12 @@ import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.User
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserRegisterRequest;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserUpdateMyRequest;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserUpdateRequest;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.SecurityUser;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.LoginUserVO;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.common.util.RedisUtils;
+import com.yaonie.intelligent.assessment.server.common.util.SecurityUtils;
 import com.yaonie.intelligent.assessment.system.domain.dto.UserPatchPassDto;
 import com.yaonie.intelligent.assessment.system.domain.vo.AdminUserInfoVO;
 import com.yaonie.intelligent.assessment.system.service.UserService;
@@ -151,7 +153,6 @@ public class UserController {
      */
     @PostMapping("/logout")
     @Operation(summary = "用户注销")
-    
     public BaseResponse<Boolean> userLogout(HttpServletRequest request) {
         if (request == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -163,15 +164,13 @@ public class UserController {
     /**
      * 获取当前登录用户
      *
-     * @param request 请求
      * @return 当前登录用户
      */
     @Operation(summary = "获取当前登录用户")
     @GetMapping("/get/login")
-    
-    public BaseResponse<LoginUserVO> getLoginUser(HttpServletRequest request) {
-        User user = UserHolder.getUser();
-        return ResultUtils.success(userService.getLoginUserVO(user));
+    public BaseResponse<SecurityUser> getLoginUser() {
+        SecurityUser user = SecurityUtils.getSecurityUser();
+        return ResultUtils.success(user);
     }
 
     /**
@@ -372,6 +371,14 @@ public class UserController {
         boolean result = userService.resetPassword(password, id);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
+    }
+
+    @GetMapping("/myPermission")
+    public BaseResponse<List<String>> getMyPermission() {
+        SecurityUser securityUser = SecurityUtils.getSecurityUser();
+        if (securityUser == null) return null;
+        List<String> permission = securityUser.getPermissions().stream().toList();
+        return ResultUtils.success(permission);
     }
 
 }

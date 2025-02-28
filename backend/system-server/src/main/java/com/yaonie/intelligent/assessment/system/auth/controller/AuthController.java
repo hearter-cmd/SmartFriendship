@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +38,8 @@ public class AuthController {
 
     @Operation(summary = "用户登录")
     @PostMapping("/login")
-    public BaseResponse<Object> login(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
+    public BaseResponse<Object> login(@Validated @RequestBody UserLoginRequest userLoginRequest,
+                                      HttpServletRequest request) {
         Object loginUserVO = authService.userLogin(userLoginRequest, request);
         return ResultUtils.success(loginUserVO);
     }

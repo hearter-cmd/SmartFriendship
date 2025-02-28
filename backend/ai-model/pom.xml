@@ -12,26 +12,24 @@
     <artifactId>ai-model</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-ai-starter.version>1.0.3</spring-ai-starter.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.yaonie.intelligent.assessment.server</groupId>
+                <artifactId>server-common-starter</artifactId>
+                <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- 基本依赖 -->
-        <dependency>
-            <groupId>com.yaonie.intelligent.assessment.server</groupId>
-            <artifactId>server-common-util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.yaonie.intelligent.assessment.server</groupId>
-            <artifactId>server-common-model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.yaonie.intelligent.assessment.server</groupId>
-            <artifactId>server-common-starter</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>system-server</artifactId>
@@ -50,15 +48,35 @@
             <version>1.1.0</version>
         </dependency>
         <dependency>
+            <groupId>group.springframework.ai</groupId>
+            <artifactId>spring-ai-milvus-store</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- 文档依赖 -->
+        <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
 
+        <!-- 数据库依赖 -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
+
+<!--        &lt;!&ndash;Nacos 注册中心&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash;loadbalancer 均衡负载&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-loadbalancer</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 

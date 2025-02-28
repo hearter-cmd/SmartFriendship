@@ -1,0 +1,57 @@
+#server:
+#  address: 0.0.0.0
+#  port: 8103
+#  servlet:
+#    context-path: /api
+#    session:
+#      cookie:
+#        path: /
+#spring:
+#  application:
+#    name: chat-server
+#  profiles:
+#    active: dev
+#  # 分布式session
+#  session:
+#    store-type: redis
+#    # 30 天过期
+#    # cookie 30 天过期
+#    timeout: 604800
+#  # 存入时间, 自动变成时间戳
+#  jackson:
+#    serialization:
+#      write-dates-as-timestamps: true
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    map-underscore-to-camel-case: false
+#  mapper-locations: classpath:/com/yaonie/intelligent/assessment/server/chat/server/mappers/**/*.xml
+## 接口文档配置
+#knife4j:
+#  enable: true
+#  openapi:
+#    title: "接口文档"
+#    version: 1.0
+#    group:
+#      default:
+#        api-rule: package
+#        api-rule-resources:
+#          - com.yaonie.intelligent.assessment.server.springbootinit.com.yaonie.intelligent.assessment.com.yaonie.intelligent.assessment.server.match.controller
+## 自定义配置部分
+## 项目目录
+#project:
+#  folder: G:\Study\Intelligent-assessment-server\backend\assets
+#log:
+#  root:
+#    level: info
+#admin:
+#  email: 771603162@qq.com
+#ws:
+#  port: 8105
+## 密码加盐
+#jwt:
+#  slat: 39a4e2262b09439fb23e69f142514b76
+## 获取IP地址所属地的工具
+#area:
+#  gaoDe:
+#    key: ${GAODE_KEY}

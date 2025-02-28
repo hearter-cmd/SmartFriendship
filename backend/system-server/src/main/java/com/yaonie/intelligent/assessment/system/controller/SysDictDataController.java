@@ -1,8 +1,8 @@
 package com.yaonie.intelligent.assessment.system.controller;
 
 
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.util.StringUtils;
-import com.yaonie.intelligent.assessment.system.domain.AjaxResult;
 import com.yaonie.intelligent.assessment.system.domain.entity.SysDictData;
 import com.yaonie.intelligent.assessment.system.domain.page.TableDataInfo;
 import com.yaonie.intelligent.assessment.system.service.SysDictDataService;
@@ -52,7 +52,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "查询字典数据详细")
     @GetMapping(value = "/{dictCode}")
-    public AjaxResult getInfo(@PathVariable Long dictCode)
+    public BaseResponse<?> getInfo(@PathVariable Long dictCode)
     {
         return success(dictDataService.selectDictDataById(dictCode));
     }
@@ -62,7 +62,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "根据字典类型查询字典数据信息")
     @GetMapping(value = "/type/{dictType}")
-    public AjaxResult dictType(@PathVariable String dictType)
+    public BaseResponse<?> dictType(@PathVariable String dictType)
     {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data))
@@ -77,7 +77,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "新增字典类型")
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDictData dict)
+    public BaseResponse<?> add(@Validated @RequestBody SysDictData dict)
     {
         dict.setCreateBy(getUsername());
         return toAjax(dictDataService.insertDictData(dict));
@@ -88,7 +88,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "修改保存字典类型")
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDictData dict)
+    public BaseResponse<?> edit(@Validated @RequestBody SysDictData dict)
     {
         dict.setUpdateBy(getUsername());
         return toAjax(dictDataService.updateDictData(dict));
@@ -99,7 +99,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "删除字典类型")
     @DeleteMapping("/{dictCodes}")
-    public AjaxResult remove(@PathVariable Long[] dictCodes)
+    public BaseResponse<?> remove(@PathVariable Long[] dictCodes)
     {
         dictDataService.deleteDictDataByIds(dictCodes);
         return success();

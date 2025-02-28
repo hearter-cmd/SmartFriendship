@@ -11,18 +11,14 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.Securi
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.util.StringUtils;
 import com.yaonie.intelligent.assessment.system.domain.entity.SysMenu;
-import com.yaonie.intelligent.assessment.system.domain.entity.SysRole;
 import com.yaonie.intelligent.assessment.system.domain.entity.SysRoleMenu;
 import com.yaonie.intelligent.assessment.system.mapper.UserMapper;
 import com.yaonie.intelligent.assessment.system.service.SysMenuService;
 import com.yaonie.intelligent.assessment.system.service.SysRoleMenuService;
-import com.yaonie.intelligent.assessment.system.service.SysRoleService;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,15 +37,12 @@ import java.util.stream.Collectors;
  * @author 武春利
  * @since 2025-01-10
  */
-@Lazy
 @Service
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     private UserMapper userMapper;
-    private SysRoleService sysRoleService;
     private SysRoleMenuService sysRoleMenuService;
     private SysMenuService sysMenuService;
-    private PasswordEncoder passwordEncoder;
 
     /**
      * 根据用户名加载用户详细信息
@@ -92,8 +85,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         user.setUserRole(roleIds);
 
-        List<Long> permissionIds = new ArrayList<>();
-        Set<String> permissions = new HashSet<>();
+        List<Long> permissionIds;
+        Set<String> permissions;
         if (roleIds.contains(UserConstant.ADMIN_ROLE)) {
             List<SysMenu> allMenuList = sysMenuService.getAllMenuList();
             permissionIds = allMenuList.stream()
@@ -118,9 +111,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @return 用户权限集合
      */
     private Set<String> getPermissionsByIds(List<Long> permissionIds) {
-
         // 获取用户权限
-        List<SysMenu> menuList = new ArrayList<>();
+        List<SysMenu> menuList;
         if (!permissionIds.isEmpty()) {
             menuList = sysMenuService
                     .lambdaQuery()
@@ -141,10 +133,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private List<Long> getPermissionIdsByRoleIds(List<Long> roleIds) {
-
-        // 获取用户角色
-        List<SysRole> role = sysRoleService.listByIds(roleIds);
-
         // 获取用户权限id
         List<SysRoleMenu> roleMenuList =
                 sysRoleMenuService.getMenuIdsByRoleIds(roleIds);

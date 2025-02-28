@@ -58,7 +58,7 @@ public class LoginUserVO implements Serializable {
     /**
      * 用户角色：user/admin/ban
      */
-    private List<String> userRole;
+    private List<Long> userRole;
 
     /**
      * 地区名称

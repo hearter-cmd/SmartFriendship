@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.util.List;
 
@@ -14,7 +16,19 @@ import java.util.List;
  * @author yaonie
  */
 public class JsonUtils {
-    private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
+    private static final ObjectMapper JSON_MAPPER;
+
+    static {
+        JSON_MAPPER = new ObjectMapper();
+        // 创建一个简单模块
+        SimpleModule module = new SimpleModule();
+        // 注册 Long 类型的序列化器，将 Long 序列化为 String
+        module.addSerializer(Long.class, ToStringSerializer.instance);
+        // 注册 Long.TYPE（即基本类型 long）的序列化器，将 long 序列化为 String
+        module.addSerializer(Long.TYPE, ToStringSerializer.instance);
+        // 将模块注册到 ObjectMapper 中
+        JSON_MAPPER.registerModule(module);
+    }
 
     public static <T> T toObj(String str, Class<T> clz) {
         try {

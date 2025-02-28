@@ -3,6 +3,7 @@ package com.yaonie.intelligent.assessment.server.common.model.exception;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 @Slf4j
+@Hidden
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ConstraintViolationException.class)

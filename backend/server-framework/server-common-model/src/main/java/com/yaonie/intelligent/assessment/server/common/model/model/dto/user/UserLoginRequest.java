@@ -34,13 +34,12 @@ public class UserLoginRequest implements Serializable {
     /**
      * 验证码
      */
-    @NotBlank(message = "验证码不能为空")
-    @Size(min = 4, max = 4, message = "验证码长度要在4位之间")
     private String captchaKey;
 
     /**
      * 验证码
      */
     @NotBlank(message = "验证码不能为空")
+    @Size(min = 5, max = 5, message = "验证码长度要在5位之间")
     private String captcha;
 }

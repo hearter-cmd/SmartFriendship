@@ -7,10 +7,10 @@ import com.yaonie.intelligent.assessment.system.auth.handler.FailHandler;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,11 +32,11 @@ import org.springframework.util.DigestUtils;
  */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     /**
      * 自定义用户认证
      */
-    @Lazy
     @Resource
     private UserDetailsService userDetailsService;
     @Resource
@@ -65,17 +65,20 @@ public class SecurityConfig {
                                 "/css/**", "/fonts/**", "/images/**",
                                 "/js/**", "/v2/**", "/v3/**",
                                 "/swagger-ui/**", "/swagger-resources/**",
-                                "/api-docs/**", "/webjars/**", "/favicon.ico"
+                                "/api-docs/**", "/webjars/**", "/favicon.ico",
+                                "/error"
                         ).permitAll() // 直接放行
                         // 放行登录接口
                         .requestMatchers(
                                 "/auth/**", "/user/login", "/doc.html",
-                                "/user/captcha", "/user/register"
+                                "/user/captcha", "/user/register",
+                                "/app/list/page/vo", "/wx/**"
                         ).permitAll()
                         //其他所有路径 都需认证
                         .anyRequest().authenticated() // 都需要认证
                 )
                 .logout(logout -> {logout
+                            .logoutUrl("/user/logout")
                             .invalidateHttpSession(true)
                             .deleteCookies("SESSION");
                 })

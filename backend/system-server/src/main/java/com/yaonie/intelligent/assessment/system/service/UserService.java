@@ -9,6 +9,7 @@ import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.system.domain.dto.UserPatchPassDto;
 import com.yaonie.intelligent.assessment.system.domain.vo.AdminUserInfoVO;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -126,4 +127,11 @@ public interface UserService extends IService<User> {
      * @return 如果密码重置成功，则返回true；否则返回false
      */
     boolean resetPassword(UserPatchPassDto newPass, Long id);
+
+    /**
+     * 根据用户OPENID获取用户信息
+     * @param mpOpenId 用户的唯一标识符（ID）
+     * @return 用户信息对象
+     */
+    User getUserByMpOpenId(@Param("mpOpenId") String mpOpenId);
 }

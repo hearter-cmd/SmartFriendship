@@ -1,17 +1,17 @@
 package com.yaonie.intelligent.assessment.system.controller;
 
 import com.yaonie.intelligent.assessment.server.common.constant.HttpStatus;
+import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.sql.SqlUtil;
 import com.yaonie.intelligent.assessment.server.common.util.DateUtils;
 import com.yaonie.intelligent.assessment.server.common.util.SecurityUtils;
 import com.yaonie.intelligent.assessment.server.common.util.StringUtils;
-import com.yaonie.intelligent.assessment.system.domain.AjaxResult;
 import com.yaonie.intelligent.assessment.system.domain.page.PageDomain;
 import com.yaonie.intelligent.assessment.system.domain.page.TableDataInfo;
 import com.yaonie.intelligent.assessment.system.domain.page.TableSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -26,7 +26,6 @@ import java.util.List;
  */
 public class BaseController
 {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
@@ -73,49 +72,49 @@ public class BaseController
     /**
      * 返回成功
      */
-    public AjaxResult success()
+    public BaseResponse<?> success()
     {
-        return AjaxResult.success();
+        return ResultUtils.success(null);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error()
+    public BaseResponse<?> error()
     {
-        return AjaxResult.error();
+        return ResultUtils.error(null);
     }
 
     /**
      * 返回成功消息
      */
-    public AjaxResult success(String message)
+    public BaseResponse<?> success(String message)
     {
-        return AjaxResult.success(message);
+        return ResultUtils.success(message);
     }
     
     /**
      * 返回成功消息
      */
-    public AjaxResult success(Object data)
+    public BaseResponse<?> success(Object data)
     {
-        return AjaxResult.success(data);
+        return ResultUtils.success(data);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error(String message)
+    public BaseResponse<?> error(String message)
     {
-        return AjaxResult.error(message);
+        return ResultUtils.error(ErrorCode.OPERATION_ERROR, message);
     }
 
     /**
      * 返回警告消息
      */
-    public AjaxResult warn(String message)
+    public BaseResponse<?> warn(String message)
     {
-        return AjaxResult.warn(message);
+        return ResultUtils.success(message);
     }
 
     /**
@@ -124,9 +123,9 @@ public class BaseController
      * @param rows 影响行数
      * @return 操作结果
      */
-    protected AjaxResult toAjax(int rows)
+    protected BaseResponse<?> toAjax(int rows)
     {
-        return rows > 0 ? AjaxResult.success() : AjaxResult.error();
+        return rows > 0 ? ResultUtils.success(null) : ResultUtils.error(null);
     }
 
     /**
@@ -135,7 +134,7 @@ public class BaseController
      * @param result 结果
      * @return 操作结果
      */
-    protected AjaxResult toAjax(boolean result)
+    protected BaseResponse<?> toAjax(boolean result)
     {
         return result ? success() : error();
     }
@@ -161,6 +160,6 @@ public class BaseController
      */
     public String getUsername()
     {
-        return getLoginUser().getUserName();
+        return SecurityUtils.getUsername();
     }
 }

@@ -6,7 +6,6 @@ import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -16,7 +15,7 @@ import java.util.Map;
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  **/
-@Component
+//@Component
 public class EventHandler implements WxMpMessageHandler {
 
     @Override

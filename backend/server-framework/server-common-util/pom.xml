@@ -12,8 +12,6 @@
     <artifactId>server-common-util</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -25,12 +23,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.yaonie.intelligent.assessment.server</groupId>
-            <artifactId>server-common-starter</artifactId>
-            <version>${project.version}</version>
-            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

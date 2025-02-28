@@ -49,7 +49,7 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, User> implements Au
     @Override
     public Object userLogin(UserLoginRequest userLoginRequest, HttpServletRequest request) {
         // 1. 验证码校验
-//        checkCaptcha(userLoginRequest, request);
+        checkCaptcha(userLoginRequest, request);
 
         // 2. 创建用户名密码身份验证令牌
         String userAccount = userLoginRequest.getUserAccount();
@@ -58,7 +58,7 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, User> implements Au
                 userAccount, userPassword);
 
         // 2. 通过令牌进行身份验证，获取身份
-        Authentication authenticate = null;
+        Authentication authenticate;
         try {
             authenticate = authenticationManager.authenticate(authenticationToken);
         } catch (AuthenticationException e) {
@@ -138,7 +138,7 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, User> implements Au
         // 验证码校验
         String captchaKey = request.getSession().getAttribute(REDIS_CAPTCHA_PREFIX).toString();
         String captcha = userLoginRequest.getCaptcha();
-        String realCaptcha = RedisUtils.getAndDelete(REDIS_CAPTCHA_PREFIX + captchaKey);
+        String realCaptcha = RedisUtils.getAndDelete(REDIS_CAPTCHA_PREFIX + captchaKey).replace("\"", "");
         if (log.isInfoEnabled()) {
             log.info("captchaKey: {}, captcha: {}, realCaptcha: {}",
                     captchaKey, captcha, realCaptcha);

@@ -1,6 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yaonie.intelligent.assessment.system.mapper.SysDictTypeMapper">
+
+    <resultMap type="com.yaonie.intelligent.assessment.system.domain.entity.SysDictType" id="SysDictTypeResult">
+        <id     property="dictId"     column="dictId"     />
+        <result property="dictName"   column="dictName"   />
+        <result property="dictType"   column="dictType"   />
+        <result property="status"     column="status"      />
+        <result property="createBy"   column="createBy"   />
+        <result property="createTime" column="createTime" />
+        <result property="updateBy"   column="updateBy"   />
+        <result property="updateTime" column="updateTime" />
+    </resultMap>
+
+    <sql id="selectDictTypeVo">
+        select dictId, dictName, dictType, status, createBy, createTime, remark
+        from sys_dict_type
+    </sql>
+
+    <select id="selectDictTypeList" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictType" resultMap="SysDictTypeResult">
+        <include refid="selectDictTypeVo"/>
+        <where>
+            <if test="dictName != null and dictName != ''">
+                AND dictName like concat('%', #{dictName}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                AND dictType like concat('%', #{dictType}, '%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDictTypeAll" resultMap="SysDictTypeResult">
+        <include refid="selectDictTypeVo"/>
+    </select>
+
+    <select id="selectDictTypeById" parameterType="Long" resultMap="SysDictTypeResult">
+        <include refid="selectDictTypeVo"/>
+        where dictId = #{dictId}
+    </select>
+
+    <select id="selectDictTypeByType" parameterType="String" resultMap="SysDictTypeResult">
+        <include refid="selectDictTypeVo"/>
+        where dictType = #{dictType}
+    </select>
+
+    <select id="checkDictTypeUnique" parameterType="String" resultMap="SysDictTypeResult">
+        <include refid="selectDictTypeVo"/>
+        where dictType = #{dictType} limit 1
+    </select>
+
+    <delete id="deleteDictTypeById" parameterType="Long">
+        delete from sys_dict_type where dictId = #{dictId}
+    </delete>
+
+    <delete id="deleteDictTypeByIds" parameterType="Long">
+        delete from sys_dict_type where dictId in
+        <foreach collection="array" item="dictId" open="(" separator="," close=")">
+            #{dictId}
+        </foreach>
+    </delete>
+
+    <update id="updateDictType" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictType">
+        update sys_dict_type
+        <set>
+            <if test="dictName != null and dictName != ''">dictName = #{dictName},</if>
+            <if test="dictType != null and dictType != ''">dictType = #{dictType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">updateBy = #{updateBy},</if>
+            updateTime = sysdate()
+        </set>
+        where dictId = #{dictId}
+    </update>
+
+    <insert id="insertDictType" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictType">
+        insert into sys_dict_type(
+        <if test="dictName != null and dictName != ''">dictName,</if>
+        <if test="dictType != null and dictType != ''">dictType,</if>
+        <if test="status != null">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">createBy,</if>
+        createTime
+        )values(
+        <if test="dictName != null and dictName != ''">#{dictName},</if>
+        <if test="dictType != null and dictType != ''">#{dictType},</if>
+        <if test="status != null">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
 </mapper>

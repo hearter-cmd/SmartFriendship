@@ -1,0 +1,91 @@
+server:
+  port: 8106
+knife4j:
+  enable: true
+logging:
+  level:
+    web: debug
+    org.springframework.security: debug
+spring:
+  application:
+    name: match-server
+  cloud:
+    nacos:
+      server-addr: 117.72.97.218:8848
+      discovery:
+        enabled: true
+        serverAddr: 117.72.97.218
+        namespace: 0a65c55a-c301-4293-821b-fa269a621d9f
+        username: nacos
+        password: ${MYSQL_PASSWORD}
+        port: 8848
+      config:
+        import-check:
+          enabled: false
+        server-addr: 117.72.97.218:8848
+    loadbalancer:
+      nacos:
+        enabled: true
+  session:
+    type: redis
+    # 30 天过期
+    timeout: 604800
+    redis:
+      flush-mode: immediate
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动类名
+    url: jdbc:mysql://117.72.97.218:3306/intelligent?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+    username: intelligent
+    password: ADwh4jMLpNRadnb3
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 5
+      max-lifetime: 800000
+  data:
+    redis:
+      database: 1
+      host: ${BASE_HOST}
+      port: 6379
+      timeout: 5000
+      password: ${MYSQL_PASSWORD}
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      embedding:
+        enabled: false
+    zhipuai:
+      api-key: ${ZHIPU_API_KEY}
+      chat:
+        options:
+          stop: "停下来ZhiPu"
+          model: "glm-4v-plus"
+      image:
+        options:
+          model: "cogview-3-plus"
+      embedding:
+        enabled: true
+        options:
+          model: "embedding-2"
+    vectorstore:
+      milvus:
+        client:
+          host: localhost
+          port: 19530
+        database-name: userMatch
+        collection-name: user_match
+        embedding-dimension: 1024
+        indexType: IVF_FLAT
+        metricType: COSINE
+        # 当向量库为空时，是否自动初始化
+        initialize-schema: true
+  jackson:
+    default-property-inclusion: non_null
+  profiles:
+    active: dev
+  #          username: root
+  #          password: Milvus
+# 获取IP地址所属地的工具
+area:
+  gao-de:
+    key: ${GAODE_KEY}

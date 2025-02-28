@@ -1,0 +1,77 @@
+server:
+  frequency: 2  #2秒只能请求一次
+  address: 0.0.0.0
+  port: 8101
+  servlet:
+    session:
+      cookie:
+        path: /
+# 公共配置文件
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: evaluation-server
+  datasource:
+    hikari:
+      maxLifetime: 27000
+      connection-test-query: SELECT 1
+      keepalive-time: 30000
+  # 支持 swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session 配置
+  session:
+    store-type: redis
+    # 30 天过期
+    timeout: 604800
+  # 文件上传
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 50MB
+#      password: ${MYSQL_PASSWORD}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+# 接口文档配置
+knife4j:
+  enable: true
+  openapi:
+    title: "接口文档"
+    version: 1.0
+    group:
+      default:
+        api-rule: package
+        api-rule-resources:
+          - com.yaonie.intelligent.assessment.server.springbootinit.com.yaonie.intelligent.assessment.com.yaonie.intelligent.assessment.server.match.controller
+cos:
+  client:
+    access-key: ${COS_ACCESSKEY}
+    secret-key: ${COS_SECRETKEY}
+    region: ap-beijing
+    bucket: part-one-1306321377
+# AI 配置
+ais:
+  tag: true
+  # 智普 AI
+  zhi-pu:
+    tag: true
+    temperature: 0.95
+    apiKey: ${ZHIPU_API_KEY}
+# 获取IP地址所属地的工具
+area:
+  gao-de:
+    key: ${GAODE_KEY}
