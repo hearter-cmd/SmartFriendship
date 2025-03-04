@@ -1,6 +1,7 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.DateTimePatternEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.utils.DateUtil;
@@ -24,7 +25,7 @@ public class UserContact implements Serializable {
 	/**
 	 * 用户ID
 	 */
-    @TableField("user_id")
+    @TableId("user_id")
 	private Long userId;
 
 	/**

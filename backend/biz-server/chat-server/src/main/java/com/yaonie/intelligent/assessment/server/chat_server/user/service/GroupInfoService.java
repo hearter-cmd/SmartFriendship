@@ -1,8 +1,7 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.GroupInfo;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.GroupInfoQuery;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.vo.PaginationResultVO;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -10,23 +9,9 @@ import java.util.List;
 
 /**
  * 群聊存档 业务接口
+ * @author 77160
  */
-public interface GroupInfoService {
-
-	/**
-	 * 根据条件查询列表
-	 */
-	List<GroupInfo> findListByParam(GroupInfoQuery param);
-
-	/**
-	 * 根据条件查询列表
-	 */
-	Integer findCountByParam(GroupInfoQuery param);
-
-	/**
-	 * 分页查询
-	 */
-	PaginationResultVO<GroupInfo> findListByPage(GroupInfoQuery param);
+public interface GroupInfoService extends IService<GroupInfo> {
 
 	/**
 	 * 新增
@@ -42,16 +27,6 @@ public interface GroupInfoService {
 	 * 批量新增/修改
 	 */
 	Integer addOrUpdateBatch(List<GroupInfo> listBean);
-
-	/**
-	 * 多条件更新
-	 */
-	Integer updateByParam(GroupInfo bean,GroupInfoQuery param);
-
-	/**
-	 * 多条件删除
-	 */
-	Integer deleteByParam(GroupInfoQuery param);
 
 	/**
 	 * 根据GroupId查询对象

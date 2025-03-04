@@ -14,7 +14,10 @@ import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.GroupMember;
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.GroupMessage;
 import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
+import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactTypeEnum;
 import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
+import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.util.SecurityUtils;
 import jakarta.annotation.Resource;
@@ -57,13 +60,28 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
 
     @Override
     public Page<Message> getMsgList(Long id, HttpServletRequest request) {
-        User userInfo = SecurityUtils.getLoginUser();
-        Page<Message> pageMate = new Page<>(1, 10);
-        Page<Message> page = lambdaQuery()
-                .or(qw -> qw.eq(Message::getUserId, userInfo.getId()).eq(Message::getContactId, id))
-                .or(qw -> qw.eq(Message::getUserId, id).eq(Message::getContactId, userInfo.getId()))
-                .orderBy(true, false,Message::getCreateTime)
-                .page(pageMate);
+        Page<Message> page = null;
+        // 获取好友聊天记录
+        switch(UserContactTypeEnum.getEnumByLen(id)) {
+            case GROUP -> {
+                page = lambdaQuery()
+                        .eq(Message::getContactId, id)
+                        .orderBy(true, false, Message::getCreateTime)
+                        .page(new Page<>(1, 10));
+            }
+            case USER -> {
+                User userInfo = SecurityUtils.getLoginUser();
+                page = lambdaQuery()
+                        .or(qw -> qw.eq(Message::getUserId, userInfo.getId()).eq(Message::getContactId, id))
+                        .or(qw -> qw.eq(Message::getUserId, id).eq(Message::getContactId, userInfo.getId()))
+                        .orderBy(true, false,Message::getCreateTime)
+                        .page(new Page<>(1, 10));
+            }
+            case null -> {
+                throw new BusinessException(ErrorCode.PARAMS_ERROR);
+            }
+        }
+
         return page;
     }
 
@@ -88,6 +106,6 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         // 获取群成员id
         groupMessage.setToUserIds(groupMembers.stream().map(GroupMember::getUserId).collect(Collectors.toList()));
         groupMessage.setMessage(message.getMessage());
-        rabbitTemplate.convertAndSend("chat.message.exchange", "chat.message.routing.key.group", groupMessage);
+        rabbitTemplate.convertAndSend("chat.group.message.exchange", "chat.message.routing.key.group", groupMessage);
     }
 }

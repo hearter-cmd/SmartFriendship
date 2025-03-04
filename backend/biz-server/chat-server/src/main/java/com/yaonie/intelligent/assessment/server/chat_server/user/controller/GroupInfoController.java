@@ -1,7 +1,6 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.controller;
 
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.GroupInfo;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.GroupInfoQuery;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.GroupInfoService;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,14 +39,6 @@ public class GroupInfoController extends ABaseController{
 	public BaseResponse<?> saveGroup(@RequestBody GroupInfo groupInfo,
 										  HttpServletRequest request) {
 		return getSuccessResponseVO(groupInfoService.saveGroup(request, groupInfo));
-	}
-
-	/**
-	 * 根据条件分页查询
-	 */
-	@RequestMapping("/loadDataList")
-	public BaseResponse<?> loadDataList(@RequestBody GroupInfoQuery query){
-		return getSuccessResponseVO(groupInfoService.findListByPage(query));
 	}
 
 	/**

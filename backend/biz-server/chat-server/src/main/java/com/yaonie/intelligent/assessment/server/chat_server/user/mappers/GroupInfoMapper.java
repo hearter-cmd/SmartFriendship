@@ -1,17 +1,19 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.mappers;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.GroupInfo;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * 群聊存档 数据库操作接口
  * @author 77160
  */
-public interface GroupInfoMapper<T,P> extends BaseMapper<T,P> {
+public interface GroupInfoMapper extends BaseMapper<GroupInfo> {
 
 	/**
 	 * 根据GroupId更新
 	 */
-	 Integer updateByGroupId(@Param("bean") T t,@Param("groupId") Long groupId);
+	 Integer updateByGroupId(@Param("bean") GroupInfo t, @Param("groupId") Long groupId);
 
 
 	/**
@@ -23,7 +25,7 @@ public interface GroupInfoMapper<T,P> extends BaseMapper<T,P> {
 	/**
 	 * 根据GroupId获取对象
 	 */
-	 T selectByGroupId(@Param("groupId") Long groupId);
+	GroupInfo selectByGroupId(@Param("groupId") Long groupId);
 
 
 }

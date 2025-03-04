@@ -52,12 +52,18 @@ public class MessageListener {
     @RabbitListener(bindings = {
             @QueueBinding(
                     value = @Queue(name = "chat.message.queue.group"),
-                    exchange = @Exchange(name = "chat.message.exchange"),
+                    exchange = @Exchange(name = "chat.group.message.exchange", type="fanout"),
                     key = {"chat.message.routing.key.group"},
                     declare = "true"
             )
     })
-    public void receiveGroupMessage(GroupMessage message){
-        log.info(message.toString());
+    public void receiveGroupMessage(GroupMessage groupMessage){
+        Message message = new Message();
+        message.setContactId(groupMessage.getGroupId());
+        message.setUserId(groupMessage.getFromUserId());
+        message.setMessage(groupMessage.getMessage());
+        message.setCreateTime(new Date());
+        webSocketService.handleMsg(message);
+        log.info(groupMessage.toString());
     }
 }

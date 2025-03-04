@@ -82,6 +82,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         userOffline(ctx.channel());
+
         log.info("用户已离线");
         super.channelInactive(ctx);
     }

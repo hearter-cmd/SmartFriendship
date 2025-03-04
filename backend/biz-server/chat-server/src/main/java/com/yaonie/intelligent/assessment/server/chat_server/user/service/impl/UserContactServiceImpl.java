@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.PageSize;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactStatusEnum;
+import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.GroupInfo;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.SimplePage;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.UserContactQuery;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.vo.PaginationResultVO;
 import com.yaonie.intelligent.assessment.server.chat_server.user.mappers.UserContactMapper;
+import com.yaonie.intelligent.assessment.server.chat_server.user.service.GroupInfoService;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.UserContactService;
 import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
@@ -33,6 +35,8 @@ public class UserContactServiceImpl extends ServiceImpl<UserContactMapper, UserC
 	private UserContactMapper userContactMapper;
 	@Resource
 	private UserMapper userMapper;
+	@Resource
+	private GroupInfoService groupInfoService;
 
 	/**
 	 * 根据条件查询列表
@@ -141,6 +145,8 @@ public class UserContactServiceImpl extends ServiceImpl<UserContactMapper, UserC
 				.eq(UserContact::getStatus, UserContactStatusEnum.FRIEND.getStatus())
 				.list();
 		List<Long> contactIds = list.stream().map(UserContact::getContactId).toList();
+
+		// 查询用户详细信息
 		LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
 		lambdaQueryWrapper
 				.in(User::getId, contactIds)
@@ -148,11 +154,26 @@ public class UserContactServiceImpl extends ServiceImpl<UserContactMapper, UserC
 				.eq(User::getIsDelete, CommonConstant.IS_NOT_DELETED)
 				.select(User::getId, User::getUserName, User::getUserAvatar);
 		List<User> users = userMapper.selectList(lambdaQueryWrapper);
+
+		// 查询群组详细信息
+		List<GroupInfo> groups = groupInfoService
+				.lambdaQuery()
+				.in(GroupInfo::getGroupId, contactIds)
+				.eq(GroupInfo::getStatus, CommonConstant.IS_ENABLE)
+				.list();
+
+		// 填充
 		list.forEach(userContact -> {
 			users.forEach(user -> {
 				if (user.getId().equals(userContact.getContactId())) {
 					userContact.setAvatar(user.getUserAvatar());
 					userContact.setName(user.getUserName());
+				}
+			});
+			groups.forEach(info -> {
+				if (info.getGroupId().equals(userContact.getContactId())) {
+					userContact.setAvatar(info.getGroupAvatar());
+					userContact.setName(info.getGroupName());
 				}
 			});
 		});

@@ -1,6 +1,7 @@
 package com.yaonie.intelligent.assessment.server.chat_server.common.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -20,7 +21,7 @@ public class GroupMember implements Serializable {
     /**
      * 群聊Id
      */
-    @TableField(value = "groupId")
+    @TableId(value = "groupId")
     private Long groupId;
 
     /**

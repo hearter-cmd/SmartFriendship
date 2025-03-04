@@ -1,26 +1,26 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.dto.SysSettingDto;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.PageSize;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactStatusEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactTypeEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.GroupInfo;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.GroupInfoQuery;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.SimplePage;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.vo.PaginationResultVO;
 import com.yaonie.intelligent.assessment.server.chat_server.user.mappers.GroupInfoMapper;
 import com.yaonie.intelligent.assessment.server.chat_server.user.mappers.UserContactMapper;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.GroupInfoService;
 import com.yaonie.intelligent.assessment.server.chat_server.utils.StringTools;
 import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
+import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -36,44 +36,13 @@ import java.util.Objects;
  */
 @Service("groupInfoService")
 @Slf4j
-public class GroupInfoServiceImpl implements GroupInfoService {
+public class GroupInfoServiceImpl extends ServiceImpl<GroupInfoMapper, GroupInfo> implements GroupInfoService {
 
 	@Resource
-	private GroupInfoMapper<GroupInfo, GroupInfoQuery> groupInfoMapper;
+	private GroupInfoMapper groupInfoMapper;
 
 	@Resource
 	private UserContactMapper userContactMapper;
-
-	/**
-	 * 根据条件查询列表
-	 */
-	@Override
-	public List<GroupInfo> findListByParam(GroupInfoQuery param) {
-		return this.groupInfoMapper.selectList(param);
-	}
-
-	/**
-	 * 根据条件查询列表
-	 */
-	@Override
-	public Integer findCountByParam(GroupInfoQuery param) {
-		return this.groupInfoMapper.selectCount(param);
-	}
-
-	/**
-	 * 分页查询方法
-	 */
-	@Override
-	public PaginationResultVO<GroupInfo> findListByPage(GroupInfoQuery param) {
-		int count = this.findCountByParam(param);
-		int pageSize = param.getPageSize() == null ? PageSize.SIZE15.getSize() : param.getPageSize();
-
-		SimplePage page = new SimplePage(param.getPageNo(), count, pageSize);
-		param.setSimplePage(page);
-		List<GroupInfo> list = this.findListByParam(param);
-		PaginationResultVO<GroupInfo> result = new PaginationResultVO(count, page.getPageSize(), page.getPageNo(), page.getPageTotal(), list);
-		return result;
-	}
 
 	/**
 	 * 新增
@@ -91,7 +60,8 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 		if (listBean == null || listBean.isEmpty()) {
 			return 0;
 		}
-		return this.groupInfoMapper.insertBatch(listBean);
+		List<BatchResult> insert = this.groupInfoMapper.insert(listBean);
+		return insert.size();
 	}
 
 	/**
@@ -102,25 +72,8 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 		if (listBean == null || listBean.isEmpty()) {
 			return 0;
 		}
-		return this.groupInfoMapper.insertOrUpdateBatch(listBean);
-	}
-
-	/**
-	 * 多条件更新
-	 */
-	@Override
-	public Integer updateByParam(GroupInfo bean, GroupInfoQuery param) {
-		StringTools.checkParam(param);
-		return this.groupInfoMapper.updateByParam(bean, param);
-	}
-
-	/**
-	 * 多条件删除
-	 */
-	@Override
-	public Integer deleteByParam(GroupInfoQuery param) {
-		StringTools.checkParam(param);
-		return this.groupInfoMapper.deleteByParam(param);
+		List<BatchResult> batchResults = groupInfoMapper.insertOrUpdate(listBean);
+		return batchResults.size();
 	}
 
 	/**
@@ -163,7 +116,10 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 			// 新增群组
 			GroupInfoQuery groupInfoQuery = new GroupInfoQuery();
 			groupInfoQuery.setGroupOwnerId(groupInfo.getGroupOwnerId());
-			Integer count = groupInfoMapper.selectCount(groupInfoQuery);
+			Long count = lambdaQuery()
+					.eq(GroupInfo::getGroupOwnerId, loginUser.getId())
+					.eq(GroupInfo::getStatus, CommonConstant.IS_ENABLE)
+					.count();
 			if (count > sysSetting.getMaxGroupCount()) {
 				throw new BusinessException(ErrorCode.GROUP_MAX_ERROR);
 			}

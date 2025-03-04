@@ -17,7 +17,7 @@ import lombok.Getter;
 @Getter
 public enum UserContactTypeEnum {
     USER(1, 19, "好友"),
-    GROUP(2, 12, "群组"),
+    GROUP(2, 11, "群组"),
     ;
 
     private final Integer type;

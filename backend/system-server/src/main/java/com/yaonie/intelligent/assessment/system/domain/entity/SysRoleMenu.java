@@ -1,6 +1,7 @@
 package com.yaonie.intelligent.assessment.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ public class SysRoleMenu implements Serializable {
     /**
      * 角色ID
      */
-    @TableField(value = "roleId")
+    @TableId(value = "roleId")
     private String roleId;
 
     /**

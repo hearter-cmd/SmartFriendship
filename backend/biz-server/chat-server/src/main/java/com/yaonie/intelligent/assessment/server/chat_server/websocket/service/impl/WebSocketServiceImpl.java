@@ -10,6 +10,7 @@ import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.Us
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactTypeEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.UserContactService;
+import com.yaonie.intelligent.assessment.server.chat_server.user.service.impl.GroupInfoServiceImpl;
 import com.yaonie.intelligent.assessment.server.chat_server.utils.IpUtil;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.adepter.WebSocketAdepter;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.dto.WSChannelDTO;
@@ -101,6 +102,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     private static final ConcurrentHashMap<Long, CopyOnWriteArrayList<Long>> ONLINE_GROUP_MAP = new ConcurrentHashMap<>();
     @Autowired
     private UserContactService userContactService;
+    private GroupInfoServiceImpl groupInfoService;
 
     /**
      * 添加Channel操作
@@ -144,6 +146,20 @@ public class WebSocketServiceImpl implements WebSocketService {
             return;
         }
         ONLINE_UID_MAP.remove(uid);
+        List<UserContact> list = userContactService.lambdaQuery()
+                .eq(UserContact::getUserId, uid)
+                .eq(UserContact::getContactType, UserContactTypeEnum.GROUP.getType())
+                .eq(UserContact::getStatus, UserContactStatusEnum.FRIEND.getStatus())
+                .list();
+        list.forEach(item -> {
+            Long contactId = item.getContactId();
+            CopyOnWriteArrayList<Long> groupList = ONLINE_GROUP_MAP.get(contactId);
+            for (int i = 0; i < groupList.size(); i++) {
+                if (Objects.equals(groupList.get(i), uid)) {
+                    groupList.remove(i);
+                }
+            }
+        });
     }
 
     /**
@@ -228,8 +244,21 @@ public class WebSocketServiceImpl implements WebSocketService {
                 WebSocketAdepter.sendWSTextMsg(channel, WSRespTypeEnum.MESSAGE, message);
             });
         } else if (UserContactTypeEnum.getEnumByLen(contactId) == UserContactTypeEnum.GROUP) {
-            // 创建群聊
-            ONLINE_GROUP_MAP.put(contactId, new CopyOnWriteArrayList<>(Collections.singleton(message.getUserId())));
+            CopyOnWriteArrayList<Long> longs = ONLINE_GROUP_MAP.get(contactId);
+            if (longs == null) {
+                // 创建群聊
+                ONLINE_GROUP_MAP.put(contactId, new CopyOnWriteArrayList<>(Collections.singleton(message.getUserId())));
+            } else {
+                longs.forEach(item -> {
+                    if (item.equals(message.getUserId())) {
+                        return;
+                    }
+                    CopyOnWriteArrayList<Channel> userChannels = ONLINE_UID_MAP.get(item);
+                    userChannels.forEach(it -> {
+                        WebSocketAdepter.sendWSTextMsg(it, WSRespTypeEnum.MESSAGE, message);
+                    });
+                });
+            }
         }
     }
 
@@ -275,10 +304,11 @@ public class WebSocketServiceImpl implements WebSocketService {
         }  else {
             channels.add(channel);
         }
+        // 存储到群组信息
         List<UserContact> list = userContactService.lambdaQuery()
                 .eq(UserContact::getUserId, userId)
                 .eq(UserContact::getContactType, UserContactTypeEnum.GROUP.getType())
-                .eq(UserContact::getStatus, UserContactStatusEnum.FRIEND)
+                .eq(UserContact::getStatus, UserContactStatusEnum.FRIEND.getStatus())
                 .list();
         list.forEach(userContact -> {
             CopyOnWriteArrayList<Long> longs = ONLINE_GROUP_MAP.get(userContact.getContactId());
