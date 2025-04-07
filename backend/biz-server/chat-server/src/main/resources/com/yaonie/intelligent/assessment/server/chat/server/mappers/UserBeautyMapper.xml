@@ -1,855 +1,876 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yaonie.intelligent.assessment.server.chat_server.user.mappers.UserBeautyMapper">
 
-	<!--实体映射-->
-	<resultMap id="base_result_map" type="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserBeauty">
-		<!--id-->
-		<id column="id" property="id"  />
-		<!--账号-->
-		<result column="userAccount" property="userAccount"  />
-		<!--密码-->
-		<result column="userPassword" property="userPassword"  />
-		<!--邮箱-->
-		<result column="email" property="email"  />
-		<!--性别 0:女 1:男  2:未知-->
-		<result column="sex" property="sex"  />
-		<!--个性签名-->
-		<result column="person_signature" property="personSignature"  />
-		<!--微信开放平台id-->
-		<result column="unionId" property="unionId"  />
-		<!--公众号openId-->
-		<result column="mpOpenId" property="mpOpenId"  />
-		<!--用户昵称-->
-		<result column="userName" property="userName"  />
-		<!--用户头像-->
-		<result column="userAvatar" property="userAvatar"  />
-		<!--用户简介-->
-		<result column="userProfile" property="userProfile"  />
-		<!--用户角色：user/admin/ban-->
-		<result column="userRole" property="userRole"  />
-		<!--添加好友的方式 0 : 直接添加; 1 : 同意后添加-->
-		<result column="join_type" property="joinType"  />
-		<!--地区名称-->
-		<result column="area_name" property="areaName"  />
-		<!--地区编号-->
-		<result column="area_code" property="areaCode"  />
-		<!--最后一次登录的时间-->
-		<result column="last_login_time" property="lastLoginTime"  />
-		<!--最后离开时间-->
-		<result column="last_leave_time" property="lastLeaveTime"  />
-		<!--创建时间-->
-		<result column="createTime" property="createTime"  />
-		<!--更新时间-->
-		<result column="updateTime" property="updateTime"  />
-		<!--是否删除-->
-		<result column="isDelete" property="isDelete"  />
-	</resultMap>
+    <!--实体映射-->
+    <resultMap id="base_result_map"
+               type="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserBeauty">
+        <!--id-->
+        <id column="id" property="id"/>
+        <!--账号-->
+        <result column="userAccount" property="userAccount"/>
+        <!--密码-->
+        <result column="userPassword" property="userPassword"/>
+        <!--邮箱-->
+        <result column="email" property="email"/>
+        <!--性别 0:女 1:男  2:未知-->
+        <result column="sex" property="sex"/>
+        <!--个性签名-->
+        <result column="person_signature" property="personSignature"/>
+        <!--微信开放平台id-->
+        <result column="unionId" property="unionId"/>
+        <!--公众号openId-->
+        <result column="mpOpenId" property="mpOpenId"/>
+        <!--用户昵称-->
+        <result column="userName" property="userName"/>
+        <!--用户头像-->
+        <result column="userAvatar" property="userAvatar"/>
+        <!--用户简介-->
+        <result column="userProfile" property="userProfile"/>
+        <!--用户角色：user/admin/ban-->
+        <result column="userRole" property="userRole"/>
+        <!--添加好友的方式 0 : 直接添加; 1 : 同意后添加-->
+        <result column="join_type" property="joinType"/>
+        <!--地区名称-->
+        <result column="area_name" property="areaName"/>
+        <!--地区编号-->
+        <result column="area_code" property="areaCode"/>
+        <!--最后一次登录的时间-->
+        <result column="last_login_time" property="lastLoginTime"/>
+        <!--最后离开时间-->
+        <result column="last_leave_time" property="lastLeaveTime"/>
+        <!--创建时间-->
+        <result column="createTime" property="createTime"/>
+        <!--更新时间-->
+        <result column="updateTime" property="updateTime"/>
+        <!--是否删除-->
+        <result column="isDelete" property="isDelete"/>
+    </resultMap>
 
 
-	<!-- 通用查询结果列-->
-	<sql id="base_column_list">
-		 id,userAccount,userPassword,email,sex,
+    <!-- 通用查询结果列-->
+    <sql id="base_column_list">
+        id,userAccount,userPassword,email,sex,
 		 person_signature,unionId,mpOpenId,userName,userAvatar,
 		 userProfile,userRole,join_type,area_name,area_code,
 		 last_login_time,last_leave_time,createTime,updateTime,isDelete
-		 
-	</sql>
 
-	<sql id="base_condition_filed">
-			<if test="query.id != null">
-				 and  id = #{query.id}
-			</if>
-			<if test="query.userAccount != null and query.userAccount!=''">
-				 and  userAccount = #{query.userAccount}
-			</if>
-			<if test="query.userPassword != null and query.userPassword!=''">
-				 and  userPassword = #{query.userPassword}
-			</if>
-			<if test="query.email != null and query.email!=''">
-				 and  email = #{query.email}
-			</if>
-			<if test="query.sex != null">
-				 and  sex = #{query.sex}
-			</if>
-			<if test="query.personSignature != null and query.personSignature!=''">
-				 and  person_signature = #{query.personSignature}
-			</if>
-			<if test="query.unionId != null and query.unionId!=''">
-				 and  unionId = #{query.unionId}
-			</if>
-			<if test="query.mpOpenId != null and query.mpOpenId!=''">
-				 and  mpOpenId = #{query.mpOpenId}
-			</if>
-			<if test="query.userName != null and query.userName!=''">
-				 and  userName = #{query.userName}
-			</if>
-			<if test="query.userAvatar != null and query.userAvatar!=''">
-				 and  userAvatar = #{query.userAvatar}
-			</if>
-			<if test="query.userProfile != null and query.userProfile!=''">
-				 and  userProfile = #{query.userProfile}
-			</if>
-			<if test="query.userRole != null and query.userRole!=''">
-				 and  userRole = #{query.userRole}
-			</if>
-			<if test="query.joinType != null">
-				 and  join_type = #{query.joinType}
-			</if>
-			<if test="query.areaName != null and query.areaName!=''">
-				 and  area_name = #{query.areaName}
-			</if>
-			<if test="query.areaCode != null and query.areaCode!=''">
-				 and  area_code = #{query.areaCode}
-			</if>
-			<if test="query.lastLoginTime != null and query.lastLoginTime!=''">
-				 <![CDATA[ and  last_login_time=str_to_date(#{query.lastLoginTime}, '%Y-%m-%d') ]]>
-			</if>
-			<if test="query.lastLeaveTime != null">
-				 and  last_leave_time = #{query.lastLeaveTime}
-			</if>
-			<if test="query.createTime != null and query.createTime!=''">
-				 <![CDATA[ and  createTime=str_to_date(#{query.createTime}, '%Y-%m-%d') ]]>
-			</if>
-			<if test="query.updateTime != null and query.updateTime!=''">
-				 <![CDATA[ and  updateTime=str_to_date(#{query.updateTime}, '%Y-%m-%d') ]]>
-			</if>
-			<if test="query.isDelete != null">
-				 and  isDelete = #{query.isDelete}
-			</if>
-	</sql>
-	<!-- 通用条件列-->
-	<sql id="base_condition">
-	 <where>
-		 <include refid="base_condition_filed" />
-	 </where>
-	</sql>
+    </sql>
 
-	<!-- 通用查询条件列-->
-	<sql id="query_condition">
-	 <where>
-			<include refid="base_condition_filed" />
-			<if test="query.userAccountFuzzy!= null  and query.userAccountFuzzy!=''">
-				 and  userAccount like concat('%', #{query.userAccountFuzzy}, '%')
-			</if>
-			<if test="query.userPasswordFuzzy!= null  and query.userPasswordFuzzy!=''">
-				 and  userPassword like concat('%', #{query.userPasswordFuzzy}, '%')
-			</if>
-			<if test="query.emailFuzzy!= null  and query.emailFuzzy!=''">
-				 and  email like concat('%', #{query.emailFuzzy}, '%')
-			</if>
-			<if test="query.personSignatureFuzzy!= null  and query.personSignatureFuzzy!=''">
-				 and  person_signature like concat('%', #{query.personSignatureFuzzy}, '%')
-			</if>
-			<if test="query.unionIdFuzzy!= null  and query.unionIdFuzzy!=''">
-				 and  unionId like concat('%', #{query.unionIdFuzzy}, '%')
-			</if>
-			<if test="query.mpOpenIdFuzzy!= null  and query.mpOpenIdFuzzy!=''">
-				 and  mpOpenId like concat('%', #{query.mpOpenIdFuzzy}, '%')
-			</if>
-			<if test="query.userNameFuzzy!= null  and query.userNameFuzzy!=''">
-				 and  userName like concat('%', #{query.userNameFuzzy}, '%')
-			</if>
-			<if test="query.userAvatarFuzzy!= null  and query.userAvatarFuzzy!=''">
-				 and  userAvatar like concat('%', #{query.userAvatarFuzzy}, '%')
-			</if>
-			<if test="query.userProfileFuzzy!= null  and query.userProfileFuzzy!=''">
-				 and  userProfile like concat('%', #{query.userProfileFuzzy}, '%')
-			</if>
-			<if test="query.userRoleFuzzy!= null  and query.userRoleFuzzy!=''">
-				 and  userRole like concat('%', #{query.userRoleFuzzy}, '%')
-			</if>
-			<if test="query.areaNameFuzzy!= null  and query.areaNameFuzzy!=''">
-				 and  area_name like concat('%', #{query.areaNameFuzzy}, '%')
-			</if>
-			<if test="query.areaCodeFuzzy!= null  and query.areaCodeFuzzy!=''">
-				 and  area_code like concat('%', #{query.areaCodeFuzzy}, '%')
-			</if>
-			<if test="query.lastLoginTimeStart!= null and query.lastLoginTimeStart!=''">
-				 <![CDATA[ and  last_login_time>=str_to_date(#{query.lastLoginTimeStart}, '%Y-%m-%d') ]]>
-			</if>
-			<if test="query.lastLoginTimeEnd!= null and query.lastLoginTimeEnd!=''">
-				 <![CDATA[ and  last_login_time< date_sub(str_to_date(#{query.lastLoginTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
-			</if>
-			<if test="query.createTimeStart!= null and query.createTimeStart!=''">
-				 <![CDATA[ and  createTime>=str_to_date(#{query.createTimeStart}, '%Y-%m-%d') ]]>
-			</if>
-			<if test="query.createTimeEnd!= null and query.createTimeEnd!=''">
-				 <![CDATA[ and  createTime< date_sub(str_to_date(#{query.createTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
-			</if>
-			<if test="query.updateTimeStart!= null and query.updateTimeStart!=''">
-				 <![CDATA[ and  updateTime>=str_to_date(#{query.updateTimeStart}, '%Y-%m-%d') ]]>
-			</if>
-			<if test="query.updateTimeEnd!= null and query.updateTimeEnd!=''">
-				 <![CDATA[ and  updateTime< date_sub(str_to_date(#{query.updateTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
-			</if>
-	 </where>
-	</sql>
+    <sql id="base_condition_filed">
+        <if test="query.id != null">
+            and id = #{query.id}
+        </if>
+        <if test="query.userAccount != null and query.userAccount!=''">
+            and userAccount = #{query.userAccount}
+        </if>
+        <if test="query.userPassword != null and query.userPassword!=''">
+            and userPassword = #{query.userPassword}
+        </if>
+        <if test="query.email != null and query.email!=''">
+            and email = #{query.email}
+        </if>
+        <if test="query.sex != null">
+            and sex = #{query.sex}
+        </if>
+        <if test="query.personSignature != null and query.personSignature!=''">
+            and person_signature = #{query.personSignature}
+        </if>
+        <if test="query.unionId != null and query.unionId!=''">
+            and unionId = #{query.unionId}
+        </if>
+        <if test="query.mpOpenId != null and query.mpOpenId!=''">
+            and mpOpenId = #{query.mpOpenId}
+        </if>
+        <if test="query.userName != null and query.userName!=''">
+            and userName = #{query.userName}
+        </if>
+        <if test="query.userAvatar != null and query.userAvatar!=''">
+            and userAvatar = #{query.userAvatar}
+        </if>
+        <if test="query.userProfile != null and query.userProfile!=''">
+            and userProfile = #{query.userProfile}
+        </if>
+        <if test="query.userRole != null and query.userRole!=''">
+            and userRole = #{query.userRole}
+        </if>
+        <if test="query.joinType != null">
+            and join_type = #{query.joinType}
+        </if>
+        <if test="query.areaName != null and query.areaName!=''">
+            and area_name = #{query.areaName}
+        </if>
+        <if test="query.areaCode != null and query.areaCode!=''">
+            and area_code = #{query.areaCode}
+        </if>
+        <if test="query.lastLoginTime != null and query.lastLoginTime!=''">
+            <![CDATA[ and  last_login_time=str_to_date(#{query.lastLoginTime}, '%Y-%m-%d') ]]>
+        </if>
+        <if test="query.lastLeaveTime != null">
+            and last_leave_time = #{query.lastLeaveTime}
+        </if>
+        <if test="query.createTime != null and query.createTime!=''">
+            <![CDATA[ and  createTime=str_to_date(#{query.createTime}, '%Y-%m-%d') ]]>
+        </if>
+        <if test="query.updateTime != null and query.updateTime!=''">
+            <![CDATA[ and  updateTime=str_to_date(#{query.updateTime}, '%Y-%m-%d') ]]>
+        </if>
+        <if test="query.isDelete != null">
+            and isDelete = #{query.isDelete}
+        </if>
+    </sql>
+    <!-- 通用条件列-->
+    <sql id="base_condition">
+        <where>
+            <include refid="base_condition_filed"/>
+        </where>
+    </sql>
 
-	<!-- 查询集合-->
-	<select id="selectList" resultMap="base_result_map" >
-		 SELECT <include refid="base_column_list" /> FROM user_beauty <include refid="query_condition" />
-		 <if test="query.orderBy!=null">
-			 order by ${query.orderBy}
-		 </if>
-		 <if test="query.simplePage!=null">
-			 limit #{query.simplePage.start},#{query.simplePage.end}
-		 </if>
-	</select>
+    <!-- 通用查询条件列-->
+    <sql id="query_condition">
+        <where>
+            <include refid="base_condition_filed"/>
+            <if test="query.userAccountFuzzy!= null  and query.userAccountFuzzy!=''">
+                and userAccount like concat('%', #{query.userAccountFuzzy}, '%')
+            </if>
+            <if test="query.userPasswordFuzzy!= null  and query.userPasswordFuzzy!=''">
+                and userPassword like concat('%', #{query.userPasswordFuzzy}, '%')
+            </if>
+            <if test="query.emailFuzzy!= null  and query.emailFuzzy!=''">
+                and email like concat('%', #{query.emailFuzzy}, '%')
+            </if>
+            <if test="query.personSignatureFuzzy!= null  and query.personSignatureFuzzy!=''">
+                and person_signature like concat('%', #{query.personSignatureFuzzy}, '%')
+            </if>
+            <if test="query.unionIdFuzzy!= null  and query.unionIdFuzzy!=''">
+                and unionId like concat('%', #{query.unionIdFuzzy}, '%')
+            </if>
+            <if test="query.mpOpenIdFuzzy!= null  and query.mpOpenIdFuzzy!=''">
+                and mpOpenId like concat('%', #{query.mpOpenIdFuzzy}, '%')
+            </if>
+            <if test="query.userNameFuzzy!= null  and query.userNameFuzzy!=''">
+                and userName like concat('%', #{query.userNameFuzzy}, '%')
+            </if>
+            <if test="query.userAvatarFuzzy!= null  and query.userAvatarFuzzy!=''">
+                and userAvatar like concat('%', #{query.userAvatarFuzzy}, '%')
+            </if>
+            <if test="query.userProfileFuzzy!= null  and query.userProfileFuzzy!=''">
+                and userProfile like concat('%', #{query.userProfileFuzzy}, '%')
+            </if>
+            <if test="query.userRoleFuzzy!= null  and query.userRoleFuzzy!=''">
+                and userRole like concat('%', #{query.userRoleFuzzy}, '%')
+            </if>
+            <if test="query.areaNameFuzzy!= null  and query.areaNameFuzzy!=''">
+                and area_name like concat('%', #{query.areaNameFuzzy}, '%')
+            </if>
+            <if test="query.areaCodeFuzzy!= null  and query.areaCodeFuzzy!=''">
+                and area_code like concat('%', #{query.areaCodeFuzzy}, '%')
+            </if>
+            <if test="query.lastLoginTimeStart!= null and query.lastLoginTimeStart!=''">
+                <![CDATA[ and  last_login_time>=str_to_date(#{query.lastLoginTimeStart}, '%Y-%m-%d') ]]>
+            </if>
+            <if test="query.lastLoginTimeEnd!= null and query.lastLoginTimeEnd!=''">
+                <![CDATA[ and  last_login_time< date_sub(str_to_date(#{query.lastLoginTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+            </if>
+            <if test="query.createTimeStart!= null and query.createTimeStart!=''">
+                <![CDATA[ and  createTime>=str_to_date(#{query.createTimeStart}, '%Y-%m-%d') ]]>
+            </if>
+            <if test="query.createTimeEnd!= null and query.createTimeEnd!=''">
+                <![CDATA[ and  createTime< date_sub(str_to_date(#{query.createTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+            </if>
+            <if test="query.updateTimeStart!= null and query.updateTimeStart!=''">
+                <![CDATA[ and  updateTime>=str_to_date(#{query.updateTimeStart}, '%Y-%m-%d') ]]>
+            </if>
+            <if test="query.updateTimeEnd!= null and query.updateTimeEnd!=''">
+                <![CDATA[ and  updateTime< date_sub(str_to_date(#{query.updateTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+            </if>
+        </where>
+    </sql>
 
-	<!-- 查询数量-->
-	<select id="selectCount" resultType="java.lang.Integer" >
-		 SELECT count(1) FROM user_beauty <include refid="query_condition" />
-	</select>
+    <!-- 查询集合-->
+    <select id="selectList" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM user_beauty
+        <include refid="query_condition"/>
+        <if test="query.orderBy!=null">
+            order by ${query.orderBy}
+        </if>
+        <if test="query.simplePage!=null">
+            limit #{query.simplePage.start},#{query.simplePage.end}
+        </if>
+    </select>
 
-	<!-- 插入 （匹配有值的字段）-->
-	<insert id="insert" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserBeauty">
-		<selectKey keyProperty="bean.id" resultType="Long" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-		 INSERT INTO user_beauty
-		 <trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="bean.userAccount != null">
-				 userAccount,
-			</if>
-			<if test="bean.userPassword != null">
-				 userPassword,
-			</if>
-			<if test="bean.email != null">
-				 email,
-			</if>
-			<if test="bean.sex != null">
-				 sex,
-			</if>
-			<if test="bean.personSignature != null">
-				 person_signature,
-			</if>
-			<if test="bean.unionId != null">
-				 unionId,
-			</if>
-			<if test="bean.mpOpenId != null">
-				 mpOpenId,
-			</if>
-			<if test="bean.userName != null">
-				 userName,
-			</if>
-			<if test="bean.userAvatar != null">
-				 userAvatar,
-			</if>
-			<if test="bean.userProfile != null">
-				 userProfile,
-			</if>
-			<if test="bean.userRole != null">
-				 userRole,
-			</if>
-			<if test="bean.joinType != null">
-				 join_type,
-			</if>
-			<if test="bean.areaName != null">
-				 area_name,
-			</if>
-			<if test="bean.areaCode != null">
-				 area_code,
-			</if>
-			<if test="bean.lastLoginTime != null">
-				 last_login_time,
-			</if>
-			<if test="bean.lastLeaveTime != null">
-				 last_leave_time,
-			</if>
-			<if test="bean.createTime != null">
-				 createTime,
-			</if>
-			<if test="bean.updateTime != null">
-				 updateTime,
-			</if>
-			<if test="bean.isDelete != null">
-				 isDelete,
-			</if>
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="bean.userAccount!=null">
-				 #{bean.userAccount},
-			</if>
-			<if test="bean.userPassword!=null">
-				 #{bean.userPassword},
-			</if>
-			<if test="bean.email!=null">
-				 #{bean.email},
-			</if>
-			<if test="bean.sex!=null">
-				 #{bean.sex},
-			</if>
-			<if test="bean.personSignature!=null">
-				 #{bean.personSignature},
-			</if>
-			<if test="bean.unionId!=null">
-				 #{bean.unionId},
-			</if>
-			<if test="bean.mpOpenId!=null">
-				 #{bean.mpOpenId},
-			</if>
-			<if test="bean.userName!=null">
-				 #{bean.userName},
-			</if>
-			<if test="bean.userAvatar!=null">
-				 #{bean.userAvatar},
-			</if>
-			<if test="bean.userProfile!=null">
-				 #{bean.userProfile},
-			</if>
-			<if test="bean.userRole!=null">
-				 #{bean.userRole},
-			</if>
-			<if test="bean.joinType!=null">
-				 #{bean.joinType},
-			</if>
-			<if test="bean.areaName!=null">
-				 #{bean.areaName},
-			</if>
-			<if test="bean.areaCode!=null">
-				 #{bean.areaCode},
-			</if>
-			<if test="bean.lastLoginTime!=null">
-				 #{bean.lastLoginTime},
-			</if>
-			<if test="bean.lastLeaveTime!=null">
-				 #{bean.lastLeaveTime},
-			</if>
-			<if test="bean.createTime!=null">
-				 #{bean.createTime},
-			</if>
-			<if test="bean.updateTime!=null">
-				 #{bean.updateTime},
-			</if>
-			<if test="bean.isDelete!=null">
-				 #{bean.isDelete},
-			</if>
-		 </trim>
-	</insert>
+    <!-- 查询数量-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM user_beauty
+        <include refid="query_condition"/>
+    </select>
 
-	<!-- 插入或者更新 （匹配有值的字段）-->
-	<insert id="insertOrUpdate" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserBeauty">
-		 INSERT INTO user_beauty
-		 <trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="bean.id != null">
-				 id,
-			</if>
-			<if test="bean.userAccount != null">
-				 userAccount,
-			</if>
-			<if test="bean.userPassword != null">
-				 userPassword,
-			</if>
-			<if test="bean.email != null">
-				 email,
-			</if>
-			<if test="bean.sex != null">
-				 sex,
-			</if>
-			<if test="bean.personSignature != null">
-				 person_signature,
-			</if>
-			<if test="bean.unionId != null">
-				 unionId,
-			</if>
-			<if test="bean.mpOpenId != null">
-				 mpOpenId,
-			</if>
-			<if test="bean.userName != null">
-				 userName,
-			</if>
-			<if test="bean.userAvatar != null">
-				 userAvatar,
-			</if>
-			<if test="bean.userProfile != null">
-				 userProfile,
-			</if>
-			<if test="bean.userRole != null">
-				 userRole,
-			</if>
-			<if test="bean.joinType != null">
-				 join_type,
-			</if>
-			<if test="bean.areaName != null">
-				 area_name,
-			</if>
-			<if test="bean.areaCode != null">
-				 area_code,
-			</if>
-			<if test="bean.lastLoginTime != null">
-				 last_login_time,
-			</if>
-			<if test="bean.lastLeaveTime != null">
-				 last_leave_time,
-			</if>
-			<if test="bean.createTime != null">
-				 createTime,
-			</if>
-			<if test="bean.updateTime != null">
-				 updateTime,
-			</if>
-			<if test="bean.isDelete != null">
-				 isDelete,
-			</if>
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="bean.id!=null">
-				 #{bean.id},
-			</if>
-			<if test="bean.userAccount!=null">
-				 #{bean.userAccount},
-			</if>
-			<if test="bean.userPassword!=null">
-				 #{bean.userPassword},
-			</if>
-			<if test="bean.email!=null">
-				 #{bean.email},
-			</if>
-			<if test="bean.sex!=null">
-				 #{bean.sex},
-			</if>
-			<if test="bean.personSignature!=null">
-				 #{bean.personSignature},
-			</if>
-			<if test="bean.unionId!=null">
-				 #{bean.unionId},
-			</if>
-			<if test="bean.mpOpenId!=null">
-				 #{bean.mpOpenId},
-			</if>
-			<if test="bean.userName!=null">
-				 #{bean.userName},
-			</if>
-			<if test="bean.userAvatar!=null">
-				 #{bean.userAvatar},
-			</if>
-			<if test="bean.userProfile!=null">
-				 #{bean.userProfile},
-			</if>
-			<if test="bean.userRole!=null">
-				 #{bean.userRole},
-			</if>
-			<if test="bean.joinType!=null">
-				 #{bean.joinType},
-			</if>
-			<if test="bean.areaName!=null">
-				 #{bean.areaName},
-			</if>
-			<if test="bean.areaCode!=null">
-				 #{bean.areaCode},
-			</if>
-			<if test="bean.lastLoginTime!=null">
-				 #{bean.lastLoginTime},
-			</if>
-			<if test="bean.lastLeaveTime!=null">
-				 #{bean.lastLeaveTime},
-			</if>
-			<if test="bean.createTime!=null">
-				 #{bean.createTime},
-			</if>
-			<if test="bean.updateTime!=null">
-				 #{bean.updateTime},
-			</if>
-			<if test="bean.isDelete!=null">
-				 #{bean.isDelete},
-			</if>
-		 </trim>
-		 on DUPLICATE key update 
-		 <trim prefix="" suffix="" suffixOverrides=",">
-			<if test="bean.userAccount!=null">
-				 userAccount = VALUES(userAccount),
-			</if>
-			<if test="bean.userPassword!=null">
-				 userPassword = VALUES(userPassword),
-			</if>
-			<if test="bean.email!=null">
-				 email = VALUES(email),
-			</if>
-			<if test="bean.sex!=null">
-				 sex = VALUES(sex),
-			</if>
-			<if test="bean.personSignature!=null">
-				 person_signature = VALUES(person_signature),
-			</if>
-			<if test="bean.unionId!=null">
-				 unionId = VALUES(unionId),
-			</if>
-			<if test="bean.mpOpenId!=null">
-				 mpOpenId = VALUES(mpOpenId),
-			</if>
-			<if test="bean.userName!=null">
-				 userName = VALUES(userName),
-			</if>
-			<if test="bean.userAvatar!=null">
-				 userAvatar = VALUES(userAvatar),
-			</if>
-			<if test="bean.userProfile!=null">
-				 userProfile = VALUES(userProfile),
-			</if>
-			<if test="bean.userRole!=null">
-				 userRole = VALUES(userRole),
-			</if>
-			<if test="bean.joinType!=null">
-				 join_type = VALUES(join_type),
-			</if>
-			<if test="bean.areaName!=null">
-				 area_name = VALUES(area_name),
-			</if>
-			<if test="bean.areaCode!=null">
-				 area_code = VALUES(area_code),
-			</if>
-			<if test="bean.lastLoginTime!=null">
-				 last_login_time = VALUES(last_login_time),
-			</if>
-			<if test="bean.lastLeaveTime!=null">
-				 last_leave_time = VALUES(last_leave_time),
-			</if>
-			<if test="bean.createTime!=null">
-				 createTime = VALUES(createTime),
-			</if>
-			<if test="bean.updateTime!=null">
-				 updateTime = VALUES(updateTime),
-			</if>
-			<if test="bean.isDelete!=null">
-				 isDelete = VALUES(isDelete),
-			</if>
-		 </trim>
-	</insert>
+    <!-- 插入 （匹配有值的字段）-->
+    <insert id="insert"
+            parameterType="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserBeauty">
+        <selectKey keyProperty="bean.id" resultType="Long" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO user_beauty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bean.userAccount != null">
+                userAccount,
+            </if>
+            <if test="bean.userPassword != null">
+                userPassword,
+            </if>
+            <if test="bean.email != null">
+                email,
+            </if>
+            <if test="bean.sex != null">
+                sex,
+            </if>
+            <if test="bean.personSignature != null">
+                person_signature,
+            </if>
+            <if test="bean.unionId != null">
+                unionId,
+            </if>
+            <if test="bean.mpOpenId != null">
+                mpOpenId,
+            </if>
+            <if test="bean.userName != null">
+                userName,
+            </if>
+            <if test="bean.userAvatar != null">
+                userAvatar,
+            </if>
+            <if test="bean.userProfile != null">
+                userProfile,
+            </if>
+            <if test="bean.userRole != null">
+                userRole,
+            </if>
+            <if test="bean.joinType != null">
+                join_type,
+            </if>
+            <if test="bean.areaName != null">
+                area_name,
+            </if>
+            <if test="bean.areaCode != null">
+                area_code,
+            </if>
+            <if test="bean.lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="bean.lastLeaveTime != null">
+                last_leave_time,
+            </if>
+            <if test="bean.createTime != null">
+                createTime,
+            </if>
+            <if test="bean.updateTime != null">
+                updateTime,
+            </if>
+            <if test="bean.isDelete != null">
+                isDelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bean.userAccount!=null">
+                #{bean.userAccount},
+            </if>
+            <if test="bean.userPassword!=null">
+                #{bean.userPassword},
+            </if>
+            <if test="bean.email!=null">
+                #{bean.email},
+            </if>
+            <if test="bean.sex!=null">
+                #{bean.sex},
+            </if>
+            <if test="bean.personSignature!=null">
+                #{bean.personSignature},
+            </if>
+            <if test="bean.unionId!=null">
+                #{bean.unionId},
+            </if>
+            <if test="bean.mpOpenId!=null">
+                #{bean.mpOpenId},
+            </if>
+            <if test="bean.userName!=null">
+                #{bean.userName},
+            </if>
+            <if test="bean.userAvatar!=null">
+                #{bean.userAvatar},
+            </if>
+            <if test="bean.userProfile!=null">
+                #{bean.userProfile},
+            </if>
+            <if test="bean.userRole!=null">
+                #{bean.userRole},
+            </if>
+            <if test="bean.joinType!=null">
+                #{bean.joinType},
+            </if>
+            <if test="bean.areaName!=null">
+                #{bean.areaName},
+            </if>
+            <if test="bean.areaCode!=null">
+                #{bean.areaCode},
+            </if>
+            <if test="bean.lastLoginTime!=null">
+                #{bean.lastLoginTime},
+            </if>
+            <if test="bean.lastLeaveTime!=null">
+                #{bean.lastLeaveTime},
+            </if>
+            <if test="bean.createTime!=null">
+                #{bean.createTime},
+            </if>
+            <if test="bean.updateTime!=null">
+                #{bean.updateTime},
+            </if>
+            <if test="bean.isDelete!=null">
+                #{bean.isDelete},
+            </if>
+        </trim>
+    </insert>
 
-	<!-- 添加 （批量插入）-->
-	<insert id="insertBatch" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserBeauty" useGeneratedKeys="true" keyProperty="id">
-		 INSERT INTO user_beauty(
-			 userAccount,
-			 userPassword,
-			 email,
-			 sex,
-			 person_signature,
-			 unionId,
-			 mpOpenId,
-			 userName,
-			 userAvatar,
-			 userProfile,
-			 userRole,
-			 join_type,
-			 area_name,
-			 area_code,
-			 last_login_time,
-			 last_leave_time,
-			 createTime,
-			 updateTime,
-			 isDelete
-		 )values
-		 <foreach collection="list" item="item" separator=",">
-			 (
-				 #{item.userAccount},
-				 #{item.userPassword},
-				 #{item.email},
-				 #{item.sex},
-				 #{item.personSignature},
-				 #{item.unionId},
-				 #{item.mpOpenId},
-				 #{item.userName},
-				 #{item.userAvatar},
-				 #{item.userProfile},
-				 #{item.userRole},
-				 #{item.joinType},
-				 #{item.areaName},
-				 #{item.areaCode},
-				 #{item.lastLoginTime},
-				 #{item.lastLeaveTime},
-				 #{item.createTime},
-				 #{item.updateTime},
-				 #{item.isDelete}
-			 )
-		 </foreach>
-	</insert>
+    <!-- 插入或者更新 （匹配有值的字段）-->
+    <insert id="insertOrUpdate"
+            parameterType="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserBeauty">
+        INSERT INTO user_beauty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bean.id != null">
+                id,
+            </if>
+            <if test="bean.userAccount != null">
+                userAccount,
+            </if>
+            <if test="bean.userPassword != null">
+                userPassword,
+            </if>
+            <if test="bean.email != null">
+                email,
+            </if>
+            <if test="bean.sex != null">
+                sex,
+            </if>
+            <if test="bean.personSignature != null">
+                person_signature,
+            </if>
+            <if test="bean.unionId != null">
+                unionId,
+            </if>
+            <if test="bean.mpOpenId != null">
+                mpOpenId,
+            </if>
+            <if test="bean.userName != null">
+                userName,
+            </if>
+            <if test="bean.userAvatar != null">
+                userAvatar,
+            </if>
+            <if test="bean.userProfile != null">
+                userProfile,
+            </if>
+            <if test="bean.userRole != null">
+                userRole,
+            </if>
+            <if test="bean.joinType != null">
+                join_type,
+            </if>
+            <if test="bean.areaName != null">
+                area_name,
+            </if>
+            <if test="bean.areaCode != null">
+                area_code,
+            </if>
+            <if test="bean.lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="bean.lastLeaveTime != null">
+                last_leave_time,
+            </if>
+            <if test="bean.createTime != null">
+                createTime,
+            </if>
+            <if test="bean.updateTime != null">
+                updateTime,
+            </if>
+            <if test="bean.isDelete != null">
+                isDelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bean.id!=null">
+                #{bean.id},
+            </if>
+            <if test="bean.userAccount!=null">
+                #{bean.userAccount},
+            </if>
+            <if test="bean.userPassword!=null">
+                #{bean.userPassword},
+            </if>
+            <if test="bean.email!=null">
+                #{bean.email},
+            </if>
+            <if test="bean.sex!=null">
+                #{bean.sex},
+            </if>
+            <if test="bean.personSignature!=null">
+                #{bean.personSignature},
+            </if>
+            <if test="bean.unionId!=null">
+                #{bean.unionId},
+            </if>
+            <if test="bean.mpOpenId!=null">
+                #{bean.mpOpenId},
+            </if>
+            <if test="bean.userName!=null">
+                #{bean.userName},
+            </if>
+            <if test="bean.userAvatar!=null">
+                #{bean.userAvatar},
+            </if>
+            <if test="bean.userProfile!=null">
+                #{bean.userProfile},
+            </if>
+            <if test="bean.userRole!=null">
+                #{bean.userRole},
+            </if>
+            <if test="bean.joinType!=null">
+                #{bean.joinType},
+            </if>
+            <if test="bean.areaName!=null">
+                #{bean.areaName},
+            </if>
+            <if test="bean.areaCode!=null">
+                #{bean.areaCode},
+            </if>
+            <if test="bean.lastLoginTime!=null">
+                #{bean.lastLoginTime},
+            </if>
+            <if test="bean.lastLeaveTime!=null">
+                #{bean.lastLeaveTime},
+            </if>
+            <if test="bean.createTime!=null">
+                #{bean.createTime},
+            </if>
+            <if test="bean.updateTime!=null">
+                #{bean.updateTime},
+            </if>
+            <if test="bean.isDelete!=null">
+                #{bean.isDelete},
+            </if>
+        </trim>
+        on DUPLICATE key update
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="bean.userAccount!=null">
+                userAccount = VALUES(userAccount),
+            </if>
+            <if test="bean.userPassword!=null">
+                userPassword = VALUES(userPassword),
+            </if>
+            <if test="bean.email!=null">
+                email = VALUES(email),
+            </if>
+            <if test="bean.sex!=null">
+                sex = VALUES(sex),
+            </if>
+            <if test="bean.personSignature!=null">
+                person_signature = VALUES(person_signature),
+            </if>
+            <if test="bean.unionId!=null">
+                unionId = VALUES(unionId),
+            </if>
+            <if test="bean.mpOpenId!=null">
+                mpOpenId = VALUES(mpOpenId),
+            </if>
+            <if test="bean.userName!=null">
+                userName = VALUES(userName),
+            </if>
+            <if test="bean.userAvatar!=null">
+                userAvatar = VALUES(userAvatar),
+            </if>
+            <if test="bean.userProfile!=null">
+                userProfile = VALUES(userProfile),
+            </if>
+            <if test="bean.userRole!=null">
+                userRole = VALUES(userRole),
+            </if>
+            <if test="bean.joinType!=null">
+                join_type = VALUES(join_type),
+            </if>
+            <if test="bean.areaName!=null">
+                area_name = VALUES(area_name),
+            </if>
+            <if test="bean.areaCode!=null">
+                area_code = VALUES(area_code),
+            </if>
+            <if test="bean.lastLoginTime!=null">
+                last_login_time = VALUES(last_login_time),
+            </if>
+            <if test="bean.lastLeaveTime!=null">
+                last_leave_time = VALUES(last_leave_time),
+            </if>
+            <if test="bean.createTime!=null">
+                createTime = VALUES(createTime),
+            </if>
+            <if test="bean.updateTime!=null">
+                updateTime = VALUES(updateTime),
+            </if>
+            <if test="bean.isDelete!=null">
+                isDelete = VALUES(isDelete),
+            </if>
+        </trim>
+    </insert>
 
-	<!-- 批量新增修改 （批量插入）-->
-	<insert id="insertOrUpdateBatch" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserBeauty">
-		 INSERT INTO user_beauty(
-			 userAccount,
-			 userPassword,
-			 email,
-			 sex,
-			 person_signature,
-			 unionId,
-			 mpOpenId,
-			 userName,
-			 userAvatar,
-			 userProfile,
-			 userRole,
-			 join_type,
-			 area_name,
-			 area_code,
-			 last_login_time,
-			 last_leave_time,
-			 createTime,
-			 updateTime,
-			 isDelete
-		 )values
-		 <foreach collection="list" item="item" separator=",">
-			 (
-				 #{item.userAccount},
-				 #{item.userPassword},
-				 #{item.email},
-				 #{item.sex},
-				 #{item.personSignature},
-				 #{item.unionId},
-				 #{item.mpOpenId},
-				 #{item.userName},
-				 #{item.userAvatar},
-				 #{item.userProfile},
-				 #{item.userRole},
-				 #{item.joinType},
-				 #{item.areaName},
-				 #{item.areaCode},
-				 #{item.lastLoginTime},
-				 #{item.lastLeaveTime},
-				 #{item.createTime},
-				 #{item.updateTime},
-				 #{item.isDelete}
-			 )
-		 </foreach>
-			on DUPLICATE key update 
-			userAccount = VALUES(userAccount),
-			userPassword = VALUES(userPassword),
-			email = VALUES(email),
-			sex = VALUES(sex),
-			person_signature = VALUES(person_signature),
-			unionId = VALUES(unionId),
-			mpOpenId = VALUES(mpOpenId),
-			userName = VALUES(userName),
-			userAvatar = VALUES(userAvatar),
-			userProfile = VALUES(userProfile),
-			userRole = VALUES(userRole),
-			join_type = VALUES(join_type),
-			area_name = VALUES(area_name),
-			area_code = VALUES(area_code),
-			last_login_time = VALUES(last_login_time),
-			last_leave_time = VALUES(last_leave_time),
-			createTime = VALUES(createTime),
-			updateTime = VALUES(updateTime),
-			isDelete = VALUES(isDelete)
-	</insert>
+    <!-- 添加 （批量插入）-->
+    <insert id="insertBatch"
+            parameterType="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserBeauty"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_beauty(
+        userAccount,
+        userPassword,
+        email,
+        sex,
+        person_signature,
+        unionId,
+        mpOpenId,
+        userName,
+        userAvatar,
+        userProfile,
+        userRole,
+        join_type,
+        area_name,
+        area_code,
+        last_login_time,
+        last_leave_time,
+        createTime,
+        updateTime,
+        isDelete
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.userAccount},
+            #{item.userPassword},
+            #{item.email},
+            #{item.sex},
+            #{item.personSignature},
+            #{item.unionId},
+            #{item.mpOpenId},
+            #{item.userName},
+            #{item.userAvatar},
+            #{item.userProfile},
+            #{item.userRole},
+            #{item.joinType},
+            #{item.areaName},
+            #{item.areaCode},
+            #{item.lastLoginTime},
+            #{item.lastLeaveTime},
+            #{item.createTime},
+            #{item.updateTime},
+            #{item.isDelete}
+            )
+        </foreach>
+    </insert>
 
-	<!--多条件修改-->
-	<update id="updateByParam" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.UserBeautyQuery">
-		 UPDATE user_beauty
- 		 <set> 
-			<if test="bean.userAccount != null">
-				 userAccount = #{bean.userAccount},
-			</if>
-			<if test="bean.userPassword != null">
-				 userPassword = #{bean.userPassword},
-			</if>
-			<if test="bean.email != null">
-				 email = #{bean.email},
-			</if>
-			<if test="bean.sex != null">
-				 sex = #{bean.sex},
-			</if>
-			<if test="bean.personSignature != null">
-				 person_signature = #{bean.personSignature},
-			</if>
-			<if test="bean.unionId != null">
-				 unionId = #{bean.unionId},
-			</if>
-			<if test="bean.mpOpenId != null">
-				 mpOpenId = #{bean.mpOpenId},
-			</if>
-			<if test="bean.userName != null">
-				 userName = #{bean.userName},
-			</if>
-			<if test="bean.userAvatar != null">
-				 userAvatar = #{bean.userAvatar},
-			</if>
-			<if test="bean.userProfile != null">
-				 userProfile = #{bean.userProfile},
-			</if>
-			<if test="bean.userRole != null">
-				 userRole = #{bean.userRole},
-			</if>
-			<if test="bean.joinType != null">
-				 join_type = #{bean.joinType},
-			</if>
-			<if test="bean.areaName != null">
-				 area_name = #{bean.areaName},
-			</if>
-			<if test="bean.areaCode != null">
-				 area_code = #{bean.areaCode},
-			</if>
-			<if test="bean.lastLoginTime != null">
-				 last_login_time = #{bean.lastLoginTime},
-			</if>
-			<if test="bean.lastLeaveTime != null">
-				 last_leave_time = #{bean.lastLeaveTime},
-			</if>
-			<if test="bean.createTime != null">
-				 createTime = #{bean.createTime},
-			</if>
-			<if test="bean.updateTime != null">
-				 updateTime = #{bean.updateTime},
-			</if>
-			<if test="bean.isDelete != null">
-				 isDelete = #{bean.isDelete},
-			</if>
- 		 </set>
- 		 <include refid="query_condition" />
-	</update>
+    <!-- 批量新增修改 （批量插入）-->
+    <insert id="insertOrUpdateBatch"
+            parameterType="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserBeauty">
+        INSERT INTO user_beauty(
+        userAccount,
+        userPassword,
+        email,
+        sex,
+        person_signature,
+        unionId,
+        mpOpenId,
+        userName,
+        userAvatar,
+        userProfile,
+        userRole,
+        join_type,
+        area_name,
+        area_code,
+        last_login_time,
+        last_leave_time,
+        createTime,
+        updateTime,
+        isDelete
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.userAccount},
+            #{item.userPassword},
+            #{item.email},
+            #{item.sex},
+            #{item.personSignature},
+            #{item.unionId},
+            #{item.mpOpenId},
+            #{item.userName},
+            #{item.userAvatar},
+            #{item.userProfile},
+            #{item.userRole},
+            #{item.joinType},
+            #{item.areaName},
+            #{item.areaCode},
+            #{item.lastLoginTime},
+            #{item.lastLeaveTime},
+            #{item.createTime},
+            #{item.updateTime},
+            #{item.isDelete}
+            )
+        </foreach>
+        on DUPLICATE key update
+        userAccount = VALUES(userAccount),
+        userPassword = VALUES(userPassword),
+        email = VALUES(email),
+        sex = VALUES(sex),
+        person_signature = VALUES(person_signature),
+        unionId = VALUES(unionId),
+        mpOpenId = VALUES(mpOpenId),
+        userName = VALUES(userName),
+        userAvatar = VALUES(userAvatar),
+        userProfile = VALUES(userProfile),
+        userRole = VALUES(userRole),
+        join_type = VALUES(join_type),
+        area_name = VALUES(area_name),
+        area_code = VALUES(area_code),
+        last_login_time = VALUES(last_login_time),
+        last_leave_time = VALUES(last_leave_time),
+        createTime = VALUES(createTime),
+        updateTime = VALUES(updateTime),
+        isDelete = VALUES(isDelete)
+    </insert>
 
-	<!--多条件删除-->
-	<delete id="deleteByParam">
-		 delete from user_beauty
- 		 <include refid="query_condition" />
-	</delete>
+    <!--多条件修改-->
+    <update id="updateByParam"
+            parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.query.UserBeautyQuery">
+        UPDATE user_beauty
+        <set>
+            <if test="bean.userAccount != null">
+                userAccount = #{bean.userAccount},
+            </if>
+            <if test="bean.userPassword != null">
+                userPassword = #{bean.userPassword},
+            </if>
+            <if test="bean.email != null">
+                email = #{bean.email},
+            </if>
+            <if test="bean.sex != null">
+                sex = #{bean.sex},
+            </if>
+            <if test="bean.personSignature != null">
+                person_signature = #{bean.personSignature},
+            </if>
+            <if test="bean.unionId != null">
+                unionId = #{bean.unionId},
+            </if>
+            <if test="bean.mpOpenId != null">
+                mpOpenId = #{bean.mpOpenId},
+            </if>
+            <if test="bean.userName != null">
+                userName = #{bean.userName},
+            </if>
+            <if test="bean.userAvatar != null">
+                userAvatar = #{bean.userAvatar},
+            </if>
+            <if test="bean.userProfile != null">
+                userProfile = #{bean.userProfile},
+            </if>
+            <if test="bean.userRole != null">
+                userRole = #{bean.userRole},
+            </if>
+            <if test="bean.joinType != null">
+                join_type = #{bean.joinType},
+            </if>
+            <if test="bean.areaName != null">
+                area_name = #{bean.areaName},
+            </if>
+            <if test="bean.areaCode != null">
+                area_code = #{bean.areaCode},
+            </if>
+            <if test="bean.lastLoginTime != null">
+                last_login_time = #{bean.lastLoginTime},
+            </if>
+            <if test="bean.lastLeaveTime != null">
+                last_leave_time = #{bean.lastLeaveTime},
+            </if>
+            <if test="bean.createTime != null">
+                createTime = #{bean.createTime},
+            </if>
+            <if test="bean.updateTime != null">
+                updateTime = #{bean.updateTime},
+            </if>
+            <if test="bean.isDelete != null">
+                isDelete = #{bean.isDelete},
+            </if>
+        </set>
+        <include refid="query_condition"/>
+    </update>
 
-	<!-- 根据Id修改-->
-	<update id="updateById" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserBeauty">
-		 UPDATE user_beauty
- 		 <set> 
-			<if test="bean.userAccount != null">
-				 userAccount = #{bean.userAccount},
-			</if>
-			<if test="bean.userPassword != null">
-				 userPassword = #{bean.userPassword},
-			</if>
-			<if test="bean.email != null">
-				 email = #{bean.email},
-			</if>
-			<if test="bean.sex != null">
-				 sex = #{bean.sex},
-			</if>
-			<if test="bean.personSignature != null">
-				 person_signature = #{bean.personSignature},
-			</if>
-			<if test="bean.unionId != null">
-				 unionId = #{bean.unionId},
-			</if>
-			<if test="bean.mpOpenId != null">
-				 mpOpenId = #{bean.mpOpenId},
-			</if>
-			<if test="bean.userName != null">
-				 userName = #{bean.userName},
-			</if>
-			<if test="bean.userAvatar != null">
-				 userAvatar = #{bean.userAvatar},
-			</if>
-			<if test="bean.userProfile != null">
-				 userProfile = #{bean.userProfile},
-			</if>
-			<if test="bean.userRole != null">
-				 userRole = #{bean.userRole},
-			</if>
-			<if test="bean.joinType != null">
-				 join_type = #{bean.joinType},
-			</if>
-			<if test="bean.areaName != null">
-				 area_name = #{bean.areaName},
-			</if>
-			<if test="bean.areaCode != null">
-				 area_code = #{bean.areaCode},
-			</if>
-			<if test="bean.lastLoginTime != null">
-				 last_login_time = #{bean.lastLoginTime},
-			</if>
-			<if test="bean.lastLeaveTime != null">
-				 last_leave_time = #{bean.lastLeaveTime},
-			</if>
-			<if test="bean.createTime != null">
-				 createTime = #{bean.createTime},
-			</if>
-			<if test="bean.updateTime != null">
-				 updateTime = #{bean.updateTime},
-			</if>
-			<if test="bean.isDelete != null">
-				 isDelete = #{bean.isDelete},
-			</if>
- 		 </set>
- 		 where id=#{id}
-	</update>
+    <!--多条件删除-->
+    <delete id="deleteByParam">
+        delete from user_beauty
+        <include refid="query_condition"/>
+    </delete>
 
-	<!-- 根据Id删除-->
-	<delete id="deleteById">
-		delete from user_beauty where id=#{id}
-	</delete>
+    <!-- 根据Id修改-->
+    <update id="updateById"
+            parameterType="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserBeauty">
+        UPDATE user_beauty
+        <set>
+            <if test="bean.userAccount != null">
+                userAccount = #{bean.userAccount},
+            </if>
+            <if test="bean.userPassword != null">
+                userPassword = #{bean.userPassword},
+            </if>
+            <if test="bean.email != null">
+                email = #{bean.email},
+            </if>
+            <if test="bean.sex != null">
+                sex = #{bean.sex},
+            </if>
+            <if test="bean.personSignature != null">
+                person_signature = #{bean.personSignature},
+            </if>
+            <if test="bean.unionId != null">
+                unionId = #{bean.unionId},
+            </if>
+            <if test="bean.mpOpenId != null">
+                mpOpenId = #{bean.mpOpenId},
+            </if>
+            <if test="bean.userName != null">
+                userName = #{bean.userName},
+            </if>
+            <if test="bean.userAvatar != null">
+                userAvatar = #{bean.userAvatar},
+            </if>
+            <if test="bean.userProfile != null">
+                userProfile = #{bean.userProfile},
+            </if>
+            <if test="bean.userRole != null">
+                userRole = #{bean.userRole},
+            </if>
+            <if test="bean.joinType != null">
+                join_type = #{bean.joinType},
+            </if>
+            <if test="bean.areaName != null">
+                area_name = #{bean.areaName},
+            </if>
+            <if test="bean.areaCode != null">
+                area_code = #{bean.areaCode},
+            </if>
+            <if test="bean.lastLoginTime != null">
+                last_login_time = #{bean.lastLoginTime},
+            </if>
+            <if test="bean.lastLeaveTime != null">
+                last_leave_time = #{bean.lastLeaveTime},
+            </if>
+            <if test="bean.createTime != null">
+                createTime = #{bean.createTime},
+            </if>
+            <if test="bean.updateTime != null">
+                updateTime = #{bean.updateTime},
+            </if>
+            <if test="bean.isDelete != null">
+                isDelete = #{bean.isDelete},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 
-	<!-- 根据PrimaryKey获取对象-->
-	<select id="selectById" resultMap="base_result_map" >
-		select <include refid="base_column_list" /> from user_beauty where id=#{id}
-	</select>
+    <!-- 根据Id删除-->
+    <delete id="deleteById">
+        delete
+        from user_beauty
+        where id = #{id}
+    </delete>
 
-	<!-- 根据Email修改-->
-	<update id="updateByEmail" parameterType="com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserBeauty">
-		 UPDATE user_beauty
- 		 <set> 
-			<if test="bean.userAccount != null">
-				 userAccount = #{bean.userAccount},
-			</if>
-			<if test="bean.userPassword != null">
-				 userPassword = #{bean.userPassword},
-			</if>
-			<if test="bean.sex != null">
-				 sex = #{bean.sex},
-			</if>
-			<if test="bean.personSignature != null">
-				 person_signature = #{bean.personSignature},
-			</if>
-			<if test="bean.unionId != null">
-				 unionId = #{bean.unionId},
-			</if>
-			<if test="bean.mpOpenId != null">
-				 mpOpenId = #{bean.mpOpenId},
-			</if>
-			<if test="bean.userName != null">
-				 userName = #{bean.userName},
-			</if>
-			<if test="bean.userAvatar != null">
-				 userAvatar = #{bean.userAvatar},
-			</if>
-			<if test="bean.userProfile != null">
-				 userProfile = #{bean.userProfile},
-			</if>
-			<if test="bean.userRole != null">
-				 userRole = #{bean.userRole},
-			</if>
-			<if test="bean.joinType != null">
-				 join_type = #{bean.joinType},
-			</if>
-			<if test="bean.areaName != null">
-				 area_name = #{bean.areaName},
-			</if>
-			<if test="bean.areaCode != null">
-				 area_code = #{bean.areaCode},
-			</if>
-			<if test="bean.lastLoginTime != null">
-				 last_login_time = #{bean.lastLoginTime},
-			</if>
-			<if test="bean.lastLeaveTime != null">
-				 last_leave_time = #{bean.lastLeaveTime},
-			</if>
-			<if test="bean.createTime != null">
-				 createTime = #{bean.createTime},
-			</if>
-			<if test="bean.updateTime != null">
-				 updateTime = #{bean.updateTime},
-			</if>
-			<if test="bean.isDelete != null">
-				 isDelete = #{bean.isDelete},
-			</if>
- 		 </set>
- 		 where email=#{email}
-	</update>
+    <!-- 根据PrimaryKey获取对象-->
+    <select id="selectById" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from user_beauty where id=#{id}
+    </select>
 
-	<!-- 根据Email删除-->
-	<delete id="deleteByEmail">
-		delete from user_beauty where email=#{email}
-	</delete>
+    <!-- 根据Email修改-->
+    <update id="updateByEmail"
+            parameterType="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserBeauty">
+        UPDATE user_beauty
+        <set>
+            <if test="bean.userAccount != null">
+                userAccount = #{bean.userAccount},
+            </if>
+            <if test="bean.userPassword != null">
+                userPassword = #{bean.userPassword},
+            </if>
+            <if test="bean.sex != null">
+                sex = #{bean.sex},
+            </if>
+            <if test="bean.personSignature != null">
+                person_signature = #{bean.personSignature},
+            </if>
+            <if test="bean.unionId != null">
+                unionId = #{bean.unionId},
+            </if>
+            <if test="bean.mpOpenId != null">
+                mpOpenId = #{bean.mpOpenId},
+            </if>
+            <if test="bean.userName != null">
+                userName = #{bean.userName},
+            </if>
+            <if test="bean.userAvatar != null">
+                userAvatar = #{bean.userAvatar},
+            </if>
+            <if test="bean.userProfile != null">
+                userProfile = #{bean.userProfile},
+            </if>
+            <if test="bean.userRole != null">
+                userRole = #{bean.userRole},
+            </if>
+            <if test="bean.joinType != null">
+                join_type = #{bean.joinType},
+            </if>
+            <if test="bean.areaName != null">
+                area_name = #{bean.areaName},
+            </if>
+            <if test="bean.areaCode != null">
+                area_code = #{bean.areaCode},
+            </if>
+            <if test="bean.lastLoginTime != null">
+                last_login_time = #{bean.lastLoginTime},
+            </if>
+            <if test="bean.lastLeaveTime != null">
+                last_leave_time = #{bean.lastLeaveTime},
+            </if>
+            <if test="bean.createTime != null">
+                createTime = #{bean.createTime},
+            </if>
+            <if test="bean.updateTime != null">
+                updateTime = #{bean.updateTime},
+            </if>
+            <if test="bean.isDelete != null">
+                isDelete = #{bean.isDelete},
+            </if>
+        </set>
+        where email=#{email}
+    </update>
 
-	<!-- 根据PrimaryKey获取对象-->
-	<select id="selectByEmail" resultMap="base_result_map" >
-		select <include refid="base_column_list" /> from user_beauty where email=#{email}
-	</select>
+    <!-- 根据Email删除-->
+    <delete id="deleteByEmail">
+        delete
+        from user_beauty
+        where email = #{email}
+    </delete>
+
+    <!-- 根据PrimaryKey获取对象-->
+    <select id="selectByEmail" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from user_beauty where email=#{email}
+    </select>
 
 </mapper>

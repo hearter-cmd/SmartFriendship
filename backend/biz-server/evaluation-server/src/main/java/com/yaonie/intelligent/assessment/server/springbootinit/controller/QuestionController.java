@@ -22,9 +22,7 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.QuestionVO;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.QuestionService;
 import com.yaonie.intelligent.assessment.system.service.UserService;
-import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Flowable;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +35,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,11 +69,10 @@ public class QuestionController {
      * 创建题目
      *
      * @param questionAddRequest 题目请求
-     * @param request 请求
+     * @param request            请求
      * @return 新题目id
      */
     @PostMapping("/add")
-    
     public BaseResponse<Long> addQuestion(@RequestBody QuestionAddRequest questionAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(questionAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 在此处将实体类和 DTO 进行转换
@@ -98,11 +97,11 @@ public class QuestionController {
      * 删除题目
      *
      * @param deleteRequest 删除请求
-     * @param request 请求
+     * @param request       请求
      * @return 是否删除成功
      */
     @PostMapping("/delete")
-    
+
     public BaseResponse<Boolean> deleteQuestion(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -266,12 +265,12 @@ public class QuestionController {
 
     /**
      * 根据 AI 生成题目（给用户使用）
+     *
      * @param aiGenerateQuestionRequest
      * @param request
      * @return
      */
     @PostMapping("/ai/generate")
-    
     public BaseResponse<List<QuestionContextDto>> addQuestionByAi(@RequestBody AiGenerateQuestionRequest aiGenerateQuestionRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
         List<QuestionContextDto> questionContextDtoList = questionService.generateQuestionByAi(aiGenerateQuestionRequest);
@@ -281,13 +280,13 @@ public class QuestionController {
 
     /**
      * 根据 AI 生成题目（给用户使用）
+     *
      * @param aiGenerateQuestionRequest 对题目的要求封装
-     * @param isVip 是否是 vip
-     * @param request HttpServletRequest
+     * @param isVip                     是否是 vip
+     * @param request                   HttpServletRequest
      * @return 流式题目数据
      */
     @GetMapping("/ai/generate/sse")
-    
     public SseEmitter generateQuestionByAiStream(AiGenerateQuestionRequest aiGenerateQuestionRequest, Boolean isVip, HttpServletRequest request) {
         ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
         SseEmitter sseEmitter = new SseEmitter(0L);
@@ -296,7 +295,7 @@ public class QuestionController {
 
         AtomicInteger count = new AtomicInteger();
         StringBuilder result = new StringBuilder();
-        Scheduler scheduler = Schedulers.io();
+        Scheduler scheduler = Schedulers.boundedElastic();
         if (isVip) {
             scheduler = vipScheduler;
         }
@@ -305,7 +304,7 @@ public class QuestionController {
                 .map(modelData -> modelData.replaceAll("\\s", ""))
                 // 过滤空字符串
                 .filter(StringUtils::isNotBlank)
-                // 将多个字符变为字符
+                // 将多个字符变为字符串
                 .flatMap(modelData -> {
                     ArrayList<Character> characters = new ArrayList<>();
                     for (char ch : modelData.toCharArray()) {
@@ -335,7 +334,7 @@ public class QuestionController {
                         result.append(modelData);
                     }
                 })
-                .subscribeOn((reactor.core.scheduler.Scheduler) scheduler)
+                .subscribeOn(scheduler)
                 .doOnError(error -> {
                     throw new BusinessException(ErrorCode.SYSTEM_ERROR, error.getMessage());
                 })
@@ -344,7 +343,6 @@ public class QuestionController {
 
         return sseEmitter;
     }
-
 
 
     // endregion

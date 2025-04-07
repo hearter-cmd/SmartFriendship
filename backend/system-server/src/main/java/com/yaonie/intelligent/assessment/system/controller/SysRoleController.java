@@ -64,7 +64,7 @@ public class SysRoleController {
     public BaseResponse<?> getRoleList(Character enable) {
         List<SysRole> enableRoleList = sysRoleService.getRoleListByQuery(enable);
         List<RoleVO> list = enableRoleList.stream()
-                .map(item -> new RoleVO(item.getRoleId(),  item.getRoleKey(), item.getRoleName(),item.getEnable().equals('0')))
+                .map(item -> new RoleVO(item.getRoleId(), item.getRoleKey(), item.getRoleName(), item.getEnable().equals('0')))
                 .toList();
         return ResultUtils.success(list);
     }
@@ -78,6 +78,7 @@ public class SysRoleController {
 
     /**
      * 修改角色是否启用
+     *
      * @param id 角色id
      * @return BaseResponse
      */

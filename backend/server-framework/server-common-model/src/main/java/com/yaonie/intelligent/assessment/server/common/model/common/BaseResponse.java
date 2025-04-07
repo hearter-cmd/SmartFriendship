@@ -12,8 +12,8 @@ import java.io.Serializable;
 /**
  * 通用返回类
  *
- * @author 77160
  * @param <T>
+ * @author 77160
  */
 @Data
 public class BaseResponse<T> implements Serializable {

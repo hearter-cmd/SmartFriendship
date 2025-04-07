@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 /**
  * 用户登录请求
+ *
  * @author yaonie
  */
 @Data

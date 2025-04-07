@@ -11,7 +11,7 @@ import lombok.Data;
  * @CreateTime 2024-09-16
  * @ClassName WSChannelDTO
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Data
 public class WSChannelDTO {

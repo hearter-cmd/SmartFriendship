@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 
 /**
  * 评分结果表服务实现
- *
  */
 @Service
 @Slf4j
@@ -49,7 +48,7 @@ public class ScoringResultServiceImpl extends ServiceImpl<ScoringResultMapper, S
      * 校验数据
      *
      * @param scoringResult
-     * @param add      对创建的数据进行校验
+     * @param add           对创建的数据进行校验
      */
     @Override
     public void validScoringResult(ScoringResult scoringResult, boolean add) {

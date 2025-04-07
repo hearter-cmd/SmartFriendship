@@ -20,10 +20,22 @@
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-util</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.yaonie.intelligent.assessment.server</groupId>
+                    <artifactId>server-common-util</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-model</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.yaonie.intelligent.assessment.server</groupId>
+                    <artifactId>server-common-util</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- SpringBoot项目启动引导 -->

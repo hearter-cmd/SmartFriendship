@@ -34,6 +34,7 @@ public class StatisticController {
 
     /**
      * 获取每个应用用户答题统计 (top 10)
+     *
      * @return 用户答题统计
      */
     @GetMapping("answer_count")
@@ -43,6 +44,7 @@ public class StatisticController {
 
     /**
      * 获取指定应用用户答题结果统计 (top 10)
+     *
      * @param appId 应用id
      * @return 用户答题结果统计
      */

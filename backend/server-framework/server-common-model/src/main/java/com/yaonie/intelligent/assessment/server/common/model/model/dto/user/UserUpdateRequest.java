@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 /**
  * 用户更新请求
+ *
  * @author yaonie
  */
 @Data

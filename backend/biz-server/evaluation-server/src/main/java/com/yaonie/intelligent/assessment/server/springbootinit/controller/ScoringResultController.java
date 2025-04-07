@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 /**
  * 评分结果表接口
  *
@@ -54,11 +53,10 @@ public class ScoringResultController {
      * 创建评分结果表
      *
      * @param scoringResultAddRequest 评分结果添加请求
-     * @param request request请求对象
+     * @param request                 request请求对象
      * @return 创建的评分结果的ID
      */
     @PostMapping("/add")
-    
     public BaseResponse<Long> addScoringResult(@RequestBody ScoringResultAddRequest scoringResultAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(scoringResultAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 在此处将实体类和 DTO 进行转换
@@ -83,11 +81,10 @@ public class ScoringResultController {
      * 删除评分结果表
      *
      * @param deleteRequest 删除请求信息
-     * @param request request请求对象
+     * @param request       request请求对象
      * @return 是否删除成功
      */
     @PostMapping("/delete")
-    
     public BaseResponse<Boolean> deleteScoringResult(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -143,7 +140,6 @@ public class ScoringResultController {
      * @return 评分结果表
      */
     @GetMapping("/get/vo")
-    
     public BaseResponse<ScoringResultVO> getScoringResultVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
@@ -160,7 +156,6 @@ public class ScoringResultController {
      * @return 评分结果表列表
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<ScoringResult>> listScoringResultByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest) {
         long current = scoringResultQueryRequest.getCurrent();
         long size = scoringResultQueryRequest.getPageSize();
@@ -174,12 +169,12 @@ public class ScoringResultController {
      * 分页获取评分结果表列表（封装类）
      *
      * @param scoringResultQueryRequest 评分结果表查询请求
-     * @param request HttpServletRequest
+     * @param request                   HttpServletRequest
      * @return 评分结果表列表
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<ScoringResultVO>> listScoringResultVOByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest,
-                                                               HttpServletRequest request) {
+                                                                         HttpServletRequest request) {
         long current = scoringResultQueryRequest.getCurrent();
         long size = scoringResultQueryRequest.getPageSize();
         // 限制爬虫
@@ -195,13 +190,12 @@ public class ScoringResultController {
      * 分页获取当前登录用户创建的评分结果表列表
      *
      * @param scoringResultQueryRequest 评分结果表查询请求
-     * @param request HttpServletRequest
+     * @param request                   HttpServletRequest
      * @return 评分结果表列表
      */
     @PostMapping("/my/list/page/vo")
-    
     public BaseResponse<Page<ScoringResultVO>> listMyScoringResultVOByPage(@RequestBody ScoringResultQueryRequest scoringResultQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                                           HttpServletRequest request) {
         ThrowUtils.throwIf(scoringResultQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
         User loginUser = UserHolder.getUser();
@@ -221,11 +215,10 @@ public class ScoringResultController {
      * 编辑评分结果表（给用户使用）
      *
      * @param scoringResultEditRequest 评分结果表编辑请求
-     * @param request HttpServletRequest
+     * @param request                  HttpServletRequest
      * @return 评分结果表列表
      */
     @PostMapping("/edit")
-    
     public BaseResponse<Boolean> editScoringResult(@RequestBody ScoringResultEditRequest scoringResultEditRequest, HttpServletRequest request) {
         if (scoringResultEditRequest == null || scoringResultEditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

@@ -13,17 +13,19 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
  * @CreateTime 2024-09-16
  * @ClassName WXMsgService
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public interface WXMsgService {
     /**
      * 用户扫码成功进行的事件
+     *
      * @param wxMessage Wx消息封装
      */
     WxMpXmlOutTextMessage scan(WxMpXmlMessage wxMessage);
 
     /**
      * 用户授权成功的事件
+     *
      * @param zhCn 用户信息
      */
     void authorize(WxOAuth2UserInfo zhCn);

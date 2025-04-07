@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @Description : 系统配置 控制器
  */
 @Service
-public class SystemController extends ABaseController{
+public class SystemController extends ABaseController {
 
 
     @GetMapping("/getSysSettings")
-    public SysSettingDto getSysSettings(){
+    public SysSettingDto getSysSettings() {
         return null;
     }
-
 
 
 }

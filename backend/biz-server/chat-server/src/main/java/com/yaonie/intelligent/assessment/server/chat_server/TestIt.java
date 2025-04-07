@@ -1,9 +1,9 @@
 package com.yaonie.intelligent.assessment.server.chat_server;
 
 
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.FriendMessage;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.service.WebSocketService;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.FriendMessage;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
 import com.yaonie.intelligent.assessment.server.common.util.JsonUtils;
 import jakarta.annotation.Resource;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-
 
 
 /**
@@ -40,7 +39,7 @@ public class TestIt {
     private RabbitTemplate rabbitTemplate;
 
     @Test
-    void test1(){
+    void test1() {
 //        RLock lock = redissonClient.getLock("lock");
 //        lock.lock();
 //        User userByMpOpenId = userService.getUserByMpOpenId("1");
@@ -54,7 +53,7 @@ public class TestIt {
     }
 
     @Test
-    void test2(){
+    void test2() {
         Message message = new Message();
         message.setContactId(0L);
         message.setUserId(0L);

@@ -15,7 +15,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @CreateTime 2024-09-13
  * @ClassName RetryConfig
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Configuration
 public class RetryConfig {

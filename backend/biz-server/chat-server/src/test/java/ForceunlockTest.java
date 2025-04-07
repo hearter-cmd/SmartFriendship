@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public class ForceunlockTest {
 
     @Test
-    void test1(){
+    void test1() {
 
     }
 

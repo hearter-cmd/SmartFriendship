@@ -5,12 +5,16 @@ import com.yaonie.intelligent.assessment.ai.domain.model.dto.match.MilvusAddDto;
 import com.yaonie.intelligent.assessment.ai.service.MatchService;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
-import lombok.AllArgsConstructor;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.GroupInfo;
+import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserVO;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,13 +26,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/match")
-@AllArgsConstructor
 public class MatchController {
-    private final MatchService matchService;
+    @Resource
+    private MatchService matchService;
 
     @GetMapping("/doMatch")
-    public BaseResponse<?> doMatch() {
+    public BaseResponse<List<UserVO>> doMatch() {
         return ResultUtils.success(matchService.doMatch());
+    }
+
+    @GetMapping("/doMatchByGroup")
+    public BaseResponse<List<GroupInfo>> doMatchByGroup() {
+        return ResultUtils.success(matchService.doMatchByGroup());
     }
 
     @PostMapping("/add")
@@ -36,4 +45,5 @@ public class MatchController {
         matchService.doAdd(milvusAddDto);
         return ResultUtils.success(null);
     }
+
 }

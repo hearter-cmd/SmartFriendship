@@ -15,7 +15,7 @@ import java.util.List;
  * @CreateTime 2024-09-15
  * @ClassName WxMpConfig
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Data
 @Configuration
@@ -30,6 +30,7 @@ public class WxMpProperties {
      * redis配置
      */
     private RedisConfig redisConfig;
+
     @Data
     public static class RedisConfig {
         private String host;
@@ -43,6 +44,7 @@ public class WxMpProperties {
      * 多个公众号配置
      */
     private List<MpConfig> configs;
+
     @Data
     public static class MpConfig {
         private String appId;

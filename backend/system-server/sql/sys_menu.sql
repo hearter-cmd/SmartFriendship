@@ -1,7 +1,15 @@
-insert into intelligent.sys_menu (menuId, menuName, menuCode, parentId, orderNum, path, component, layout, query, routeName, isFrame, isCache, menuType, visible, status, perms, icon, createBy, createTime, updateBy, updateTime, remark, isDeleted, redirect)
-values  (1, '资源管理', 'Resource_Mgt', 2, 1, '/pms/resource', '/src/views/pms/resource/index.vue', null, null, '', 1, null, 'MENU', '1', '1', null, 'i-fe:list', '', null, '', null, null, '0', null),
-        (2, '系统管理', 'SysMgt', null, 2, null, null, null, null, '', 1, null, 'MENU', '1', '1', null, 'i-fe:grid', '', null, '', null, null, '0', null),
-        (3, '角色管理', 'RoleMgt', 2, 2, '/pms/role', '/src/views/pms/role/index.vue', null, null, '', 1, null, 'MENU', '1', '1', null, 'i-fe:user-check', '', null, '', null, null, '0', null),
-        (4, '用户管理', 'UserMgt', 2, 3, '/pms/user', '/src/views/pms/user/index.vue', null, null, '', 1, 1, 'MENU', '1', '1', null, 'i-fe:user', '', null, '', null, null, '0', null),
-        (5, '分配用户', 'RoleUser', 3, 1, '/pms/role/user/:roleId', '/src/views/pms/role/role-user.vue', 'full', null, '', 1, null, 'MENU', '0', '1', null, 'i-fe:user-plus', '', null, '', null, null, '0', null),
-        (13, '创建新用户', 'AddUser', 4, 1, null, null, null, null, '', 1, null, 'BUTTON', '1', '1', null, null, '', null, '', null, null, '0', null);
+insert into intelligent.sys_menu (menuId, menuName, menuCode, parentId, orderNum, path, component, layout, query,
+                                  routeName, isFrame, isCache, menuType, visible, status, perms, icon, createBy,
+                                  createTime, updateBy, updateTime, remark, isDeleted, redirect)
+values (1, '资源管理', 'Resource_Mgt', 2, 1, '/pms/resource', '/src/views/pms/resource/index.vue', null, null, '', 1,
+        null, 'MENU', '1', '1', null, 'i-fe:list', '', null, '', null, null, '0', null),
+       (2, '系统管理', 'SysMgt', null, 2, null, null, null, null, '', 1, null, 'MENU', '1', '1', null, 'i-fe:grid', '',
+        null, '', null, null, '0', null),
+       (3, '角色管理', 'RoleMgt', 2, 2, '/pms/role', '/src/views/pms/role/index.vue', null, null, '', 1, null, 'MENU',
+        '1', '1', null, 'i-fe:user-check', '', null, '', null, null, '0', null),
+       (4, '用户管理', 'UserMgt', 2, 3, '/pms/user', '/src/views/pms/user/index.vue', null, null, '', 1, 1, 'MENU', '1',
+        '1', null, 'i-fe:user', '', null, '', null, null, '0', null),
+       (5, '分配用户', 'RoleUser', 3, 1, '/pms/role/user/:roleId', '/src/views/pms/role/role-user.vue', 'full', null,
+        '', 1, null, 'MENU', '0', '1', null, 'i-fe:user-plus', '', null, '', null, null, '0', null),
+       (13, '创建新用户', 'AddUser', 4, 1, null, null, null, null, '', 1, null, 'BUTTON', '1', '1', null, null, '',
+        null, '', null, null, '0', null);

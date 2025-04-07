@@ -10,10 +10,11 @@ import java.io.Serializable;
 
 /**
  * 角色和菜单关联表
- * @TableName sys_role_menu
+ *
  * @author 武春利
+ * @TableName sys_role_menu
  */
-@TableName(value ="sys_role_menu")
+@TableName(value = "sys_role_menu")
 @Data
 public class SysRoleMenu implements Serializable {
     /**
@@ -45,7 +46,7 @@ public class SysRoleMenu implements Serializable {
         }
         SysRoleMenu other = (SysRoleMenu) that;
         return (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
-            && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()));
+                && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()));
     }
 
     @Override

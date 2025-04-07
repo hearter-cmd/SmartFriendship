@@ -11,12 +11,13 @@ import lombok.Data;
  * @CreateTime 2024-09-15
  * @ClassName WSBaseRequest
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Data
 public class WSBaseRequest {
     /**
      * 请求类型
+     *
      * @see com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.enums.WSReqTypeEnum
      */
     private Integer type;

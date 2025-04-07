@@ -14,7 +14,7 @@ import java.util.Date;
  * @CreateTime 2024-09-15
  * @ClassName WSLoginSuccess
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Data
 @Builder

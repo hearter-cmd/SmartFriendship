@@ -11,7 +11,7 @@ import lombok.Data;
  * @CreateTime 2024-09-15
  * @ClassName WSBaseResponse
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Data
 public class WSBaseResponse<T> {

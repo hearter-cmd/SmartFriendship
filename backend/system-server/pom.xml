@@ -21,13 +21,6 @@
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
             <artifactId>server-common-starter</artifactId>
-            <version>${project.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.yaonie.intelligent.assessment.server</groupId>
-            <artifactId>server-common-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

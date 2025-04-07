@@ -32,14 +32,14 @@ public class FailHandler implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         BaseResponse<Object> error = null;
         if (authException instanceof InsufficientAuthenticationException) {
-            log.error("认证失败", authException);
+            log.error("访问:{}认证失败", request.getRequestURI(), authException);
             error = ResultUtils.error(ErrorCode.NO_AUTH_ERROR, authException.getLocalizedMessage());
             response.setContentType("application/json;charset=UTF-8");
         } else {
             log.error("权限不足", authException);
             error = ResultUtils.error(ErrorCode.AUTH_ERROR, authException.getLocalizedMessage());
-            response.setContentType("application/json;charset=UTF-8");
         }
+        response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(JsonUtils.toStr(error));
     }
 }

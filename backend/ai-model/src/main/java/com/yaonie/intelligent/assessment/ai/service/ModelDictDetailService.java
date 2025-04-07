@@ -18,6 +18,6 @@ public interface ModelDictDetailService extends IService<ModelDictDetail> {
     /**
      * 根据Id修改
      */
-    boolean updateModelDictDetailById(ModelDictDetail bean,String id);
+    boolean updateModelDictDetailById(ModelDictDetail bean, String id);
 }
 

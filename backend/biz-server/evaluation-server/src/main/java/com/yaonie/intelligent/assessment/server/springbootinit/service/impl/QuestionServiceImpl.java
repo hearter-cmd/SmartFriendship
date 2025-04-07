@@ -247,7 +247,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         String result = zhiPuService.getMessage(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage);
         int start = result.indexOf("[");
         int end = result.lastIndexOf("]");
-        result = result.substring(start, end+1);
+        result = result.substring(start, end + 1);
         System.out.println(result);
         return JSONUtil.toList(result, QuestionContextDto.class);
     }
@@ -273,7 +273,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         remove(getQueryWrapper(questionQueryRequest));
     }
     // 生成题目结束
-
 
 
 }

@@ -33,6 +33,7 @@ public class SearchFacade {
 
     /**
      * 搜索通用方法
+     *
      * @param searchRequest 搜索参数
      * @return 搜索结果
      */

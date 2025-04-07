@@ -48,7 +48,7 @@ public class ModelDictDetailController {
     /**
      * 分页查询所有数据
      *
-     * @param page              分页对象
+     * @param page            分页对象
      * @param modelDictDetail 查询实体
      * @return 所有数据
      */
@@ -126,7 +126,7 @@ public class ModelDictDetailController {
      */
     @Operation(summary = "根据ID修改模型详情")
     @PatchMapping("/{id}")
-    public BaseResponse<?> updateModelDictDetailById(@RequestBody ModelDictDetail bean,@PathVariable("id") String id) {
+    public BaseResponse<?> updateModelDictDetailById(@RequestBody ModelDictDetail bean, @PathVariable("id") String id) {
         boolean i = modelDictDetailService.updateModelDictDetailById(bean, id);
         ThrowUtils.throwIf(!i, ErrorCode.OPERATION_ERROR, "修改失败");
         return ResultUtils.success(null);

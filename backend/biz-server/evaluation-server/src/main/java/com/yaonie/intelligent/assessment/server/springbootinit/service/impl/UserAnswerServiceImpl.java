@@ -50,13 +50,14 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
     private AppService appService;
 
     @Resource
-    private ScoringResultService scoringResultService;;
+    private ScoringResultService scoringResultService;
+    ;
 
     /**
      * 校验数据
      *
      * @param userAnswer
-     * @param add      对创建的数据进行校验
+     * @param add        对创建的数据进行校验
      */
     @Override
     public void validUserAnswer(UserAnswer userAnswer, boolean add) {

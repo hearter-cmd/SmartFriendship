@@ -33,6 +33,7 @@ public class SessionUtil {
 
     /**
      * 通过请求头获取session
+     *
      * @param headers Headers
      * @return Session
      */
@@ -46,6 +47,7 @@ public class SessionUtil {
 
     /**
      * 通过sessionId获取session
+     *
      * @param sessionId sessionId
      * @return Session
      */
@@ -61,11 +63,13 @@ public class SessionUtil {
 
     /**
      * 从请求头中获取sessionId
+     *
      * @param headers Headers
      * @return sessionId
      */
     public static String getSessionIdByHeaders(HttpHeaders headers) {
-        String cookies = headers.get("Cookie");;
+        String cookies = headers.get("Cookie");
+        ;
         if (StringUtils.isBlank(cookies)) {
             return null;
         }
@@ -81,6 +85,7 @@ public class SessionUtil {
 
     /**
      * 创建session并返回sessionId
+     *
      * @return sessionId
      */
     public static String createSessionId() {

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @CreateTime 2024-09-10
  * @ClassName WebSocketConfig
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Configuration
 public class WebSocketConfig {

@@ -5,12 +5,9 @@ import cn.hutool.core.util.RandomUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.yaonie.intelligent.assessment.server.chat_server.common.event.UserOnlineEvent;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactStatusEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactTypeEnum;
-import com.yaonie.intelligent.assessment.server.chat_server.user.entity.po.UserContact;
 import com.yaonie.intelligent.assessment.server.chat_server.user.service.UserContactService;
-import com.yaonie.intelligent.assessment.server.chat_server.user.service.impl.GroupInfoServiceImpl;
 import com.yaonie.intelligent.assessment.server.chat_server.utils.IpUtil;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.adepter.WebSocketAdepter;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.dto.WSChannelDTO;
@@ -23,6 +20,8 @@ import com.yaonie.intelligent.assessment.server.chat_server.websocket.utils.Sess
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.SecurityUser;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.area.GaoDeArea;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.UserContact;
 import com.yaonie.intelligent.assessment.system.mapper.UserMapper;
 import io.micrometer.common.util.StringUtils;
 import io.netty.channel.Channel;
@@ -102,7 +101,6 @@ public class WebSocketServiceImpl implements WebSocketService {
     private static final ConcurrentHashMap<Long, CopyOnWriteArrayList<Long>> ONLINE_GROUP_MAP = new ConcurrentHashMap<>();
     @Autowired
     private UserContactService userContactService;
-    private GroupInfoServiceImpl groupInfoService;
 
     /**
      * 添加Channel操作
@@ -133,6 +131,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 离线之后的移除操作
+     *
      * @param channel websocket通道
      */
     @Override
@@ -164,8 +163,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 扫码登录成功进行的操作
+     *
      * @param code 事件码
-     * @param uid 用户openid
+     * @param uid  用户openid
      */
     @Override
     public void scanLoginSuccess(Integer code, Long uid) {
@@ -196,7 +196,7 @@ public class WebSocketServiceImpl implements WebSocketService {
      * 在 链接成功 之后, 进行验证
      *
      * @param channel 通道
-     * sessionId存在, 并且存储了USER_LOGIN_STATE状态, 才能算是验证成功
+     *                sessionId存在, 并且存储了USER_LOGIN_STATE状态, 才能算是验证成功
      *                否则就是失败
      */
     @Override
@@ -231,7 +231,8 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     /**
      * 处理消息
-     * @param message  消息
+     *
+     * @param message 消息
      */
     @Override
     public void handleMsg(Message message) {
@@ -262,14 +263,27 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
     }
 
+    @Override
+    public void joinGroup(Long userId, Long groupId) {
+        CopyOnWriteArrayList<Long> longs = ONLINE_GROUP_MAP.get(groupId);
+        if (longs == null) {
+            longs = new CopyOnWriteArrayList<>();
+            longs.add(userId);
+            ONLINE_GROUP_MAP.put(groupId, longs);
+        } else {
+            longs.add(userId);
+        }
+    }
+
     @Resource
     private UserDetailsService userDetailsService;
 
     /**
      * 登录成功
-     * @param channel websocket通道
+     *
+     * @param channel  websocket通道
      * @param userInfo 用户信息
-     * @param session session
+     * @param session  session
      */
     @Override
     public void loginSuccess(Channel channel, User userInfo, Session session) {
@@ -301,7 +315,7 @@ public class WebSocketServiceImpl implements WebSocketService {
             channels = new CopyOnWriteArrayList<>();
             ONLINE_UID_MAP.put(userId, channels);
             channels.add(channel);
-        }  else {
+        } else {
             channels.add(channel);
         }
         // 存储到群组信息

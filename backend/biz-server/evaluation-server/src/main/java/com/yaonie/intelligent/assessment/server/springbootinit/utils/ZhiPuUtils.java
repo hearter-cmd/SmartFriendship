@@ -44,18 +44,20 @@ public class ZhiPuUtils {
 
     /**
      * 异步请求(答案稳定)
+     *
      * @param systemMessage 系统消息
-     * @param userMessage 用户消息
+     * @param userMessage   用户消息
      * @return AI返回的消息
      */
-    public String doAsyncStableRequest(String systemMessage, String userMessage, Float temperature ) {
+    public String doAsyncStableRequest(String systemMessage, String userMessage, Float temperature) {
         return doRequest(systemMessage, userMessage, Boolean.FALSE, temperature);
     }
 
     /**
      * 异步请求(答案不稳定)
+     *
      * @param systemMessage 系统消息
-     * @param userMessage 用户消息
+     * @param userMessage   用户消息
      * @return AI返回的消息
      */
     public String doAsyncUnstableRequest(String systemMessage, String userMessage, Float temperature) {
@@ -64,9 +66,10 @@ public class ZhiPuUtils {
 
     /**
      * 同步请求 请求知普AI的封装
+     *
      * @param systemMessage 系统消息
-     * @param userMessage 用户消息
-     * @param temperature 创造性, 值越大, 越随机     范围[0,1]
+     * @param userMessage   用户消息
+     * @param temperature   创造性, 值越大, 越随机     范围[0,1]
      * @return AI返回的消息
      */
     public String doRequest(String systemMessage, String userMessage, Float temperature) {
@@ -81,10 +84,11 @@ public class ZhiPuUtils {
 
     /**
      * 请求知普AI的封装
+     *
      * @param systemMessage 系统消息
-     * @param userMessage 用户消息
-     * @param stream 是否流式输出
-     * @param temperature 创造性, 值越大, 越随机     范围[0,1]
+     * @param userMessage   用户消息
+     * @param stream        是否流式输出
+     * @param temperature   创造性, 值越大, 越随机     范围[0,1]
      * @return AI返回的消息
      */
     public String doRequest(String systemMessage, String userMessage, Boolean stream, Float temperature) {
@@ -101,8 +105,9 @@ public class ZhiPuUtils {
 
     /**
      * 请求知普AI的封装, 更加多的自定义
-     * @param messages 消息集合
-     * @param stream 是否流式输出
+     *
+     * @param messages    消息集合
+     * @param stream      是否流式输出
      * @param temperature 创造性, 值越大, 越随机     范围[0,1]
      * @return AI返回的消息
      */
@@ -132,9 +137,10 @@ public class ZhiPuUtils {
 
     /**
      * 流式返回数据
+     *
      * @param systemMessage 系统消息
-     * @param userMessage 用户消息
-     * @param temperature 灵活性
+     * @param userMessage   用户消息
+     * @param temperature   灵活性
      * @return flowable流, 用于式返回数据
      */
     public Flowable<ModelData> doStreamRequest(String systemMessage, String userMessage, Float temperature) {
@@ -152,7 +158,8 @@ public class ZhiPuUtils {
 
     /**
      * 请求知普AI的封装, 流式返回数据
-     * @param messages 消息集合
+     *
+     * @param messages    消息集合
      * @param temperature 创造性, 值越大, 越随机     范围[0,1]
      * @return AI返回的消息
      */

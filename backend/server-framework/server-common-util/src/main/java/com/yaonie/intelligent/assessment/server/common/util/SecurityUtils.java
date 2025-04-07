@@ -15,8 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.Objects;
-
 /**
  * 安全服务工具类
  *
@@ -25,7 +23,7 @@ import java.util.Objects;
 @Slf4j
 public class SecurityUtils {
     private static final ThreadLocal<SecurityUser> LOGIN_USER = new ThreadLocal<>();
-    
+
     /**
      * 用户ID
      **/
@@ -49,7 +47,8 @@ public class SecurityUtils {
     }
 
     public static User getLoginUser() {
-        return Objects.requireNonNull(getSecurityUser()).getUser();
+        SecurityUser securityUser = getSecurityUser();
+        return securityUser == null ? null : securityUser.getUser();
     }
 
     /**

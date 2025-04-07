@@ -4,12 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yaonie.intelligent.assessment.server.springbootinit.mapper.PostThumbMapper">
 
-    <resultMap id="BaseResultMap" type="com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.PostThumb">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="postId" column="postId" jdbcType="BIGINT"/>
-            <result property="userId" column="userId" jdbcType="BIGINT"/>
-            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+    <resultMap id="BaseResultMap"
+               type="com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.PostThumb">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="postId" column="postId" jdbcType="BIGINT"/>
+        <result property="userId" column="userId" jdbcType="BIGINT"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

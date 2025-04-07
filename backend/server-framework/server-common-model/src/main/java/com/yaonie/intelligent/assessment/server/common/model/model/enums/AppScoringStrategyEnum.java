@@ -32,10 +32,11 @@ public enum AppScoringStrategyEnum {
 
     /**
      * 通过状态码获取枚举
+     *
      * @param value 状态码
      * @return ReviewStatusEnum 枚举
      */
-    public static AppScoringStrategyEnum getEnumByValue(Integer value){
+    public static AppScoringStrategyEnum getEnumByValue(Integer value) {
         if (value == null) {
             return null;
         }
@@ -49,6 +50,7 @@ public enum AppScoringStrategyEnum {
 
     /**
      * 获取所有的枚举值
+     *
      * @return List<Integer> 所有的枚举值列表
      */
     public static List<Integer> getValues() {

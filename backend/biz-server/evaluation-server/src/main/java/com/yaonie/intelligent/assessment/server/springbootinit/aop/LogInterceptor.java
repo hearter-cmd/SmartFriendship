@@ -18,7 +18,6 @@ import java.util.UUID;
 /**
  * 请求响应日志 AOP
  *
- *
  * @author 77160
  */
 @Aspect
@@ -27,7 +26,8 @@ import java.util.UUID;
 public class LogInterceptor {
 
     @Pointcut("execution(* com.yaonie.intelligent.assessment.server.springbootinit.controller.*.*(..))")
-    public void pointcut() {}
+    public void pointcut() {
+    }
 
     /**
      * 执行拦截

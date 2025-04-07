@@ -24,7 +24,7 @@ public enum SearchTypeEnum {
 
     private final String dataSource;
 
-    SearchTypeEnum (String dataSource) {
+    SearchTypeEnum(String dataSource) {
         this.dataSource = dataSource;
     }
 

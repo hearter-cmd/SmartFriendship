@@ -33,7 +33,8 @@
         updateTime,remark
     </sql>
     <select id="selectMenuByPath" resultType="com.yaonie.intelligent.assessment.system.domain.entity.SysMenu">
-        select <include refid="Base_Menu_Column_List"/>
+        select
+        <include refid="Base_Menu_Column_List"/>
         from sys_menu
         where path = #{path} and status = '0' and visible = '0' AND isDeleted = '0'
     </select>

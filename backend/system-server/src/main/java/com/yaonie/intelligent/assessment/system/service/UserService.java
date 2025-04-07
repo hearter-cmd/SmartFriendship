@@ -35,7 +35,7 @@ public interface UserService extends IService<User> {
      *
      * @param userAccount  用户账户
      * @param userPassword 用户密码
-     * @param request 请求
+     * @param request      请求
      * @return 脱敏后的用户信息
      */
     LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request);
@@ -61,7 +61,7 @@ public interface UserService extends IService<User> {
      * 是否为管理员
      *
      * @param request 请求
-     * @return  是否为管理员
+     * @return 是否为管理员
      */
     boolean isAdmin(HttpServletRequest request);
 
@@ -130,8 +130,11 @@ public interface UserService extends IService<User> {
 
     /**
      * 根据用户OPENID获取用户信息
+     *
      * @param mpOpenId 用户的唯一标识符（ID）
      * @return 用户信息对象
      */
     User getUserByMpOpenId(@Param("mpOpenId") String mpOpenId);
+
+    List<User> searchUser(String keyword);
 }

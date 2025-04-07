@@ -20,7 +20,7 @@ public class EventHandler implements WxMpMessageHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMpXmlMessage, Map<String, Object> map, WxMpService wxMpService,
-            WxSessionManager wxSessionManager) throws WxErrorException {
+                                    WxSessionManager wxSessionManager) throws WxErrorException {
         final String content = "您点击了菜单";
         // 调用接口，返回验证码
         return WxMpXmlOutMessage.TEXT().content(content)

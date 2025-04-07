@@ -9,17 +9,19 @@ package com.yaonie.intelligent.assessment.server.chat_server.user.service;
  * @CreateTime 2024-09-16
  * @ClassName LoginService
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public interface LoginService {
     /**
      * 刷新token有效期
+     *
      * @param token token`
      */
     void renewalTokenIfNecessary(String token);
 
     /**
      * 登录成功，获取token
+     *
      * @param uid 用户ID
      * @return 返回token
      */
@@ -27,6 +29,7 @@ public interface LoginService {
 
     /**
      * 如果token有效，返回uid
+     *
      * @param token
      * @return
      */

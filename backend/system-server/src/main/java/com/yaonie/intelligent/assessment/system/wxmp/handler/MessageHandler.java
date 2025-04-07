@@ -20,7 +20,7 @@ public class MessageHandler implements WxMpMessageHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMpXmlMessage, Map<String, Object> map,
-            WxMpService wxMpService, WxSessionManager wxSessionManager) throws WxErrorException {
+                                    WxMpService wxMpService, WxSessionManager wxSessionManager) throws WxErrorException {
         String content = "我是复读机：" + wxMpXmlMessage.getContent();
         return WxMpXmlOutMessage.TEXT().content(content)
                 .fromUser(wxMpXmlMessage.getToUser())

@@ -18,11 +18,12 @@ import java.util.Date;
 
 /**
  * 应用
+ *
  * @author 77160
  * @TableName app
  */
 @Document(indexName = "app_v1")
-@TableName(value ="app")
+@TableName(value = "app")
 @Data
 public class App implements Serializable {
     private static final String DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";

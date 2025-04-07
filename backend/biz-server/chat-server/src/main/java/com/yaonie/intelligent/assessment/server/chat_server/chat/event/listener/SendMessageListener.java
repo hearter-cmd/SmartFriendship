@@ -3,9 +3,9 @@ package com.yaonie.intelligent.assessment.server.chat_server.chat.event.listener
 
 import com.yaonie.intelligent.assessment.server.chat_server.chat.event.SendMessageEvent;
 import com.yaonie.intelligent.assessment.server.chat_server.chat.service.MessageService;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactTypeEnum;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.service.WebSocketService;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import jakarta.annotation.Resource;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -30,6 +30,7 @@ public class SendMessageListener {
 
     /**
      * 发送消息
+     *
      * @param event 发送消息事件
      */
     @EventListener(classes = {SendMessageEvent.class})
@@ -41,9 +42,11 @@ public class SendMessageListener {
                 UserContactTypeEnum.getEnumByLen(contactId)
         )) {
             case USER:
-                messageService.sendToUser(message);break;
+                messageService.sendToUser(message);
+                break;
             case GROUP:
-                messageService.sendToGroup(message);break;
+                messageService.sendToGroup(message);
+                break;
             default:
                 System.out.println(message);
         }
@@ -51,6 +54,7 @@ public class SendMessageListener {
 
     /**
      * 持久化消息
+     *
      * @param event 发送消息事件
      */
     @EventListener(classes = SendMessageEvent.class)

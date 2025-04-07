@@ -13,6 +13,7 @@ import java.util.Date;
 
 /**
  * 用户答题记录
+ *
  * @author 77160
  * @TableName user_answer
  */

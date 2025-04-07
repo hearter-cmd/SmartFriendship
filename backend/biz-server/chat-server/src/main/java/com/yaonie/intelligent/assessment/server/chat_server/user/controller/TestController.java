@@ -1,8 +1,8 @@
 package com.yaonie.intelligent.assessment.server.chat_server.user.controller;
 
 
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.service.WebSocketService;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class TestController {
     private WebSocketService webSocketService;
 
     @GetMapping("test")
-    public void test(){
+    public void test() {
         Message message = new Message();
         message.setContactId(1834256123482370058L);
         message.setUserId(0L);

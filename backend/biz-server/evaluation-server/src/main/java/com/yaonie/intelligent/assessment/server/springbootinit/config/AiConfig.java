@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description : AI 配置合集
  */
 @Configuration
-@ConditionalOnProperty(prefix = "ai", name="tag", havingValue = "true")
+@ConditionalOnProperty(prefix = "ai", name = "tag", havingValue = "true")
 @Data
 public class AiConfig {
     @Autowired(required = false)

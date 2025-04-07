@@ -47,7 +47,7 @@ public class UserSearchDataSourceImpl implements SearchDataSource<UserVO> {
     public QueryWrapper<User> getSearchWrapper(SearchRequest searchRequest) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper
-                .like("userName",  searchRequest.getSearchText())
+                .like("userName", searchRequest.getSearchText())
                 .or()
                 .like("userAccount", searchRequest.getSearchText());
         return queryWrapper;

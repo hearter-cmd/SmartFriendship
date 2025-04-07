@@ -2,10 +2,10 @@ package com.yaonie.intelligent.assessment.server.chat_server.websocket.mq.listen
 
 
 import com.rabbitmq.client.Channel;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.FriendMessage;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.GroupMessage;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.chat_server.websocket.service.WebSocketService;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.FriendMessage;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.GroupMessage;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -44,6 +44,7 @@ public class MessageListener {
         message.setContactId(friendMessage.getToUserId());
         message.setUserId(friendMessage.getFromUserId());
         message.setMessage(friendMessage.getMessage());
+        message.setAvatar(friendMessage.getAvatar());
         message.setCreateTime(new Date());
         webSocketService.handleMsg(message);
         System.out.println("收到消息：" + friendMessage);
@@ -52,17 +53,18 @@ public class MessageListener {
     @RabbitListener(bindings = {
             @QueueBinding(
                     value = @Queue(name = "chat.message.queue.group"),
-                    exchange = @Exchange(name = "chat.group.message.exchange", type="fanout"),
+                    exchange = @Exchange(name = "chat.group.message.exchange", type = "fanout"),
                     key = {"chat.message.routing.key.group"},
                     declare = "true"
             )
     })
-    public void receiveGroupMessage(GroupMessage groupMessage){
+    public void receiveGroupMessage(GroupMessage groupMessage) {
         Message message = new Message();
         message.setContactId(groupMessage.getGroupId());
         message.setUserId(groupMessage.getFromUserId());
         message.setMessage(groupMessage.getMessage());
         message.setCreateTime(new Date());
+        message.setAvatar(groupMessage.getAvatar());
         webSocketService.handleMsg(message);
         log.info(groupMessage.toString());
     }

@@ -16,6 +16,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
+
 /**
  * _*_ coding : utf-8 _*_
  *
@@ -24,7 +25,7 @@ import java.util.Objects;
  * @CreateTime 2024-09-15
  * @ClassName BaseServerHandler
  * @Project backend
- * @Description : 
+ * @Description :
  */
 // 这个注解保证了, 不会被重复创建, 只使用一个共享的处理器
 @Slf4j
@@ -35,6 +36,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
 
     /**
      * 当前ws服务器被连接一次就执行一次这个方法, 只在刚刚建立连接的时候调用
+     *
      * @param ctx 通道处理器上下文
      */
     @Override
@@ -45,6 +47,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
 
     /**
      * 用户事件监控
+     *
      * @param ctx Handler上下文
      * @param evt 对应的事件
      * @throws Exception 报错
@@ -76,6 +79,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
 
     /**
      * 用户下线
+     *
      * @param ctx 上下文
      * @throws Exception 报错
      */
@@ -89,6 +93,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
 
     /**
      * 读取数据
+     *
      * @param ctx 上下文, 也是处理器链
      * @param msg 消息
      * @throws Exception 报错
@@ -103,20 +108,24 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
         WSBaseRequest request = JSONUtil.toBean(text, WSBaseRequest.class);
         WSReqTypeEnum reqType = WSReqTypeEnum.getByType(request.getType());
         switch (Objects.requireNonNull(reqType)) {
-            case LOGIN : {
+            case LOGIN: {
                 // 执行登录请求, 等待用户扫码登录
                 webSocketService.handleWxUserLogin(ctx.channel());
-            }break;
-            case AUTHORIZE:{
+            }
+            break;
+            case AUTHORIZE: {
                 // 登录认证返回的data就是token
                 webSocketService.authorize(ctx.channel());
-            }break;
+            }
+            break;
             case HEARTBEAT: {
 
-            }break;
+            }
+            break;
             default: {
                 log.info("未知请求类型");
-            }break;
+            }
+            break;
         }
         System.out.println(text);
 //        super.channelRead(ctx, msg);

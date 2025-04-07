@@ -5,27 +5,39 @@
 <mapper namespace="com.yaonie.intelligent.assessment.system.mapper.SysDictDataMapper">
 
     <resultMap type="com.yaonie.intelligent.assessment.system.domain.entity.SysDictData" id="SysDictDataResult">
-        <id     property="dictCode"   column="dictCode"   />
-        <result property="dictSort"   column="dictSort"   />
-        <result property="dictLabel"  column="dictLabel"  />
-        <result property="dictValue"  column="dictValue"  />
-        <result property="dictType"   column="dictType"   />
-        <result property="cssClass"   column="cssClass"   />
-        <result property="listClass"  column="listClass"  />
-        <result property="isDefault"  column="isDefault"  />
-        <result property="status"     column="status"      />
-        <result property="createBy"   column="createBy"   />
-        <result property="createTime" column="createTime" />
-        <result property="updateBy"   column="updateBy"   />
-        <result property="updateTime" column="updateTime" />
+        <id property="dictCode" column="dictCode"/>
+        <result property="dictSort" column="dictSort"/>
+        <result property="dictLabel" column="dictLabel"/>
+        <result property="dictValue" column="dictValue"/>
+        <result property="dictType" column="dictType"/>
+        <result property="cssClass" column="cssClass"/>
+        <result property="listClass" column="listClass"/>
+        <result property="isDefault" column="isDefault"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="createBy"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateBy" column="updateBy"/>
+        <result property="updateTime" column="updateTime"/>
     </resultMap>
 
     <sql id="selectDictDataVo">
-        select dictCode, dictSort, dictLabel, dictValue, dictType, cssClass, listClass, isDefault, status, createBy, createTime, remark
+        select dictCode,
+               dictSort,
+               dictLabel,
+               dictValue,
+               dictType,
+               cssClass,
+               listClass,
+               isDefault,
+               status,
+               createBy,
+               createTime,
+               remark
         from sys_dict_data
     </sql>
 
-    <select id="selectDictDataList" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictData" resultMap="SysDictDataResult">
+    <select id="selectDictDataList" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictData"
+            resultMap="SysDictDataResult">
         <include refid="selectDictDataVo"/>
         <where>
             <if test="dictType != null and dictType != ''">
@@ -47,8 +59,10 @@
     </select>
 
     <select id="selectDictLabel" resultType="String">
-        select dictLabel from sys_dict_data
-        where dictType = #{dictType} and dictValue = #{dictValue}
+        select dictLabel
+        from sys_dict_data
+        where dictType = #{dictType}
+          and dictValue = #{dictValue}
     </select>
 
     <select id="selectDictDataById" parameterType="Long" resultMap="SysDictDataResult">
@@ -57,11 +71,15 @@
     </select>
 
     <select id="countDictDataByType" resultType="Integer">
-        select count(1) from sys_dict_data where dictType=#{dictType}
+        select count(1)
+        from sys_dict_data
+        where dictType = #{dictType}
     </select>
 
     <delete id="deleteDictDataById" parameterType="Long">
-        delete from sys_dict_data where dictCode = #{dictCode}
+        delete
+        from sys_dict_data
+        where dictCode = #{dictCode}
     </delete>
 
     <delete id="deleteDictDataByIds" parameterType="Long">
@@ -90,7 +108,9 @@
     </update>
 
     <update id="updateDictDataType" parameterType="String">
-        update sys_dict_data set dictType = #{newDictType} where dictType = #{oldDictType}
+        update sys_dict_data
+        set dictType = #{newDictType}
+        where dictType = #{oldDictType}
     </update>
 
     <insert id="insertDictData" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictData">

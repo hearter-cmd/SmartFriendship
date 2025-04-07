@@ -29,7 +29,7 @@ import org.springframework.web.servlet.view.RedirectView;
  * @CreateTime 2024-09-15
  * @ClassName WxMpController
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @RestController
 @RequestMapping("/wx/mp")
@@ -88,10 +88,11 @@ public class WxPortalController {
 
     /**
      * 微信接入验证
+     *
      * @param timestamp 时间戳
-     * @param nonce 随机数
+     * @param nonce     随机数
      * @param signature 签名
-     * @param echostr 随机字符串
+     * @param echostr   随机字符串
      * @return 验证字符串
      */
     @GetMapping("/")

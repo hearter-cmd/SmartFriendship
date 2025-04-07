@@ -9,7 +9,7 @@ package com.yaonie.intelligent.assessment.server.chat_server.websocket.domain.vo
  * @CreateTime 2024-09-15
  * @ClassName WSOlineOfflineNotify
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public class WSOlineOfflineNotify {
 }

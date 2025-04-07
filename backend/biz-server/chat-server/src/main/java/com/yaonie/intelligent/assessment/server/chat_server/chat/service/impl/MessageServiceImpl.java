@@ -10,15 +10,15 @@ import com.yaonie.intelligent.assessment.server.chat_server.chat.mappers.Message
 import com.yaonie.intelligent.assessment.server.chat_server.chat.model.dto.MessageDto;
 import com.yaonie.intelligent.assessment.server.chat_server.chat.service.MessageService;
 import com.yaonie.intelligent.assessment.server.chat_server.common.mappers.GroupMemberMapper;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.FriendMessage;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.GroupMember;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.GroupMessage;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.chat_server.user.entity.enums.UserContactTypeEnum;
 import com.yaonie.intelligent.assessment.server.common.holder.UserHolder;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.User;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.FriendMessage;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.GroupMember;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.GroupMessage;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import com.yaonie.intelligent.assessment.server.common.util.SecurityUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,23 +59,23 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     }
 
     @Override
-    public Page<Message> getMsgList(Long id, HttpServletRequest request) {
+    public Page<Message> getMsgList(Long id, Integer current, Integer size, HttpServletRequest request) {
         Page<Message> page = null;
         // 获取好友聊天记录
-        switch(UserContactTypeEnum.getEnumByLen(id)) {
+        switch (UserContactTypeEnum.getEnumByLen(id)) {
             case GROUP -> {
                 page = lambdaQuery()
                         .eq(Message::getContactId, id)
                         .orderBy(true, false, Message::getCreateTime)
-                        .page(new Page<>(1, 10));
+                        .page(new Page<>(current, size));
             }
             case USER -> {
                 User userInfo = SecurityUtils.getLoginUser();
                 page = lambdaQuery()
                         .or(qw -> qw.eq(Message::getUserId, userInfo.getId()).eq(Message::getContactId, id))
                         .or(qw -> qw.eq(Message::getUserId, id).eq(Message::getContactId, userInfo.getId()))
-                        .orderBy(true, false,Message::getCreateTime)
-                        .page(new Page<>(1, 10));
+                        .orderBy(true, false, Message::getCreateTime)
+                        .page(new Page<>(current, size));
             }
             case null -> {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -91,6 +91,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         friendMessage.setFromUserId(message.getUserId());
         friendMessage.setToUserId(message.getContactId());
         friendMessage.setMessage(message.getMessage());
+        friendMessage.setAvatar(message.getAvatar());
         rabbitTemplate.convertAndSend("chat.message.exchange", "chat.message.routing.key.friend", friendMessage);
     }
 
@@ -106,6 +107,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         // 获取群成员id
         groupMessage.setToUserIds(groupMembers.stream().map(GroupMember::getUserId).collect(Collectors.toList()));
         groupMessage.setMessage(message.getMessage());
+        groupMessage.setAvatar(message.getAvatar());
         rabbitTemplate.convertAndSend("chat.group.message.exchange", "chat.message.routing.key.group", groupMessage);
     }
 }

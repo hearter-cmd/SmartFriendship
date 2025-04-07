@@ -9,6 +9,7 @@ import com.yaonie.intelligent.assessment.server.common.model.common.DeleteReques
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
 import com.yaonie.intelligent.assessment.server.common.model.constant.UserConstant;
+import com.yaonie.intelligent.assessment.server.common.model.event.UpdateTagEvent;
 import com.yaonie.intelligent.assessment.server.common.model.exception.BusinessException;
 import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
 import com.yaonie.intelligent.assessment.server.common.model.model.dto.user.UserAddRequest;
@@ -36,6 +37,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.util.DigestUtils;
@@ -49,7 +52,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -60,6 +66,7 @@ import static com.yaonie.intelligent.assessment.server.common.model.constant.Use
 
 /**
  * 用户接口
+ *
  * @author yaonie
  */
 @Slf4j
@@ -72,9 +79,13 @@ public class UserController {
     private UserService userService;
 
     @Resource
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     // region 登录相关
+
     /**
      * 获取验证码
      */
@@ -83,7 +94,7 @@ public class UserController {
     public BaseResponse<String> getCaptcha(HttpSession session) {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String checkCode = specCaptcha.text();
-        String checkCodeKey = UUID.randomUUID().toString().replace("-","");
+        String checkCodeKey = UUID.randomUUID().toString().replace("-", "");
         session.setAttribute(REDIS_CAPTCHA_PREFIX, checkCodeKey);
         redisTemplate.opsForValue().set(REDIS_CAPTCHA_PREFIX + checkCodeKey, checkCode, 280, TimeUnit.SECONDS);
         return ResultUtils.success(specCaptcha.toBase64());
@@ -113,7 +124,7 @@ public class UserController {
      * 用户登录
      *
      * @param userLoginRequest 用户登录信息
-     * @param request 请求
+     * @param request          请求
      * @return 登录结果
      */
     @Operation(summary = "用户登录")
@@ -177,7 +188,7 @@ public class UserController {
      * 创建用户
      *
      * @param userAddRequest 用户添加请求
-     * @param request 请求
+     * @param request        请求
      * @return 添加结果
      */
     @Operation(summary = "创建用户")
@@ -202,7 +213,7 @@ public class UserController {
      * 删除用户
      *
      * @param deleteRequest 删除请求
-     * @param request 请求
+     * @param request       请求
      * @return 删除结果
      */
     @Operation(summary = "删除用户")
@@ -216,7 +227,7 @@ public class UserController {
         boolean b = false;
         if ("/user/delete".equals(request.getRequestURI())) {
             b = userService.removeById(deleteRequest.getId());
-        } else if (!Objects.isNull(id)){
+        } else if (!Objects.isNull(id)) {
             b = userService.removeById(id);
         }
         ThrowUtils.throwIf(!b, ErrorCode.OPERATION_ERROR);
@@ -227,27 +238,24 @@ public class UserController {
      * 更新用户
      *
      * @param userUpdateRequest 用户更新请求
-     * @param request 请求
      * @return 更新结果
      */
     @Operation(summary = "更新用户")
     @PutMapping("/update")
-//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest,
-            HttpServletRequest request) {
-        if (userUpdateRequest == null || userUpdateRequest.getId() == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    public BaseResponse<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+        ThrowUtils.throwIf(userUpdateRequest == null || userUpdateRequest.getId() == null, ErrorCode.PARAMS_ERROR);
         User user = new User();
         BeanUtils.copyProperties(userUpdateRequest, user);
         boolean result = userService.updateById(user);
+        if (user.getTags() != null && !user.getTags().isBlank()) {
+            eventPublisher.publishEvent(new UpdateTagEvent(Arrays.asList(user.getTags().split(","))));
+        }
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
 
     @Operation(summary = "更新用户")
     @PatchMapping("{id}")
-//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateUser(@RequestBody UserPatchUpdateDTO userPatchUpdateDTO,
                                             @PathVariable("id") Long id,
                                             HttpServletRequest request) {
@@ -267,13 +275,12 @@ public class UserController {
     /**
      * 根据 id 获取用户（仅管理员）
      *
-     * @param id 用户 id
+     * @param id      用户 id
      * @param request 请求
      * @return 用户
      */
     @Operation(summary = "根据 id 获取用户（仅管理员）")
     @GetMapping("/get")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<User> getUserById(long id, HttpServletRequest request) {
         if (id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -286,7 +293,7 @@ public class UserController {
     /**
      * 根据 id 获取包装类
      *
-     * @param id 用户 id
+     * @param id      用户 id
      * @param request 请求
      * @return 用户
      */
@@ -298,17 +305,25 @@ public class UserController {
         return ResultUtils.success(userService.getUserVO(user));
     }
 
+    @Operation(summary = "根据 id 获取包装类")
+    @GetMapping("/search")
+    public BaseResponse<List<UserVO>> getUserVoById(String keyword, HttpServletRequest request) {
+        List<User> response = userService.searchUser(keyword);
+        List<UserVO> result = response.stream().map(item -> userService.getUserVO(item)).toList();
+        return ResultUtils.success(result);
+    }
+
     /**
      * 分页获取用户列表（仅管理员）
      *
      * @param userQueryRequest 用户查询请求
-     * @param request 请求
+     * @param request          请求
      * @return 用户列表
      */
     @Operation(summary = "分页获取用户列表（仅管理员）")
     @PostMapping("/list/page")
     public BaseResponse<Page<User>> listUserByPage(@RequestBody UserQueryRequest userQueryRequest,
-            HttpServletRequest request) {
+                                                   HttpServletRequest request) {
         long current = userQueryRequest.getCurrent();
         long size = userQueryRequest.getPageSize();
         Page<User> userPage = userService.page(new Page<>(current, size),
@@ -343,13 +358,11 @@ public class UserController {
      * 更新个人信息
      *
      * @param userUpdateMyRequest 用户更新请求
-     * @param request 请求
      * @return 更新结果
      */
     @Operation(summary = "更新个人信息")
     @PostMapping("/update/my")
-    public BaseResponse<Boolean> updateMyUser(@RequestBody UserUpdateMyRequest userUpdateMyRequest,
-            HttpServletRequest request) {
+    public BaseResponse<Boolean> updateMyUser(@RequestBody UserUpdateMyRequest userUpdateMyRequest) {
         if (userUpdateMyRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -358,6 +371,19 @@ public class UserController {
         BeanUtils.copyProperties(userUpdateMyRequest, user);
         user.setId(loginUser.getId());
         boolean result = userService.updateById(user);
+        // 更新Milvus存储的数据
+        if (user.getTags() != null && !user.getTags().isBlank()) {
+            eventPublisher.publishEvent(new UpdateTagEvent(Arrays.asList(user.getTags().split(","))));
+        }
+
+        SecurityUser securityUser = SecurityUtils.getSecurityUser();
+        securityUser.setUser(user);
+
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
+        HttpSession session = request.getSession();
+        session.setAttribute(UserConstant.USER_LOGIN_STATE, securityUser);
+
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
@@ -366,7 +392,7 @@ public class UserController {
      * 修改密码
      */
     @Operation(summary = "修改密码")
-    @PatchMapping(value = "/password/reset/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
+    @PatchMapping(value = "/password/reset/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BaseResponse<Boolean> resetPassword(@RequestBody UserPatchPassDto password, @PathVariable("id") Long id) {
         boolean result = userService.resetPassword(password, id);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
@@ -376,7 +402,9 @@ public class UserController {
     @GetMapping("/myPermission")
     public BaseResponse<List<String>> getMyPermission() {
         SecurityUser securityUser = SecurityUtils.getSecurityUser();
-        if (securityUser == null) return null;
+        if (securityUser == null) {
+            return null;
+        }
         List<String> permission = securityUser.getPermissions().stream().toList();
         return ResultUtils.success(permission);
     }

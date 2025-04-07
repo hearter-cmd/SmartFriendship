@@ -15,10 +15,12 @@ import java.util.Enumeration;
 /**
  * @author 77160
  */
+
 /**
  * <p>
- *  feign透传header
+ * feign透传header
  * </p>
+ *
  * @author example
  * @date 2021-05-26 22:16
  */
@@ -43,12 +45,12 @@ public class FeignConfig implements RequestInterceptor {
                 String values = request.getHeader(name);
 
                 // 跳过 content-length，解决too many bites written的问题
-                if ("content-length".equalsIgnoreCase(name)){
+                if ("content-length".equalsIgnoreCase(name)) {
                     continue;
                 }
                 template.header(name, values);
             }
-            log.info("feign interceptor header:{}",template);
+            log.info("feign interceptor header:{}", template);
         }
     }
 }

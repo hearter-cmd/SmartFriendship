@@ -1,9 +1,6 @@
 package com.yaonie.intelligent.assessment.ai;
 
-import com.yaonie.intelligent.assessment.ai.config.chat.ZhiPuChatConfig;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
-import org.springframework.ai.zhipuai.ZhiPuAiChatModel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -20,10 +17,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         "com.yaonie.intelligent.assessment.system"
 })
 public class AiApplication {
-    @Resource
-    ZhiPuAiChatModel zhiPuAiChatModel;
-    @Resource
-    ZhiPuChatConfig zhiPuChatConfig;
 
     @PostConstruct
     public void init() {

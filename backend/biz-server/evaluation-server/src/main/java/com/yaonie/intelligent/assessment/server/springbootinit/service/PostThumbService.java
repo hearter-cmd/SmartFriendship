@@ -6,7 +6,6 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 
 /**
  * 帖子点赞服务
- *
  */
 public interface PostThumbService extends IService<PostThumb> {
 

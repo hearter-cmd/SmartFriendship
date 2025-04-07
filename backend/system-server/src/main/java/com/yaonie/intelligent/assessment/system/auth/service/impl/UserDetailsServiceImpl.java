@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- *  user ==> role ==> role_menu ==> menu
+ * user ==> role ==> role_menu ==> menu
  * </p>
  *
  * @author 武春利
@@ -93,9 +93,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     .map(SysMenu::getId)
                     .toList();
             permissions = allMenuList.stream()
-                   .map(SysMenu::getPath)
-                   .filter(StringUtils::isNotBlank)
-                   .collect(Collectors.toSet());
+                    .map(SysMenu::getPath)
+                    .filter(StringUtils::isNotBlank)
+                    .collect(Collectors.toSet());
         } else {
             permissionIds = getPermissionIdsByRoleIds(roleIds);
             permissions = getPermissionsByIds(permissionIds);
@@ -116,7 +116,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (!permissionIds.isEmpty()) {
             menuList = sysMenuService
                     .lambdaQuery()
-                    .in(SysMenu::getName, permissionIds)
+                    .in(SysMenu::getId, permissionIds)
                     .eq(SysMenu::getEnable, CommonConstant.IS_ENABLE)
                     .list();
         } else {
@@ -127,6 +127,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<String> menuPathSet = menuList
                 .stream()
                 .map(SysMenu::getPath)
+                .filter(StringUtils::isNotBlank)
                 .collect(Collectors.toSet());
 
         return menuPathSet;

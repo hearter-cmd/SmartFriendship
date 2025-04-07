@@ -25,10 +25,22 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <dependency>
+                <groupId>group.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>1.1.0</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>group.springframework.ai</groupId>
+            <artifactId>spring-ai-core</artifactId>
+        </dependency>
         <!-- 基本依赖 -->
         <dependency>
             <groupId>com.yaonie.intelligent.assessment.server</groupId>
@@ -50,7 +62,11 @@
         <dependency>
             <groupId>group.springframework.ai</groupId>
             <artifactId>spring-ai-milvus-store</artifactId>
-            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.milvus</groupId>
+            <artifactId>milvus-sdk-java</artifactId>
+            <version>2.3.5</version>
         </dependency>
 
         <!-- 文档依赖 -->
@@ -66,17 +82,17 @@
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
 
-<!--        &lt;!&ndash;Nacos 注册中心&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash;Nacos 注册中心&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+        <!--        </dependency>-->
 
-<!--        &lt;!&ndash;loadbalancer 均衡负载&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-loadbalancer</artifactId>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash;loadbalancer 均衡负载&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-loadbalancer</artifactId>-->
+        <!--        </dependency>-->
 
     </dependencies>
 

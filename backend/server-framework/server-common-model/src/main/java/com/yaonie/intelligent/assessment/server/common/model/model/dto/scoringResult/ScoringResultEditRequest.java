@@ -8,7 +8,8 @@ import java.util.List;
 
 /**
  * 编辑评分结果表请求
- * * @author yaonie */
+ * * @author yaonie
+ */
 @Data
 public class ScoringResultEditRequest implements Serializable {
 

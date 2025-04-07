@@ -24,22 +24,22 @@ import java.util.Map;
  * @CreateTime 2024-09-15
  * @ClassName WSRespTypeEnum
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @AllArgsConstructor
 @Getter
 public enum WSRespTypeEnum {
-    LOGIN_URL( 1, WSMsgIdUrl.class),
-    LOGIN_SCAN_SUCCESS( 2,  null),
-    LOGIN_SUCCESS( 3, WSLoginSuccess.class),
-    MESSAGE( 4, WSMessage.class),
-    ONLINE_OFFLINE_NOTIFY( 5, WSOlineOfflineNotify.class),
-    INVALIDATE_TOKEN( 6,  null),
-    BLACK( 7, WSBlack.class),
-    MARK( 8, WSMsgMark.class),
-    RECALL( 9, WSMsgRecall.class),
-    APPLY( 10, WSFriendApply.class),
-    MEMBER_CHANGE( 11, WSMemberChange.class),
+    LOGIN_URL(1, WSMsgIdUrl.class),
+    LOGIN_SCAN_SUCCESS(2, null),
+    LOGIN_SUCCESS(3, WSLoginSuccess.class),
+    MESSAGE(4, WSMessage.class),
+    ONLINE_OFFLINE_NOTIFY(5, WSOlineOfflineNotify.class),
+    INVALIDATE_TOKEN(6, null),
+    BLACK(7, WSBlack.class),
+    MARK(8, WSMsgMark.class),
+    RECALL(9, WSMsgRecall.class),
+    APPLY(10, WSFriendApply.class),
+    MEMBER_CHANGE(11, WSMemberChange.class),
     SET_SESSION(12, WSSetSession.class);
 
     private final Integer type;

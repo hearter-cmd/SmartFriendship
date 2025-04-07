@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @CreateTime 2024-09-15
  * @ClassName AbstractHandler
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public abstract class AbstractHandler implements WxMpMessageHandler {
     protected Logger log = LoggerFactory.getLogger(getClass());

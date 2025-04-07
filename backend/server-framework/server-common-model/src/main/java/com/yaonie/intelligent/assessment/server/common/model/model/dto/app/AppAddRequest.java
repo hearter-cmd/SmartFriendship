@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 创建应用请求
+ *
  * @author yaonie
  */
 @Data

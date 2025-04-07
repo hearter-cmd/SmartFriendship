@@ -22,7 +22,7 @@ import java.util.Map;
  * @CreateTime 2024-09-15
  * @ClassName SubscribeHandler
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Component
 public class SubscribeHandler extends AbstractHandler {
@@ -37,7 +37,7 @@ public class SubscribeHandler extends AbstractHandler {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        if(scan != null) {
+        if (scan != null) {
             return scan;
         }
         return TextBuilder.build("欢迎关注我哦~~~", wxMessage);

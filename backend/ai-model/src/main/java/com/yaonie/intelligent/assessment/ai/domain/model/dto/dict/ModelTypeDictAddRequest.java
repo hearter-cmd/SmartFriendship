@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 /**
  * 创建应用请求
+ *
  * @author yaonie
  */
 @Schema(name = "模型类型新增DTO")

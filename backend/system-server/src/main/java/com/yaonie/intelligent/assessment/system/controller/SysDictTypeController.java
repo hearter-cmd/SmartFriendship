@@ -58,7 +58,7 @@ public class SysDictTypeController extends BaseController {
     @PostMapping
     public BaseResponse<?> add(@Validated @RequestBody SysDictType dict) {
         if (!dictTypeService.checkDictTypeUnique(dict)) {
-            return ResultUtils.error(ErrorCode.OPERATION_ERROR,"新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
+            return ResultUtils.error(ErrorCode.OPERATION_ERROR, "新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dict.setCreateBy(getUsername());
         return toAjax(dictTypeService.insertDictType(dict));

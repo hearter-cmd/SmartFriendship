@@ -9,7 +9,7 @@ package com.yaonie.intelligent.assessment.server.chat_server.common.constants;
  * @CreateTime 2024-09-11
  * @ClassName Constants
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public interface Constants {
 

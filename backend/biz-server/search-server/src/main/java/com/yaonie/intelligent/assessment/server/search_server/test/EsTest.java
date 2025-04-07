@@ -26,7 +26,7 @@ public class EsTest {
     private AppEsDao appEsDao;
 
     @Test
-    void testAdd(){
+    void testAdd() {
         App app = new App();
         app.setId(3L);
         app.setAppName("测试一下");

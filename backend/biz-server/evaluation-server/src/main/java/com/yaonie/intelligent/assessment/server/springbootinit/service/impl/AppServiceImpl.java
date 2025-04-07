@@ -52,12 +52,11 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     private UserService userService;
 
 
-
     /**
      * 校验数据
      *
-     * @param app     应用
-     * @param add      对创建的数据进行校验
+     * @param app 应用
+     * @param add 对创建的数据进行校验
      */
     @Override
     public void validApp(App app, boolean add) {
@@ -309,7 +308,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
         // 判断是否存在
         long id = reviewRequest.getId();
         App oldApp = getById(id);
-        if (oldApp.getReviewStatus().equals(reviewRequest.getReviewStatus())){
+        if (oldApp.getReviewStatus().equals(reviewRequest.getReviewStatus())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "审核状态未改变");
         }
         app.setReviewerId(userId);

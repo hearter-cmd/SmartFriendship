@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author 武春利
-* @description 针对表【model_type_dict(AI大模型类型)】的数据库操作Service实现
-* @createDate 2025-01-09 00:42:54
-*/
+ * @description 针对表【model_type_dict(AI大模型类型)】的数据库操作Service实现
+ * @createDate 2025-01-09 00:42:54
+ */
 @Service
 public class ModelTypeDictServiceImpl extends ServiceImpl<ModelTypeDictMapper, ModelTypeDict> implements ModelTypeDictService {
 }

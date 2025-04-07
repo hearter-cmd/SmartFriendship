@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 /**
  * 帖子收藏查询请求
+ *
  * @author yaonie
  */
 @Data

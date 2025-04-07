@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @Description : 评分策略执行器
  */
 @Service
-public class ScoringStrategyExecutor implements ScoringStrategy{
+public class ScoringStrategyExecutor implements ScoringStrategy {
 
     @Resource
     private List<ScoringStrategy> scoringStrategyList;
@@ -99,7 +99,7 @@ public class ScoringStrategyExecutor implements ScoringStrategy{
                  * 现在 A 取尝试释放锁, A 可能会将 B 的锁释放掉
                  */
                 // 确保这个锁, 只能本人进行释放
-                if(lock.isHeldByCurrentThread()) {
+                if (lock.isHeldByCurrentThread()) {
                     lock.unlock();
                 }
             }

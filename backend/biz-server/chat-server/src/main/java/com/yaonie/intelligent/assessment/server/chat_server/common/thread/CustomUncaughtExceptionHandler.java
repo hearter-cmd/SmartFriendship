@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Description : 线程异常处理类
  */
 @Slf4j
-public class CustomUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler{
+public class CustomUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         log.error("UncaughtException in thread {} : {}", t.getName(), e.getMessage(), e);

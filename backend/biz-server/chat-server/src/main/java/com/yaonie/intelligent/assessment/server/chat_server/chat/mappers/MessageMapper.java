@@ -2,7 +2,7 @@ package com.yaonie.intelligent.assessment.server.chat_server.chat.mappers;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

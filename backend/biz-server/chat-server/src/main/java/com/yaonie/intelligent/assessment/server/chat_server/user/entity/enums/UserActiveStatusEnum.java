@@ -9,10 +9,10 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum UserActiveStatusEnum {  
-    ONLINE(1, "在线"),  
-    OFFLINE(2, "离线");  
-  
+public enum UserActiveStatusEnum {
+    ONLINE(1, "在线"),
+    OFFLINE(2, "离线");
+
     private final Integer type;
     private final String desc;
 }

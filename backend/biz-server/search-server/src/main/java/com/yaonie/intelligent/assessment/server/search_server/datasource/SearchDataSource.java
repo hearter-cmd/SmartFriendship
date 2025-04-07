@@ -19,8 +19,9 @@ import java.util.List;
 public interface SearchDataSource<T> {
     /**
      * 根据请求参数获取数据
+     *
      * @param searchRequest 请求参数
-     * @param searchVO 封装到哪里
+     * @param searchVO      封装到哪里
      * @return 数据列表
      */
     List<T> doSearch(SearchRequest searchRequest, SearchVO searchVO);

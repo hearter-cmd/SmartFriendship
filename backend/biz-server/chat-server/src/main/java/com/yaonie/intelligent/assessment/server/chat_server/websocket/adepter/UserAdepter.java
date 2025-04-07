@@ -16,20 +16,20 @@ import java.util.UUID;
  * @CreateTime 2024-09-16
  * @ClassName UserAdepter
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public class UserAdepter {
     public static User buildUserSave(String mpOpenId) {
         User user = new User();
         user.setUserAccount(mpOpenId);
-        user.setUserPassword(UUID.randomUUID().toString().replace("-",""));
+        user.setUserPassword(UUID.randomUUID().toString().replace("-", ""));
         user.setMpOpenId(mpOpenId);
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());
         user.setIsDelete(0);
         return user;
     }
-    
+
     public static User buildAuthorizeUser(WxOAuth2UserInfo userInfo) {
         // 更新对象
         User user = new User();

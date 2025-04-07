@@ -30,11 +30,12 @@ import java.util.List;
 
 /**
  * 菜单权限表
+ *
  * @author 武春利
  * @TableName sys_menu
  */
 @Schema(title = "菜单权限表")
-@TableName(value ="sys_menu")
+@TableName(value = "sys_menu")
 @Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)

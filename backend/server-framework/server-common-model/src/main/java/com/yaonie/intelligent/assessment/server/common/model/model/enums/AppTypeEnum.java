@@ -32,10 +32,11 @@ public enum AppTypeEnum {
 
     /**
      * 通过状态码获取枚举
+     *
      * @param value 状态码
      * @return ReviewStatusEnum 枚举
      */
-    public static AppTypeEnum getEnumByValue(Integer value){
+    public static AppTypeEnum getEnumByValue(Integer value) {
         if (value == null) {
             return null;
         }
@@ -49,6 +50,7 @@ public enum AppTypeEnum {
 
     /**
      * 获取所有的枚举值
+     *
      * @return List<Integer> 所有的枚举值列表
      */
     public static List<Integer> getValues() {

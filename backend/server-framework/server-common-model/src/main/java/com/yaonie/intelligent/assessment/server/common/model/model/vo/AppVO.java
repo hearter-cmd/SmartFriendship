@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * 应用视图
+ *
  * @author yaonie
  */
 @Data

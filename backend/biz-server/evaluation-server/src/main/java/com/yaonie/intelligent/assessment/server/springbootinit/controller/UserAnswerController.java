@@ -21,6 +21,7 @@ import com.yaonie.intelligent.assessment.server.common.model.model.entity.evalua
 import com.yaonie.intelligent.assessment.server.common.model.model.entity.evaluation.UserAnswer;
 import com.yaonie.intelligent.assessment.server.common.model.model.enums.ReviewStatusEnum;
 import com.yaonie.intelligent.assessment.server.common.model.model.vo.UserAnswerVO;
+import com.yaonie.intelligent.assessment.server.common.model.event.UserAnswerEvent;
 import com.yaonie.intelligent.assessment.server.springbootinit.scoring.ScoringStrategyExecutor;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.AppService;
 import com.yaonie.intelligent.assessment.server.springbootinit.service.UserAnswerService;
@@ -29,6 +30,8 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +43,6 @@ import java.util.List;
 
 /**
  * 用户答案表接口
- *
  */
 @RestController
 @RequestMapping("/userAnswer")
@@ -58,6 +60,8 @@ public class UserAnswerController {
 
     @Resource
     private AppService appService;
+    @Autowired
+    private ApplicationEventPublisher publisher;
 
     // region 增删改查
 
@@ -99,6 +103,7 @@ public class UserAnswerController {
             userAnswer = scoringStrategyExecutor.doScore(choices, app);
             userAnswer.setId(newUserAnswerId);
             userAnswerService.updateById(userAnswer);
+            publisher.publishEvent(new UserAnswerEvent(userAnswer));
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "评分失败");
@@ -114,7 +119,7 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/delete")
-    
+
     public BaseResponse<Boolean> deleteUserAnswer(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -170,7 +175,6 @@ public class UserAnswerController {
      * @return
      */
     @GetMapping("/get/vo")
-    
     public BaseResponse<UserAnswerVO> getUserAnswerVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
@@ -205,9 +209,9 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/list/page/vo")
-    
+
     public BaseResponse<Page<UserAnswerVO>> listUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
-                                                               HttpServletRequest request) {
+                                                                   HttpServletRequest request) {
         long current = userAnswerQueryRequest.getCurrent();
         long size = userAnswerQueryRequest.getPageSize();
         // 限制爬虫
@@ -227,9 +231,9 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/my/list/page/vo")
-    
+
     public BaseResponse<Page<UserAnswerVO>> listMyUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                                     HttpServletRequest request) {
         ThrowUtils.throwIf(userAnswerQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
         User loginUser = UserHolder.getUser();
@@ -253,7 +257,7 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/edit")
-    
+
     public BaseResponse<Boolean> editUserAnswer(@RequestBody UserAnswerEditRequest userAnswerEditRequest, HttpServletRequest request) {
         if (userAnswerEditRequest == null || userAnswerEditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @CreateTime 2024-09-16
  * @ClassName LoginServiceImpl
  * @Project backend
- * @Description : 
+ * @Description :
  */
 //@Service
 public class LoginServiceImpl implements LoginService {
@@ -39,7 +39,7 @@ public class LoginServiceImpl implements LoginService {
         if (expire == -2) {
             // Key不存在
             return;
-        }else if (expire < keyLiveTime * 0.8) {
+        } else if (expire < keyLiveTime * 0.8) {
             // 刷新token
             String newToken = JwtUtil.createToken(uid);
             RedisUtils.set(getUserTokenKey(uid), newToken, keyLiveTime, TimeUnit.SECONDS);

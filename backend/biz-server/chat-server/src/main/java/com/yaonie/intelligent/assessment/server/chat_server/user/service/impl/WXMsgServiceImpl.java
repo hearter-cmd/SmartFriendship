@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @CreateTime 2024-09-16
  * @ClassName WXMsgServiceImpl
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Service
 @Slf4j
@@ -51,6 +51,7 @@ public class WXMsgServiceImpl implements WXMsgService {
 
     /**
      * 微信扫描二维码事件
+     *
      * @param wxMessage Wx消息封装
      * @return 发送给用户的授权消息
      */
@@ -79,7 +80,7 @@ public class WXMsgServiceImpl implements WXMsgService {
             userService.save(user);
         }
         WAIT_AUTHORIZE_MAP.put(fromUserOpenId, code);
-        String getUserInfoUrl = wxMpService.getOAuth2Service().buildAuthorizationUrl(callback+"/api/wx/mp/callback", "snsapi_base", "STATE");
+        String getUserInfoUrl = wxMpService.getOAuth2Service().buildAuthorizationUrl(callback + "/api/wx/mp/callback", "snsapi_base", "STATE");
         // 在这里并没有真正的发送, 必须return才行
         out = TextBuilder.build(String.format("欢迎关注，点击<a href=\"%s\">这里</a>开始使用", getUserInfoUrl), wxMessage);
         return out;
@@ -93,7 +94,7 @@ public class WXMsgServiceImpl implements WXMsgService {
         if (Objects.isNull(user)) {
             // 新用户但是没按照步骤走，存在问题
             throw new BusinessException(ErrorCode.FEIGN_REQUEST);
-        } else if (StringUtils.isBlank(user.getUserAvatar())){
+        } else if (StringUtils.isBlank(user.getUserAvatar())) {
             // 更新用户信息
             User newUser = UserAdepter.buildAuthorizeUser(userInfo);
             newUser.setId(user.getId());

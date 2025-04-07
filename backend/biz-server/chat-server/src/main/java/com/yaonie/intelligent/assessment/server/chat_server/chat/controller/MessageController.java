@@ -4,11 +4,11 @@ package com.yaonie.intelligent.assessment.server.chat_server.chat.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yaonie.intelligent.assessment.server.chat_server.chat.model.dto.MessageDto;
 import com.yaonie.intelligent.assessment.server.chat_server.chat.service.MessageService;
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
 import com.yaonie.intelligent.assessment.server.common.model.exception.ThrowUtils;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
@@ -54,8 +55,11 @@ public class MessageController {
      * @return 消息列表
      */
     @GetMapping("/list/{id}")
-    public BaseResponse<Page<Message>> getMsgList(@PathVariable("id") Long id, HttpServletRequest request) {
+    public BaseResponse<Page<Message>> getMsgList(@PathVariable("id") Long id,
+                                                  @RequestParam("current") Integer current,
+                                                  @RequestParam("size") Integer size,
+                                                  HttpServletRequest request) {
         ThrowUtils.throwIf(Objects.isNull(id), ErrorCode.PARAMS_ERROR);
-        return ResultUtils.success(messageService.getMsgList(id, request));
+        return ResultUtils.success(messageService.getMsgList(id, current, size, request));
     }
 }

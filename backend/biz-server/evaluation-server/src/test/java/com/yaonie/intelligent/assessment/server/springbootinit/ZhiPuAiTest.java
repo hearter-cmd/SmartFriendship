@@ -26,7 +26,7 @@ import java.util.List;
  * @CreateTime 2024-08-22
  * @ClassName ZhiPuAiTest
  * @Project backend
- * @Description : 
+ * @Description :
  */
 
 /**
@@ -64,7 +64,7 @@ public class ZhiPuAiTest {
     }
 
     @Test
-    void test2(){
+    void test2() {
 
     }
 }

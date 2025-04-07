@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * 帖子收藏
+ *
  * @author yaonie
  */
 @TableName(value = "post_favour")

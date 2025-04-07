@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @CreateTime 2024-09-05
  * @ClassName MybatisConfig
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Configuration
 @MapperScan(basePackages = {"com.yaonie.intelligent.assessment.server.search_server.mapper"})

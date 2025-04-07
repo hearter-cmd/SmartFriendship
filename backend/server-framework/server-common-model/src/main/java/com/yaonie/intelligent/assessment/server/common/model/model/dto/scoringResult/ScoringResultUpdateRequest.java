@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * 更新评分结果表请求
+ *
  * @author yaonie
  */
 @Data

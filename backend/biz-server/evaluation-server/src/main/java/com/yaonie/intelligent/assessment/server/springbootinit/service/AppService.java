@@ -35,11 +35,11 @@ public interface AppService extends IService<App> {
      * @return 查询条件
      */
     QueryWrapper<App> getQueryWrapper(AppQueryRequest appQueryRequest);
-    
+
     /**
      * 获取应用封装
      *
-     * @param app 应用
+     * @param app     应用
      * @param request 请求
      * @return 应用封装
      */
@@ -56,6 +56,7 @@ public interface AppService extends IService<App> {
 
     /**
      * 添加应用
+     *
      * @param app 应用
      * @return 应用id
      */

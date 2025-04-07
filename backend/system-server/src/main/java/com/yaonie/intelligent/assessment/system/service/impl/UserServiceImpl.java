@@ -2,6 +2,7 @@ package com.yaonie.intelligent.assessment.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.constant.CommonConstant;
@@ -54,8 +55,6 @@ import static com.yaonie.intelligent.assessment.server.common.model.constant.Use
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
-    private UserMapper userMapper;
-    @Resource
     private SysRoleService sysRoleService;
 
     @Resource
@@ -90,6 +89,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             user.setUserAccount(userAccount);
             user.setUserPassword(encryptPassword);
             user.setUserRoleStr(UserConstant.DEFAULT_ROLE_ID);
+            user.setTags("");
             boolean saveResult = this.save(user);
             if (!saveResult) {
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");
@@ -201,7 +201,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean isAdmin(User user) {
-        return user != null &&  user.getUserRoleStr().matches(".*" + UserRoleEnum.ADMIN.getValue() + ".*");
+        return user != null && user.getUserRoleStr().matches(".*" + UserRoleEnum.ADMIN.getValue() + ".*");
     }
 
     /**
@@ -241,9 +241,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         List<SysRole> roles = sysRoleService.listByIds(Arrays.stream(user.getUserRoleStr().split(",")).toList());
         List<RoleVO> roleVOList = roles.stream()
-                .map(item -> new RoleVO(item.getRoleId(),  item.getRoleKey(), item.getRoleName(),item.getEnable().equals('0')))
+                .map(item -> new RoleVO(item.getRoleId(), item.getRoleKey(), item.getRoleName(), item.getEnable().equals('0')))
                 .toList();
         userVO.setRoles(roleVOList);
+        String tags = user.getTags();
+        if (StringUtils.isNotBlank(tags)) {
+            List<String> tagVOList = Arrays.stream(tags.split(",")).toList();
+            userVO.setTags(tagVOList);
+        }
         return userVO;
     }
 
@@ -355,5 +360,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .eq(User::getEnable, CommonConstant.IS_ENABLE)
                 .one();
         return one;
+    }
+
+    @Override
+    public List<User> searchUser(String keyword) {
+        ThrowUtils.throwIf(StringUtils.isBlank(keyword), ErrorCode.PARAMS_ERROR, "关键字不能为空！");
+        Page<User> page = lambdaQuery()
+                .eq(User::getId, keyword)
+                .page(new Page<>(1, 20));
+        List<User> result = lambdaQuery()
+                .like(User::getUserName, keyword)
+                .page(new Page<>(1, 20)).getRecords();
+        if (result.isEmpty()) {
+            result = new ArrayList<>();
+        }
+        result.addAll(page.getRecords());
+        return result;
     }
 }

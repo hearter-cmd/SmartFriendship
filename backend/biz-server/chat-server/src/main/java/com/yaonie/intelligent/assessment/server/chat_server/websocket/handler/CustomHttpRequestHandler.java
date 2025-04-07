@@ -12,9 +12,18 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.cookie.Cookie;
+import io.netty.handler.codec.http.cookie.DefaultCookie;
+import io.netty.handler.codec.http.cookie.ServerCookieEncoder;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
@@ -63,6 +72,7 @@ public class CustomHttpRequestHandler extends ChannelInboundHandlerAdapter {
             if (sessionId == null) {
                 sessionId = SessionUtil.createSessionId();
                 log.info("channel设置sessionId : {}", sessionId);
+                doSetCookie(sessionId);
                 WebSocketAdepter.sendNewSessionId(ctx.channel(), sessionId);
             } else {
                 Session session = SessionUtil.findSessionBySessionId(sessionId);
@@ -79,6 +89,7 @@ public class CustomHttpRequestHandler extends ChannelInboundHandlerAdapter {
                 } else {
                     // SESSION不存在, 创建新的SESSION
                     sessionId = SessionUtil.createSessionId();
+                    doSetCookie(sessionId);
                     log.info("channel设置sessionId : {}", sessionId);
                 }
             }
@@ -112,6 +123,18 @@ public class CustomHttpRequestHandler extends ChannelInboundHandlerAdapter {
         } else {
             ctx.fireChannelRead(msg);
         }
+    }
+
+    private void doSetCookie(String sessionId) {
+        // 创建自定义响应并添加 Cookie
+        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.SWITCHING_PROTOCOLS);
+        response.headers().set(HttpHeaderNames.UPGRADE, HttpHeaderValues.WEBSOCKET);
+        response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.UPGRADE);
+
+        // 添加或修改 HttpOnly Cookie
+        Cookie cookie = new DefaultCookie("SESSION", sessionId);
+        cookie.setPath("/");
+        response.headers().set(HttpHeaderNames.SET_COOKIE, ServerCookieEncoder.STRICT.encode(cookie));
     }
 
     @Override

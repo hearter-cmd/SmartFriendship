@@ -11,15 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
 
 
 /**
  * @author 77160
  */
-@RestControllerAdvice
+//@RestControllerAdvice
 public class AGlobalExceptionHandlerController extends ABaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(AGlobalExceptionHandlerController.class);
@@ -32,7 +30,7 @@ public class AGlobalExceptionHandlerController extends ABaseController {
         if (e instanceof BusinessException biz) {
             //业务错误
             ajaxResponse = ResultUtils.error(ErrorCode.OPERATION_ERROR, biz.getMessage());
-        } else if (e instanceof BindException|| e instanceof MethodArgumentTypeMismatchException) {
+        } else if (e instanceof BindException || e instanceof MethodArgumentTypeMismatchException) {
             //参数类型错误
             ajaxResponse = ResultUtils.error(ErrorCode.PARAMS_ERROR);
         } else if (e instanceof DuplicateKeyException) {

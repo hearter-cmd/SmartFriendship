@@ -15,7 +15,7 @@ import java.util.Objects;
  * @ClassName WSReqTypeEnum
  * @Project backend
  * @Description :
- *          WS请求类型枚举
+ * WS请求类型枚举
  */
 @AllArgsConstructor
 @Getter

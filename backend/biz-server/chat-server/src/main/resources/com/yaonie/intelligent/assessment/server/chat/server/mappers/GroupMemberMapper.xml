@@ -4,12 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yaonie.intelligent.assessment.server.chat_server.common.mappers.GroupMemberMapper">
 
-    <resultMap id="BaseResultMap" type="com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.GroupMember">
-            <result property="groupId" column="groupId" jdbcType="BIGINT"/>
-            <result property="userId" column="userId" jdbcType="BIGINT"/>
-            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    <resultMap id="BaseResultMap"
+               type="com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.GroupMember">
+        <result property="groupId" column="groupId" jdbcType="BIGINT"/>
+        <result property="userId" column="userId" jdbcType="BIGINT"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

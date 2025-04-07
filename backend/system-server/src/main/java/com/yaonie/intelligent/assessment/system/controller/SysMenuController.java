@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * <p>
- *  菜单控制器
+ * 菜单控制器
  * </p>
  *
  * @author 武春利
@@ -37,7 +37,8 @@ public class SysMenuController {
 
     /**
      * 获取用户的权限树
-     * @return BaseResponse<List<SysMenu>>
+     *
+     * @return BaseResponse<List < SysMenu>>
      */
     @Operation(summary = "获取用户的权限树")
     @GetMapping("/permissions/tree")
@@ -48,7 +49,8 @@ public class SysMenuController {
 
     /**
      * 获取菜单树
-     * @return BaseResponse<List<SysMenu>>
+     *
+     * @return BaseResponse<List < SysMenu>>
      */
     @Operation(summary = "获取菜单树")
     @GetMapping("/tree")

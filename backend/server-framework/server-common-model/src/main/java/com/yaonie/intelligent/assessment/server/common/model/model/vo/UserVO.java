@@ -48,6 +48,14 @@ public class UserVO implements Serializable {
      * 用户角色：user/admin/ban
      */
     private String userRole = "user";
+
+    /**
+     * 用户标签列表 JSON
+     */
+    private List<String> tags;
+
+    private String personSignature;
+
     /**
      * 用户角色对象表
      */
@@ -66,7 +74,6 @@ public class UserVO implements Serializable {
     private Character enable;
 
     private static class CharacterToBooleanSerializer extends JsonSerializer<Character> {
-
         @Override
         public void serialize(Character character, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
             jsonGenerator.writeBoolean(character.equals('1'));

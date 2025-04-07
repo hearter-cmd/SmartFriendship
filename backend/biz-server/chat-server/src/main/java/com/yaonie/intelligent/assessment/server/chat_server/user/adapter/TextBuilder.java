@@ -13,7 +13,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
  * @CreateTime 2024-09-15
  * @ClassName TextBuidler
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public class TextBuilder {
     public static WxMpXmlOutTextMessage build(String text, WxMpXmlMessage message) {

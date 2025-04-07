@@ -3,13 +3,16 @@ package com.yaonie.intelligent.assessment.server.common.model.exception;
 import com.yaonie.intelligent.assessment.server.common.model.common.BaseResponse;
 import com.yaonie.intelligent.assessment.server.common.model.common.ErrorCode;
 import com.yaonie.intelligent.assessment.server.common.model.common.ResultUtils;
-import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
 
 /**
  * 全局异常处理器
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 @Slf4j
-@Hidden
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ConstraintViolationException.class)
@@ -27,10 +29,12 @@ public class GlobalExceptionHandler {
         return ResultUtils.error(ErrorCode.PARAMS_ERROR, result);
     }
 
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    @ExceptionHandler(value = BindException.class)
     public BaseResponse<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult result = e.getBindingResult();
-        String message = result.getFieldErrors().get(0).getDefaultMessage();
+        String message = result.getFieldErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining(", "));
         return ResultUtils.error(ErrorCode.PARAMS_ERROR, message);
     }
 
@@ -40,7 +44,7 @@ public class GlobalExceptionHandler {
         return ResultUtils.error(e.getCode(), e.getMessage());
     }
 
-    //    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(RuntimeException.class)
     public BaseResponse<?> runtimeExceptionHandler(RuntimeException e) {
         log.error("RuntimeException", e);
         return ResultUtils.error(ErrorCode.SYSTEM_ERROR, "系统错误");

@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadFactory;
 public class CustomThreadFactory implements ThreadFactory {
     private static final CustomUncaughtExceptionHandler MY_UNCAUGHT_EXCEPTION_HANDLER = new CustomUncaughtExceptionHandler();
     private ThreadFactory original;
+
     @Override
     public Thread newThread(Runnable r) {
         Thread thread = original.newThread(r);

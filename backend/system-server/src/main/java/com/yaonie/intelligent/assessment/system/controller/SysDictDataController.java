@@ -25,14 +25,13 @@ import java.util.List;
 
 /**
  * 数据字典信息
- * 
+ *
  * @author ruoyi
  */
 @Tag(name = "系统管理-数据字典信息")
 @RestController
 @RequestMapping("/system/dict/data")
-public class SysDictDataController extends BaseController
-{
+public class SysDictDataController extends BaseController {
     @Autowired
     private SysDictDataService dictDataService;
 
@@ -41,8 +40,7 @@ public class SysDictDataController extends BaseController
 
     @Operation(summary = "查询字典数据列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysDictData dictData)
-    {
+    public TableDataInfo list(SysDictData dictData) {
         List<SysDictData> list = dictDataService.selectDictDataList(dictData);
         return getDataTable(list);
     }
@@ -52,8 +50,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "查询字典数据详细")
     @GetMapping(value = "/{dictCode}")
-    public BaseResponse<?> getInfo(@PathVariable Long dictCode)
-    {
+    public BaseResponse<?> getInfo(@PathVariable Long dictCode) {
         return success(dictDataService.selectDictDataById(dictCode));
     }
 
@@ -62,11 +59,9 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "根据字典类型查询字典数据信息")
     @GetMapping(value = "/type/{dictType}")
-    public BaseResponse<?> dictType(@PathVariable String dictType)
-    {
+    public BaseResponse<?> dictType(@PathVariable String dictType) {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
-        if (StringUtils.isNull(data))
-        {
+        if (StringUtils.isNull(data)) {
             data = new ArrayList<SysDictData>();
         }
         return success(data);
@@ -77,8 +72,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "新增字典类型")
     @PostMapping
-    public BaseResponse<?> add(@Validated @RequestBody SysDictData dict)
-    {
+    public BaseResponse<?> add(@Validated @RequestBody SysDictData dict) {
         dict.setCreateBy(getUsername());
         return toAjax(dictDataService.insertDictData(dict));
     }
@@ -88,8 +82,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "修改保存字典类型")
     @PutMapping
-    public BaseResponse<?> edit(@Validated @RequestBody SysDictData dict)
-    {
+    public BaseResponse<?> edit(@Validated @RequestBody SysDictData dict) {
         dict.setUpdateBy(getUsername());
         return toAjax(dictDataService.updateDictData(dict));
     }
@@ -99,8 +92,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "删除字典类型")
     @DeleteMapping("/{dictCodes}")
-    public BaseResponse<?> remove(@PathVariable Long[] dictCodes)
-    {
+    public BaseResponse<?> remove(@PathVariable Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);
         return success();
     }

@@ -68,7 +68,7 @@ public class CustomDataPermissionHandler implements MultiDataPermissionHandler {
 
         // 将新条件与现有 where 条件组合
         if (dataPermissionCondition != null) {
-                return dataPermissionCondition;
+            return dataPermissionCondition;
         }
 
         return null;

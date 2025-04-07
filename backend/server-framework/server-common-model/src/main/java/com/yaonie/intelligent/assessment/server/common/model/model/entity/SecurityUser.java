@@ -82,7 +82,8 @@ public class SecurityUser implements UserDetails, Serializable {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> result = new ArrayList<>();
-        permissions.forEach(item -> {
+        Set<String> permissions1 = this.getPermissions();
+        permissions1.forEach(item -> {
             result.add(new SimpleGrantedAuthority(item));
         });
         return result;

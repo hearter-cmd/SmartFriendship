@@ -106,6 +106,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
         // 插入角色
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(roleAddDto, sysRole);
+        sysRole.setRoleId(roleAddDto.getRoleId());
         SysRole old = lambdaQuery()
                 .eq(SysRole::getRoleKey, sysRole.getRoleKey())
                 .eq(SysRole::getIsDelete, CommonConstant.IS_NOT_DEL)

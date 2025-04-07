@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class GiveLikeRabbitListener {
-//    @RabbitListener(bindings = {
+    //    @RabbitListener(bindings = {
 //            @QueueBinding(
 //                    value = @Queue(name = "give.like.queue"),
 //                    exchange = @Exchange(name = "give.like.exchange"),

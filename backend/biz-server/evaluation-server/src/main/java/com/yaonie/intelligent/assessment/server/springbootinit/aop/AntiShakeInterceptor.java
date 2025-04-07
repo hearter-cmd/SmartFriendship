@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- *  防抖拦截器
+ * 防抖拦截器
  * </p>
  *
  * @author 武春利

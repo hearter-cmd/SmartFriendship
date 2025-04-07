@@ -20,8 +20,9 @@ public interface ScoringStrategy {
 
     /**
      * 执行评分擦欧总
+     *
      * @param choices 选项集合
-     * @param app 应用实例
+     * @param app     应用实例
      * @return 评分结果封装入用户回答视图, 并返回
      */
     UserAnswer doScore(List<String> choices, App app) throws Exception;

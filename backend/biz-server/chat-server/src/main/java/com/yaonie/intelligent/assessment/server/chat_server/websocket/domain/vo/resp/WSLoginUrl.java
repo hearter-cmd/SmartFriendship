@@ -12,7 +12,7 @@ import lombok.Data;
  * @CreateTime 2024-09-16
  * @ClassName WSLoginUrl
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @AllArgsConstructor
 @Data

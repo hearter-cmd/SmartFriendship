@@ -34,19 +34,19 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(@JsonProperty("id")Long id, @JsonProperty("userAccount")String userAccount,
-                 @JsonProperty("email")String email,
-                @JsonProperty("sex")Character sex, @JsonProperty("personSignature")String personSignature,
-                @JsonProperty("unionId")String unionId, @JsonProperty("mpOpenId")String mpOpenId,
-                @JsonProperty("userName")String userName, @JsonProperty("userAvatar")String userAvatar,
-                @JsonProperty("userProfile")String userProfile, @JsonProperty("userRoleStr")String userRoleStr,
-                @JsonProperty("userRole")List<Long> userRole, @JsonProperty("joinType")Integer joinType,
-                @JsonProperty("ip")String ip, @JsonProperty("areaName")String areaName,
-                @JsonProperty("areaCode")String areaCode, @JsonProperty("lastLoginTime")Date lastLoginTime,
-                @JsonProperty("lastLeaveTime")Long lastLeaveTime, @JsonProperty("createTime")Date createTime,
-                @JsonProperty("updateTime")Date updateTime, @JsonProperty("tags")String tags,
-                 @JsonProperty("isDelete")Integer isDelete,
-                @JsonProperty("enable")Character enable) {
+    public User(@JsonProperty("id") Long id, @JsonProperty("userAccount") String userAccount,
+                @JsonProperty("email") String email,
+                @JsonProperty("sex") Character sex, @JsonProperty("personSignature") String personSignature,
+                @JsonProperty("unionId") String unionId, @JsonProperty("mpOpenId") String mpOpenId,
+                @JsonProperty("userName") String userName, @JsonProperty("userAvatar") String userAvatar,
+                @JsonProperty("userProfile") String userProfile, @JsonProperty("userRoleStr") String userRoleStr,
+                @JsonProperty("userRole") List<Long> userRole, @JsonProperty("joinType") Integer joinType,
+                @JsonProperty("ip") String ip, @JsonProperty("areaName") String areaName,
+                @JsonProperty("areaCode") String areaCode, @JsonProperty("lastLoginTime") Date lastLoginTime,
+                @JsonProperty("lastLeaveTime") Long lastLeaveTime, @JsonProperty("createTime") Date createTime,
+                @JsonProperty("updateTime") Date updateTime, @JsonProperty("tags") String tags,
+                @JsonProperty("isDelete") Integer isDelete,
+                @JsonProperty("enable") Character enable) {
         this.id = id;
         this.userAccount = userAccount;
         this.enable = enable;
@@ -122,7 +122,6 @@ public class User implements Serializable {
 
     @TableField(value = "enable")
     private Character enable;
-
 
 
     /**

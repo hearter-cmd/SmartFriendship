@@ -11,7 +11,8 @@ import java.util.List;
 /**
  * 已登录用户视图（脱敏）
  *
- * @author 77160*/
+ * @author 77160
+ */
 @Data
 public class LoginUserVO implements Serializable {
 

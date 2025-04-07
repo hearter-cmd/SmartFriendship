@@ -39,14 +39,14 @@ public class RedisUtils {
     }
 
     private static final String LUA_INCR_EXPIRE = """
-                    local key,ttl=KEYS[1],ARGV[1]\s
-                    \s
-                    if redis.call('EXISTS',key)==0 then  \s
-                      redis.call('SETEX',key,ttl,1)\s
-                      return 1\s
-                    else\s
-                      return tonumber(redis.call('INCR',key))\s
-                    end\s""";
+            local key,ttl=KEYS[1],ARGV[1]\s
+            \s
+            if redis.call('EXISTS',key)==0 then  \s
+              redis.call('SETEX',key,ttl,1)\s
+              return 1\s
+            else\s
+              return tonumber(redis.call('INCR',key))\s
+            end\s""";
 
     public static Long inc(String key, int time, TimeUnit unit) {
         RedisScript<Long> redisScript = new DefaultRedisScript<>(LUA_INCR_EXPIRE, Long.class);
@@ -439,7 +439,7 @@ public class RedisUtils {
         }
     }
 
-    public  static <T> Boolean hset(String key, Map<String,T> map, long time) {
+    public static <T> Boolean hset(String key, Map<String, T> map, long time) {
         try {
             stringRedisTemplate.opsForHash().putAll(key, map);
             if (time > 0) {
@@ -799,7 +799,7 @@ public class RedisUtils {
     /**
      * 添加元素,有序集合是按照元素的score值由小到大排列
      *
-     * @param key 键
+     * @param key   键
      * @param value 值
      * @param score score值
      * @return 添加成功返回true，否则返回false
@@ -817,7 +817,7 @@ public class RedisUtils {
     }
 
     /**
-     * @param key 键
+     * @param key    键
      * @param values 集合元素列表
      * @return 返回添加成功的元素个数
      */
@@ -826,7 +826,7 @@ public class RedisUtils {
     }
 
     /**
-     * @param key 键
+     * @param key    键
      * @param values 集合元素列表
      * @return 返回添加成功的元素个数
      */
@@ -845,7 +845,7 @@ public class RedisUtils {
     /**
      * 增加元素的score值，并返回增加后的值
      *
-     * @param key 键
+     * @param key   键
      * @param value 值
      * @param delta 增加的步长
      * @return 增加后的值
@@ -857,7 +857,7 @@ public class RedisUtils {
     /**
      * 返回元素在集合的排名,有序集合是按照元素的score值由小到大排列
      *
-     * @param key 键
+     * @param key   键
      * @param value 值
      * @return 0表示第一位
      */
@@ -868,7 +868,7 @@ public class RedisUtils {
     /**
      * 返回元素在集合的排名,按元素的score值由大到小排列
      *
-     * @param key 键
+     * @param key   键
      * @param value 值
      * @return 0表示第一位
      */
@@ -879,7 +879,7 @@ public class RedisUtils {
     /**
      * 获取集合的元素, 从小到大排序
      *
-     * @param key 键
+     * @param key   键
      * @param start 开始位置
      * @param end   结束位置, -1查询所有
      * @return 集合元素列表, 包含元素名称和score值
@@ -895,9 +895,9 @@ public class RedisUtils {
     /**
      * 获取集合元素, 并且把score值也获取
      *
-     * @param key 键
+     * @param key   键
      * @param start 开始位置
-     * @param end 结束位置, -1查询所有
+     * @param end   结束位置, -1查询所有
      * @return 集合元素列表, 包含元素名称和score值
      */
     public static Set<TypedTuple<String>> zRangeWithScores(String key, long start,
@@ -937,11 +937,11 @@ public class RedisUtils {
     }
 
     /**
-     * @param key 键
-     * @param min 最小值
-     * @param max 最大值
+     * @param key   键
+     * @param min   最小值
+     * @param max   最大值
      * @param start 开始位置
-     * @param end 结束位置
+     * @param end   结束位置
      * @return 集合元素列表, 包含元素名称和score值
      */
     public static Set<TypedTuple<String>> zRangeByScoreWithScores(String key,
@@ -953,9 +953,9 @@ public class RedisUtils {
     /**
      * 获取集合的元素, 从大到小排序
      *
-     * @param key 键
+     * @param key   键
      * @param start 开始位置
-     * @param end 结束位置, -1查询所有
+     * @param end   结束位置, -1查询所有
      * @return 集合元素列表, 包含元素名称和score值
      */
     public static Set<String> zReverseRange(String key, long start, long end) {
@@ -979,7 +979,7 @@ public class RedisUtils {
     /**
      * 获取集合的元素, 从大到小排序, 并返回score值
      *
-     * @param key 键
+     * @param key      键
      * @param pageSize 每页大小
      * @return 集合元素列表, 包含元素名称和score值
      */
@@ -990,8 +990,8 @@ public class RedisUtils {
     }
 
     /**
-     * @param key 键
-     * @param max 最大值
+     * @param key      键
+     * @param max      最大值
      * @param pageSize 每页大小
      * @return 集合元素列表, 包含元素名称和score值
      */
@@ -1064,7 +1064,7 @@ public class RedisUtils {
     /**
      * 获取集合中value元素的score值
      *
-     * @param key 键
+     * @param key   键
      * @param value 值
      * @return score值
      */
@@ -1075,9 +1075,9 @@ public class RedisUtils {
     /**
      * 移除指定索引位置的成员
      *
-     * @param key 键
+     * @param key   键
      * @param start 开始位置
-     * @param end 结束位置
+     * @param end   结束位置
      * @return 移除的元素数量
      */
     public static Long zRemoveRange(String key, long start, long end) {
@@ -1099,9 +1099,9 @@ public class RedisUtils {
     /**
      * 获取key和otherKey的并集并存储在destKey中
      *
-     * @param key 键
+     * @param key      键
      * @param otherKey 键
-     * @param destKey 键
+     * @param destKey  键
      * @return 并集的元素数量
      */
     public static Long zUnionAndStore(String key, String otherKey, String destKey) {
@@ -1109,9 +1109,9 @@ public class RedisUtils {
     }
 
     /**
-     * @param key 键
+     * @param key       键
      * @param otherKeys 其他键
-     * @param destKey 排除键
+     * @param destKey   排除键
      * @return 并集的元素数量
      */
     public static Long zUnionAndStore(String key, Collection<String> otherKeys,
@@ -1123,9 +1123,9 @@ public class RedisUtils {
     /**
      * 交集
      *
-     * @param key 键
+     * @param key      键
      * @param otherKey 其他键
-     * @param destKey 排除键
+     * @param destKey  排除键
      * @return 交集的元素数量
      */
     public static Long zIntersectAndStore(String key, String otherKey,
@@ -1137,9 +1137,9 @@ public class RedisUtils {
     /**
      * 交集
      *
-     * @param key 键
+     * @param key       键
      * @param otherKeys 其他键
-     * @param destKey 排除键
+     * @param destKey   排除键
      * @return 交集的元素数量
      */
     public static Long zIntersectAndStore(String key, Collection<String> otherKeys,

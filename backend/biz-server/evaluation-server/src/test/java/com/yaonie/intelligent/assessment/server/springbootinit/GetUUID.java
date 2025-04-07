@@ -13,12 +13,12 @@ import java.util.UUID;
  * @CreateTime 2024-08-29
  * @ClassName GetUUID
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public class GetUUID {
     @Test
-    void test1(){
-        String uuid = UUID.randomUUID().toString().replace("-","");
+    void test1() {
+        String uuid = UUID.randomUUID().toString().replace("-", "");
         System.out.println("uuid = " + uuid);
     }
 }

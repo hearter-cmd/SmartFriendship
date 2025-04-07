@@ -15,7 +15,7 @@ import java.util.Date;
  * @CreateTime 2024-09-15
  * @ClassName WSMessage
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public class WSMessage {
 

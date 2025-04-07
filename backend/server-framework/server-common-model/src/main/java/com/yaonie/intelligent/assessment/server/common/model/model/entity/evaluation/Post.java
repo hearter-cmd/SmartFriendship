@@ -13,6 +13,7 @@ import java.util.Date;
 
 /**
  * 帖子
+ *
  * @author yaonie
  */
 @TableName(value = "post")

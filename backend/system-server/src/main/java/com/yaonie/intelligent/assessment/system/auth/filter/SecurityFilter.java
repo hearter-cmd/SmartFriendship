@@ -87,7 +87,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         // 获取用户IP
         String clientIP = NetUtils.getIpAddress(request);
         // 将ip放到redis的HyperLogLog中
-        redisTemplate.opsForHyperLogLog().add(uvKey,clientIP); //PFADD mypf ip1 ip2
+        redisTemplate.opsForHyperLogLog().add(uvKey, clientIP); //PFADD mypf ip1 ip2
     }
 
     private String getDateYYYYMMDD() {

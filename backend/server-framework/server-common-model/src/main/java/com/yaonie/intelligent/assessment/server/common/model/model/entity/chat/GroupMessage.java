@@ -1,4 +1,4 @@
-package com.yaonie.intelligent.assessment.server.chat_server.common.model.entity;
+package com.yaonie.intelligent.assessment.server.common.model.model.entity.chat;
 
 
 import lombok.Data;
@@ -18,4 +18,5 @@ public class GroupMessage {
     private Long fromUserId;
     private List<Long> toUserIds;
     private String message;
+    private String avatar;
 }

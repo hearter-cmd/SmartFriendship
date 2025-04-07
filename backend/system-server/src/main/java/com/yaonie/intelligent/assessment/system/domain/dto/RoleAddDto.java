@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Data
 public class RoleAddDto {
-    private Long roleId;
+    private String roleId;
     private String roleKey;
     private String roleName;
     private Integer roleSort;

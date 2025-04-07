@@ -9,7 +9,7 @@ package com.yaonie.intelligent.assessment.server.chat_server.common.constants;
  * @CreateTime 2024-09-15
  * @ClassName WxConstants
  * @Project backend
- * @Description : 
+ * @Description :
  */
 public interface WxConstants {
 }

@@ -77,7 +77,8 @@ public class SecurityConfig {
                         //其他所有路径 都需认证
                         .anyRequest().authenticated() // 都需要认证
                 )
-                .logout(logout -> {logout
+                .logout(logout -> {
+                    logout
                             .logoutUrl("/user/logout")
                             .invalidateHttpSession(true)
                             .deleteCookies("SESSION");
@@ -87,7 +88,7 @@ public class SecurityConfig {
 //                })
                 .sessionManagement(manager -> {
                     manager
-                            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                            .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                             .sessionFixation()
                             .migrateSession();
                 })
@@ -98,6 +99,7 @@ public class SecurityConfig {
 
     /**
      * 配置认证管理器
+     *
      * @return AuthenticationManager对象
      */
     @Bean

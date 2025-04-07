@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BaseParam {
-	private SimplePage simplePage;
-	private Integer pageNo;
-	private Integer pageSize;
-	private String orderBy;
+    private SimplePage simplePage;
+    private Integer pageNo;
+    private Integer pageSize;
+    private String orderBy;
 
 }

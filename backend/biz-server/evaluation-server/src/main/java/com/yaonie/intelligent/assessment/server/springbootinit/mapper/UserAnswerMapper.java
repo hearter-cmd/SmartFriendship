@@ -10,11 +10,11 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
-* @author 77160
-* @description 针对表【user_answer(用户答题记录)】的数据库操作Mapper
-* @createDate 2024-08-18 00:16:57
-* @Entity com.yaonie.intelligent.assessment.server.springbootinit.model.entity.UserAnswer
-*/
+ * @author 77160
+ * @description 针对表【user_answer(用户答题记录)】的数据库操作Mapper
+ * @createDate 2024-08-18 00:16:57
+ * @Entity com.yaonie.intelligent.assessment.server.springbootinit.model.entity.UserAnswer
+ */
 @Mapper
 public interface UserAnswerMapper extends BaseMapper<UserAnswer> {
     @Select("select appId, count(userId) answerCount from user_answer " +

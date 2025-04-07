@@ -18,7 +18,7 @@ import java.util.Map;
  * @CreateTime 2024-09-15
  * @ClassName MsgHandler
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Component
 public class MsgHandler extends AbstractHandler {

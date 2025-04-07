@@ -20,7 +20,7 @@ import java.util.Map;
  * @CreateTime 2024-09-15
  * @ClassName ScanHandler
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Component
 public class ScanHandler extends AbstractHandler {

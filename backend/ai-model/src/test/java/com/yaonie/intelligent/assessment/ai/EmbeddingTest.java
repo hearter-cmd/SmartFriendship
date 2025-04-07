@@ -115,11 +115,11 @@ public class EmbeddingTest {
         );
     }
 
-    private <V> void testCollection(Supplier<Map<String,V>> supplier,
+    private <V> void testCollection(Supplier<Map<String, V>> supplier,
                                     BiConsumer<Map<String, V>, List<String>> consumer) {
         Map<String, V> counterMap = supplier.get();
         ArrayList<Thread> ts = new ArrayList<>();
-        for (int i = 1;i <= 200;i ++) {
+        for (int i = 1; i <= 200; i++) {
             int idx = i;
             Thread thread = new Thread(() -> {
                 List<String> list = readFromFile(idx);
@@ -143,7 +143,7 @@ public class EmbeddingTest {
 
     private List<String> readFromFile(int idx) {
         ArrayList<String> list = new ArrayList<>();
-        for (int i = 0;i < 200;i ++) {
+        for (int i = 0; i < 200; i++) {
             list.add(String.valueOf(i));
         }
         return list;
@@ -155,7 +155,7 @@ public class EmbeddingTest {
             System.out.println("执行完毕");
         });
         List<Thread> list = new ArrayList<>(20);
-        for (int i = 0;i < 20;i ++) {
+        for (int i = 0; i < 20; i++) {
             Thread thread = new Thread(() -> {
                 try {
                     toConsumer(cb);
@@ -203,14 +203,14 @@ public class EmbeddingTest {
         // 3.1 厨师做菜的同时，小明玩游戏等菜
         CompletableFuture<String> cf = CompletableFuture
                 .supplyAsync(new MakeFood(foods))
-                .thenApply(dist ->  {
-                           try {
-                               TimeUnit.SECONDS.sleep(2);
-                           } catch (InterruptedException e) {
-                               throw new RuntimeException(e);
-                           }
-                          return dist + "打好了" + ",服务员的米饭也打好了";
-                    }
+                .thenApply(dist -> {
+                            try {
+                                TimeUnit.SECONDS.sleep(2);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            return dist + "打好了" + ",服务员的米饭也打好了";
+                        }
                 );
         // 3.2 小明玩游戏
         System.out.println("小明开始玩游戏~~~~,等饭");

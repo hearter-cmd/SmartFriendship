@@ -1,7 +1,7 @@
 package com.yaonie.intelligent.assessment.server.chat_server.chat.event;
 
 
-import com.yaonie.intelligent.assessment.server.chat_server.common.model.entity.Message;
+import com.yaonie.intelligent.assessment.server.common.model.model.entity.chat.Message;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

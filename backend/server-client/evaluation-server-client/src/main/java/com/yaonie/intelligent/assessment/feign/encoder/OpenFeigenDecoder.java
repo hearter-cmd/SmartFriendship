@@ -52,7 +52,7 @@ public class OpenFeigenDecoder implements Decoder {  //实现Decoder接口
             } else {
                 if (aClass.getName().startsWith("java.lang")) {
                     // 是Java自带类型
-                    result=jsonObject.get("data");
+                    result = jsonObject.get("data");
                 } else {
                     // 不是Java自带类型
                     result = JSONUtil.toBean(dataStr, aClass);

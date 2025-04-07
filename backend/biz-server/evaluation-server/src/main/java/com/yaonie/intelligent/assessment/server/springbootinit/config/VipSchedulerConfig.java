@@ -1,15 +1,12 @@
 package com.yaonie.intelligent.assessment.server.springbootinit.config;
 
 
-
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.Objects;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -21,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @CreateTime 2024-08-31
  * @ClassName SchedulerConfig
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Configuration
 public class VipSchedulerConfig {
@@ -29,15 +26,18 @@ public class VipSchedulerConfig {
 
     @Bean
     public Scheduler vipScheduler() {
+        // 创建自定义的 ThreadFactory
         ThreadFactory threadFactory = new ThreadFactory() {
             @Override
-            public Thread newThread(@NotNull Runnable r) {
+            public Thread newThread(Runnable r) {
+                Objects.requireNonNull(r, "Runnable cannot be null");
                 Thread thread = new Thread(r, "scheduler-" + serial.getAndIncrement());
                 thread.setDaemon(false);
                 return thread;
             }
         };
-        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(20, threadFactory);
-        return Schedulers.from(scheduledExecutorService);
+
+        // 使用 Project Reactor 的 Schedulers.newParallel 创建调度器
+        return Schedulers.newParallel(20, threadFactory);
     }
 }

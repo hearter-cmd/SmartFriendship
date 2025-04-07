@@ -15,7 +15,7 @@ import java.util.Map;
  * @CreateTime 2024-09-05
  * @ClassName CrawlerTest
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @SpringBootTest
 public class CrawlerTest {
@@ -23,7 +23,7 @@ public class CrawlerTest {
     Map<String, CeShi> map;
 
     @Test
-    void test1(){
+    void test1() {
         for (String s : map.keySet()) {
             System.out.println(s);
         }

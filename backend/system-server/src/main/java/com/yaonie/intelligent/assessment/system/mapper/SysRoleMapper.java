@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 针对表【sys_role(角色)】的数据库操作Mapper
+ *
  * @author 77160
  * @createDate 2024-08-18 00:16:57
  * @Entity domain.entity.SysRole

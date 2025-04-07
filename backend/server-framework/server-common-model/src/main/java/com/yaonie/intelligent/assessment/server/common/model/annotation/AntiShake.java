@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- *  防抖接口
+ * 防抖接口
  * </p>
  *
  * @author 武春利

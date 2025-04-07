@@ -5,14 +5,14 @@
 <mapper namespace="com.yaonie.intelligent.assessment.system.mapper.SysDictTypeMapper">
 
     <resultMap type="com.yaonie.intelligent.assessment.system.domain.entity.SysDictType" id="SysDictTypeResult">
-        <id     property="dictId"     column="dictId"     />
-        <result property="dictName"   column="dictName"   />
-        <result property="dictType"   column="dictType"   />
-        <result property="status"     column="status"      />
-        <result property="createBy"   column="createBy"   />
-        <result property="createTime" column="createTime" />
-        <result property="updateBy"   column="updateBy"   />
-        <result property="updateTime" column="updateTime" />
+        <id property="dictId" column="dictId"/>
+        <result property="dictName" column="dictName"/>
+        <result property="dictType" column="dictType"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="createBy"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateBy" column="updateBy"/>
+        <result property="updateTime" column="updateTime"/>
     </resultMap>
 
     <sql id="selectDictTypeVo">
@@ -20,7 +20,8 @@
         from sys_dict_type
     </sql>
 
-    <select id="selectDictTypeList" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictType" resultMap="SysDictTypeResult">
+    <select id="selectDictTypeList" parameterType="com.yaonie.intelligent.assessment.system.domain.entity.SysDictType"
+            resultMap="SysDictTypeResult">
         <include refid="selectDictTypeVo"/>
         <where>
             <if test="dictName != null and dictName != ''">
@@ -61,7 +62,9 @@
     </select>
 
     <delete id="deleteDictTypeById" parameterType="Long">
-        delete from sys_dict_type where dictId = #{dictId}
+        delete
+        from sys_dict_type
+        where dictId = #{dictId}
     </delete>
 
     <delete id="deleteDictTypeByIds" parameterType="Long">

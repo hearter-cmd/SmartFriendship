@@ -6,10 +6,10 @@ import com.yaonie.intelligent.assessment.system.domain.entity.SysMenu;
 import java.util.List;
 
 /**
-* @author 77160
-* @description 针对表【sys_menu(菜单权限表)】的数据库操作Service
-* @createDate 2025-01-10 18:27:49
-*/
+ * @author 77160
+ * @description 针对表【sys_menu(菜单权限表)】的数据库操作Service
+ * @createDate 2025-01-10 18:27:49
+ */
 public interface SysMenuService extends IService<SysMenu> {
 
     /**

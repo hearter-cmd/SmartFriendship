@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @author yaonie
- * @since  2025/1/13
+ * @since 2025/1/13
  */
 @Data
 public class UserPatchPassDto {

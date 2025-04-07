@@ -11,15 +11,14 @@ import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 用户答案表服务
- *
-  */
+ */
 public interface UserAnswerService extends IService<UserAnswer> {
 
     /**
      * 校验数据
      *
      * @param userAnswer
-     * @param add 对创建的数据进行校验
+     * @param add        对创建的数据进行校验
      */
     void validUserAnswer(UserAnswer userAnswer, boolean add);
 
@@ -30,7 +29,7 @@ public interface UserAnswerService extends IService<UserAnswer> {
      * @return
      */
     QueryWrapper<UserAnswer> getQueryWrapper(UserAnswerQueryRequest userAnswerQueryRequest);
-    
+
     /**
      * 获取用户答案表封装
      *

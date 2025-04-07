@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @CreateTime 2024-08-29
  * @ClassName RedissionConfig
  * @Project backend
- * @Description : 
+ * @Description :
  */
 @Configuration
 @Data

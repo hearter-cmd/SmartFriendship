@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 帖子视图
+ *
  * @author yaonie
  */
 @Data

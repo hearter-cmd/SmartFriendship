@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * 题目服务
- *
  */
 public interface QuestionService extends IService<Question> {
 
@@ -23,7 +22,7 @@ public interface QuestionService extends IService<Question> {
      * 校验数据
      *
      * @param question
-     * @param add 对创建的数据进行校验
+     * @param add      对创建的数据进行校验
      */
     void validQuestion(Question question, boolean add);
 
@@ -34,7 +33,7 @@ public interface QuestionService extends IService<Question> {
      * @return
      */
     QueryWrapper<Question> getQueryWrapper(QuestionQueryRequest questionQueryRequest);
-    
+
     /**
      * 获取题目封装
      *
@@ -55,6 +54,7 @@ public interface QuestionService extends IService<Question> {
 
     /**
      * AI根据题目类型生成题目
+     *
      * @param aiGenerateQuestionRequest
      * @return
      */
@@ -62,6 +62,7 @@ public interface QuestionService extends IService<Question> {
 
     /**
      * 通过AI流式生成题目
+     *
      * @param aiGenerateQuestionRequest Ai生成题目需要的参数
      * @return 流式对象
      */

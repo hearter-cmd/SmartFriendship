@@ -52,7 +52,7 @@ public class WebSocketStart {
     private static final EventLoopGroup BOSS_GROUP = new NioEventLoopGroup(1);
     /**
      * 1.2 工作队列 CPU密集型
-     *        根据可用CPU核心设置工作线程
+     * 根据可用CPU核心设置工作线程
      */
     private static final EventLoopGroup WORKER_GROUP = new NioEventLoopGroup(NettyRuntime.availableProcessors());
 

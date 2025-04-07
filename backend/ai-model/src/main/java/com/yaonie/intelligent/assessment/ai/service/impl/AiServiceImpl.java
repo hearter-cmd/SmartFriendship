@@ -40,7 +40,7 @@ public class AiServiceImpl implements AiService {
                 return;
             }
         }
-        throw new BusinessException(ErrorCode.PARAMS_ERROR,"AI类型错误");
+        throw new BusinessException(ErrorCode.PARAMS_ERROR, "AI类型错误");
     }
 
     @Override
@@ -52,8 +52,8 @@ public class AiServiceImpl implements AiService {
                 String baseUrl = zhiPuProperties.getBaseUrl();
                 String apiKey = zhiPuProperties.getApiKey();
                 return AiInfoVo.builder().modelName(options.getModel())
-                        .baseUrl(StringUtils.isBlank(baseUrl) ? chatConfig.getBaseUrl():baseUrl)
-                        .apiKey(StringUtils.isBlank(apiKey)? chatConfig.getApiKey():apiKey)
+                        .baseUrl(StringUtils.isBlank(baseUrl) ? chatConfig.getBaseUrl() : baseUrl)
+                        .apiKey(StringUtils.isBlank(apiKey) ? chatConfig.getApiKey() : apiKey)
                         .maxTokens(Optional
                                 .ofNullable(options.getMaxTokens()).orElse(0))
                         .temperature(Optional

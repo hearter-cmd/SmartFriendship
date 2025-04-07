@@ -6,10 +6,10 @@ import com.yaonie.intelligent.assessment.system.domain.entity.SysRoleMenu;
 import java.util.List;
 
 /**
-* @author 77160
-* @description 针对表【sys_role_menu(角色和菜单关联表)】的数据库操作Service
-* @createDate 2025-01-10 17:35:35
-*/
+ * @author 77160
+ * @description 针对表【sys_role_menu(角色和菜单关联表)】的数据库操作Service
+ * @createDate 2025-01-10 17:35:35
+ */
 public interface SysRoleMenuService extends IService<SysRoleMenu> {
 
     /**
